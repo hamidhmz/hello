@@ -1,0 +1,136 @@
+<script>
+    const socket = io();
+    let receiverEmail;
+    let senderEmail;
+    $(document).ready(function () {
+        let ScrollHeight;
+        const message__content= $("#message__content");
+        const userName = $("#userName");
+        const userEmail = $("#userEmail");
+        const logoutBtn = $("#logout");
+        const submit1 = $("#submit1");
+        const textarea1 = $('#textarea1');
+
+        textarea1.keypress(function(event){
+
+            if(event.keyCode === 13 && !event.shiftKey){
+                event.preventDefault();
+                submit1.click();
+            }
+        });
+        logoutBtn.click(function () {
+            Cookies.remove("token");
+            window.location.replace("http://localhost/login.html");
+        });
+        if (!Cookies.get("token")) window.location.replace("http://localhost/login.html");
+        const contentType = "application/json; charset=utf-8";
+        const dataType = "json";
+        const type = "GET";
+        const url = "http://localhost/api/users/me";
+        const header = { 'x-auth-token': Cookies.get("token") };
+        $.ajax({
+            url: url,
+            type: type,
+            contentType: contentType,
+            dataType: dataType,
+            headers: header,
+            success: function (data, textStatus, response) {
+                // if (response.getResponseHeader('x-auth-token')) {
+                //     Cookies.set('token', response.getResponseHeader('x-auth-token'), {expires: 7});
+                //     window.location.replace("http://localhost/index.html");
+                // }
+                userName.html(data.name);
+                userEmail.html(data.email);
+
+                senderToken = Cookies.get("token");
+                socket.emit("senderToken",senderToken);
+            },
+            error: function (xhr, status, error) {
+
+                alert(error + xhr.responseText);
+
+                // error1Label.html(error + " " + xhr.responseText);
+            }
+
+        });
+
+
+        // let receiverEmail = $(".people:nth-child(3)").html();
+
+        socket.on("get sender email", function (data) {
+            senderEmail = data;
+        });
+        socket.emit("senderEmail",senderEmail);
+        // socket.emit("user is online", message);
+        // senderEmail = $("#userEmail").html();
+        // socket.emit("senderEmail",senderEmail);
+        submit1.click(function () {
+
+
+            const message = {};
+            socket.emit("createId");
+            socket.on("idCreated",function (data) {
+                message["content"] = textarea1.val();
+                message["_id"] = data;
+                textarea1.val("");
+                socket.emit("send message", message);
+            });
+            // $("#message__content").append("<div class=\"messages__item messages__item--right\">\n" +
+            //     "                            <div class=\"messages__details\">\n" +
+            //     "                                <p>" + message["content"] + "</p>\n" +
+            //     "                                <small><i class=\"zmdi zmdi-time\"></i> 20/04/2017 at 09:10</small>\n" +
+            //     "                            </div>\n" +
+            //     "                        </div>");
+
+
+
+        });
+        socket.on("load old messages", function (data) {
+            message__content.html("");
+            for (let i = 0; i < data.length; i++) {
+                console.log(data[i].createdAt);
+                if((senderEmail.trim()) === data[i].senderEmail){
+                    message__content.append("   <div id=\""+ data[i]._id +"\" class=\"messages__item messages__item--right \" >\n" +
+                        "                            <div class=\"messages__details\">\n" +
+                        "                                <p>" + data[i].content + "</p>\n" +
+                        "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss')+ "</small>\n" +
+                        "                            </div>\n" +
+                        "                        </div>");
+                }else{
+                    message__content.append("   <div id=\""+ data[i]._id +"\"  class=\"messages__item \" >\n" +
+                        "                            <img src=\"demo/img/profile-pics/1.jpg\" class=\"messages__avatar\" alt=\"\">" +
+                        "                            <div class=\"messages__details\">\n" +
+                        "                                <p>" + data[i].content + "</p>\n" +
+                        "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss')+ "</small>\n" +
+                        "                            </div>\n" +
+                        "                       </div>");
+                }
+            }
+            ScrollHeight = document.getElementById("message__content").scrollHeight;
+            message__content.animate({ scrollTop: (ScrollHeight) }, 50);
+        });
+        socket.on("load all users", function (data) {
+
+            for (let i = 0; i < data.length; i++) {
+                $("#usersList").append("        <a class=\"listview__item people\" onclick='myFunction(this)'>\n" +
+                    "                               <img src=\"demo/img/profile-pics/4.jpg\" alt=\"\" class=\"listview__img\">\n" +
+                    "\n" +
+                    "                               <div class=\"listview__content\">\n" +
+                    "                                   <div class=\"listview__heading\">"+ data[i].name+"</div>\n" +
+                    "                                   <p id='receiverEmail'>  "+ data[i].email +"</p>\n" +
+                    "                               </div>\n" +
+                    "                           </a>");
+            }
+        });
+    });
+    function myFunction(event) {
+        $("#message__content").html("");
+        receiverEmail = event.childNodes[3].childNodes[3].innerHTML;
+        let receiverName = event.childNodes[3].childNodes[1].innerHTML;
+        $("#messageBox").css("display","");
+        $("#P_select").css("display","none");
+        $("#receiverName").html(receiverName);
+        socket.emit("receiverEmail",receiverEmail.trim());
+        socket.emit("onclickPerson");
+    }
+</script>

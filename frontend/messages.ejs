@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from byrushan.com/projects/material-admin/app/2.0/jquery/bs4/messages.html by HTTrack Website Copier/3.x [XR&CO'2010], Mon, 09 Oct 2017 11:33:13 GMT -->
+<head>
+    <% include layout/main/meta.ejs %>
+
+    <!-- Vendor styles -->
+    <% include layout/main/link.ejs %>
+</head>
+
+<body data-ma-theme="green">
+<main class="main">
+    <% include layout/main/pageLoader.ejs %>
+
+    <% include layout/main/pageHeader.ejs %>
+
+    <% include layout/main/sidebar.ejs %>
+
+    <% include layout/main/chat.ejs %>
+
+    <section class="content">
+        <div class="content__inner">
+            <header class="content__title">
+                <h1>Messages</h1>
+
+                <div class="actions">
+                    <a href="#" class="actions__item zmdi zmdi-trending-up"></a>
+                    <a href="#" class="actions__item zmdi zmdi-check-all"></a>
+
+                    <div class="dropdown actions__item">
+                        <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="#" class="dropdown-item">Refresh</a>
+                            <a href="#" class="dropdown-item">Manage Widgets</a>
+                            <a href="#" class="dropdown-item">Settings</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="messages">
+                <div class="messages__sidebar">
+                    <div class="toolbar toolbar--inner mb-3">
+                        <div class="toolbar__label">Malinda Hollaway</div>
+
+                        <div class="actions toolbar__actions">
+                            <a href="#" class="actions__item zmdi zmdi-plus"></a>
+                        </div>
+                    </div>
+
+                    <div class="messages__search">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Search...">
+                            <i class="form-group__bar"></i>
+                        </div>
+                    </div>
+
+                    <div class="listview listview--hover" id="usersList">
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <img src="demo/img/profile-pics/4.jpg" alt="" class="listview__img">-->
+
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Davil Parnell</div>-->
+                        <!--                                <p>Fierent fastidii recteque ad pro</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item listview__item&#45;&#45;active" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/8.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Ann Watkinson</div>-->
+                        <!--                                <p>Cum sociis natoque penatibus </p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/3.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Marse Walter</div>-->
+                        <!--                                <p>Suspendisse sapien ligula</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/2.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Jeremy Robbins</div>-->
+                        <!--                                <p>Phasellus porttitor tellus nec</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/4.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Reginald Horace</div>-->
+                        <!--                                <p>Quisque consequat arcu eget</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/5.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Shark Henry</div>-->
+                        <!--                                <p>Nam lobortis odio et leo maximu</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/2.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Paul Van Dack</div>-->
+                        <!--                                <p>Nam posuere purus sed velit auctor sodales</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/1.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">James Anderson</div>-->
+                        <!--                                <p>Vivamus imperdiet sagittis quam</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+
+                        <!--                        <a class="listview__item" href="#">-->
+                        <!--                            <div class="pull-left">-->
+                        <!--                                <img src="demo/img/profile-pics/3.jpg" alt="" class="listview__img">-->
+                        <!--                            </div>-->
+                        <!--                            <div class="listview__content">-->
+                        <!--                                <div class="listview__heading">Kane Williams</div>-->
+                        <!--                                <p>Suspendisse justo nulla luctus nec</p>-->
+                        <!--                            </div>-->
+                        <!--                        </a>-->
+                        <!--                    </div>-->
+                    </div>
+                </div>
+                <div class="messages__body">
+
+                    <div id="P_select" class="P_select">Please select a chat to start messaging</div>
+                </div>
+                <div id="messageBox" style="display: none"  class="messages__body">
+                    <div class="messages__header">
+                        <div class="toolbar toolbar--inner mb-0">
+                            <div id="receiverName" class="toolbar__label">noname</div>
+
+                            <div class="actions toolbar__actions">
+                                <i class="actions__item zmdi zmdi-search" data-ma-action="toolbar-search-open"></i>
+                                <a href="#" class="actions__item zmdi zmdi-time"></a>
+                                <a href="#" class="actions__item zmdi zmdi-info-outline"></a>
+                                <div class="dropdown actions__item">
+                                    <i class="actions__item zmdi zmdi-more-vert" data-toggle="dropdown"></i>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="#" class="dropdown-item">Refresh</a>
+                                        <a href="#" class="dropdown-item">Delete all</a>
+                                        <a href="#" class="dropdown-item">Settings</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="toolbar__search">
+                                <input type="text" placeholder="Search...">
+                                <i class="toolbar__search__close zmdi zmdi-long-arrow-left"
+                                   data-ma-action="toolbar-search-close"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="messages__content" id="message__content">
+
+<!--                                                        <div class="messages__item">-->
+<!--                                                            <img src="demo/img/profile-pics/1.jpg" class="messages__avatar" alt="">-->
+
+<!--                                                            <div class="messages__details">-->
+<!--                                                                <p>Quisque consequat arcu eget odio cursus, ut tempor arcu vestibulum. Etiam ex arcu, porta a urna non, lacinia pellentesque orci. Proin semper sagittis erat, eget condimentum sapien viverra et. Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a sem pulvinar lobortis.</p>-->
+<!--                                                                <small><i class="zmdi zmdi-time"></i> 20/04/2017 at 09:00</small>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+
+<!--                                                        <div class="messages__item messages__item&#45;&#45;right">-->
+<!--                                                            <div class="messages__details">-->
+<!--                                                                <p>Mauris volutpat magna nibh, et condimentum est rutrum a. Nunc sed turpis mi. In eu massa a sem pulvinar lobortis.</p>-->
+<!--                                                                <p>Nunc sed turpis mi. In eu massa a sem pulvinar condimentum.</p>-->
+<!--                                                                <small><i class="zmdi zmdi-time"></i> 20/04/2017 at 09:10</small>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+
+<!--                                                        <div class="messages__item">-->
+<!--                                                            <img src="demo/img/profile-pics/1.jpg" class="messages__avatar" alt="">-->
+
+<!--                                                            <div class="messages__details">-->
+<!--                                                                <p>Etiam ex arcumentum</p>-->
+<!--                                                                <small><i class="zmdi zmdi-time"></i> 20/04/2017 at 09:11</small>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+
+<!--                                                        <div class="messages__item messages__item&#45;&#45;right">-->
+<!--                                                            <div class="messages__details">-->
+<!--                                                                <p>Etiam nec facilisis lacus. Nulla imperdiet augue ullamcorper dui ullamcorper, eu laoreet sem consectetur. Aenean et ligula risus. Praesent sed posuere sem. Cum sociis natoque penatibus et magnis dis parturient montes</p>-->
+<!--                                                                <small><i class="zmdi zmdi-time"></i> 20/04/2017 at 09:15</small>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+
+<!--                                                        <div class="messages__item">-->
+<!--                                                            <img src="demo/img/profile-pics/1.jpg" class="messages__avatar" alt="">-->
+
+<!--                                                            <div class="messages__details">-->
+<!--                                                                <p>Cum sociis natoque penatibus et magnis dis parturient montes</p>-->
+<!--                                                                <p>Nascetur ridiculus mus. Etiam ac tortor ut elit sodales varius. Mauris id ipsum id mauris malesuada tincidunt. Vestibulum elit massa, pulvinar at sapien sed, luctus vestibulum eros. Etiam finibus tristique ante, vitae rhoncus sapien volutpat eget</p>-->
+<!--                                                                <small><i class="zmdi zmdi-time"></i> 20/04/2017 at 09:22</small>-->
+<!--                                                            </div>-->
+<!--                                                        </div>-->
+
+                    </div>
+
+                    <div class="messages__reply">
+                            <textarea id="textarea1" class="messages__reply__text"
+                                      placeholder="Type a message..."></textarea>
+                        <button id="submit1" class="btn btn-success btn--icon messages__reply__btn"><i
+                                class="zmdi zmdi-mail-send"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Older IE warning message -->
+<!--[if IE]>
+<% include layout/ieWarning.ejs %>
+<![endif]-->
+
+<!-- Javascript -->
+<!-- Vendors -->
+<!--<script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>-->
+<!--<script src="vendors/bower_components/tether/dist/js/tether.min.js"></script>-->
+<!--<script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>-->
+<!--<script src="vendors/bower_components/Waves/dist/waves.min.js"></script>-->
+<!--<script src="vendors/bower_components/jquery.scrollbar/jquery.scrollbar.min.js"></script>-->
+<!--<script src="vendors/bower_components/jquery-scrollLock/jquery-scrollLock.min.js"></script>-->
+
+<!--&lt;!&ndash; App functions and actions &ndash;&gt;-->
+<!--<script src="js/app.min.js"></script>-->
+<!--&lt;!&ndash; socket client &ndash;&gt;-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>-->
+<!--<script src="https://unpkg.com/jalali-moment/dist/jalali-moment.browser.js"></script>-->
+<!--<script src="js/dynamic.js"></script>-->
+<% include layout/main/script.ejs %>
+<% include layout/main/messagesSpecialScript.ejs %>
+</body>
+
+<!-- Mirrored from byrushan.com/projects/material-admin/app/2.0/jquery/bs4/messages.html by HTTrack Website Copier/3.x [XR&CO'2010], Mon, 09 Oct 2017 11:33:13 GMT -->
+</html>

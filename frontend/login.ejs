@@ -3,16 +3,10 @@
 
 <!-- Mirrored from byrushan.com/projects/material-admin/app/2.0/jquery/bs4/login.html by HTTrack Website Copier/3.x [XR&CO'2010], Mon, 09 Oct 2017 11:34:24 GMT -->
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <% include layout/login/meta.ejs %>
 
     <!-- Vendor styles -->
-    <link rel="stylesheet"
-          href="vendors/bower_components/material-design-iconic-font/dist/css/material-design-iconic-font.min.css">
-    <link rel="stylesheet" href="vendors/bower_components/animate.css/animate.min.css">
-
-    <!-- App styles -->
-    <link rel="stylesheet" href="css/app.min.css">
+    <% include layout/login/link.ejs %>
 </head>
 
 <body data-ma-theme="green">
@@ -145,142 +139,13 @@
 </div>
 <!-- Older IE warning message -->
 <!--[if IE]>
-<div class="ie-warning">
-    <h1>Warning!!</h1>
-    <p>You are using an outdated version of Internet Explorer, please upgrade to any of the following web browsers to
-        access this website.</p>
-
-    <div class="ie-warning__downloads">
-        <a href="http://www.google.com/chrome">
-            <img src="img/browsers/chrome.png" alt="">
-        </a>
-
-        <a href="https://www.mozilla.org/en-US/firefox/new">
-            <img src="img/browsers/firefox.png" alt="">
-        </a>
-
-        <a href="http://www.opera.com">
-            <img src="img/browsers/opera.png" alt="">
-        </a>
-
-        <a href="https://support.apple.com/downloads/safari">
-            <img src="img/browsers/safari.png" alt="">
-        </a>
-
-        <a href="https://www.microsoft.com/en-us/windows/microsoft-edge">
-            <img src="img/browsers/edge.png" alt="">
-        </a>
-
-        <a href="http://windows.microsoft.com/en-us/internet-explorer/download-ie">
-            <img src="img/browsers/ie.png" alt="">
-        </a>
-    </div>
-    <p>Sorry for the inconvenience!</p>
-</div>
+<% include layout/ieWarning.ejs %>
 <![endif]-->
 
 <!-- Javascript -->
 <!-- Vendors -->
-<script src="vendors/bower_components/jquery/dist/jquery.min.js"></script>
-<script src="vendors/bower_components/tether/dist/js/tether.min.js"></script>
-<script src="vendors/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<script src="vendors/bower_components/Waves/dist/waves.min.js"></script>
-
-<!-- App functions and actions -->
-<script src="js/app.min.js"></script>
-<!-- Cookie in jquery -->
-<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-<script>
-
-    $(document).ready(function () {
-        const error1 = $('#error1');
-        const error1Label = $("#error1Label");
-        const contentType = "application/json; charset=utf-8";
-        const dataType = "json";
-        if (Cookies.get("token")) window.location.replace("http://localhost/index.html");
-        $("#registerBtn").click(function () {
-            const nameGroupRegister = $('#nameGroupRegister');
-            const emailAddressGroupRegister = $('#emailAddressGroupRegister');
-            const passwordGroupRegister = $('#passwordGroupRegister');
-            const nameInputRegister = $("#nameInputRegister").val();
-            const emailInputRegister = $("#emailInputRegister").val();
-            const passwordInputRegister = $("#passwordInputRegister").val();
-            const type = "POST";
-            const url = "http://localhost/api/users/register";
-            const data = JSON.stringify({
-                name: nameInputRegister,
-                email: emailInputRegister,
-                password: passwordInputRegister
-            });
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                contentType: contentType,
-                dataType: dataType,
-                success: function (data, textStatus, response) {
-                    if (response.getResponseHeader('x-auth-token')) {
-                        Cookies.set('token', response.getResponseHeader('x-auth-token'), {expires: 7});
-                        window.location.replace("http://localhost/index.html");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    if (!nameGroupRegister.hasClass('has-danger')) {
-                        nameGroupRegister.addClass("has-danger");
-                    }
-                    if (!emailAddressGroupRegister.hasClass('has-danger')) {
-                        emailAddressGroupRegister.addClass("has-danger");
-
-                        // alert(error + xhr.responseText);
-                    }
-                    if (!passwordGroupRegister.hasClass('has-danger')) {
-                        passwordGroupRegister.addClass("has-danger");
-                    }
-                    if (!error1.is(":visible")) {
-                        error1.css("display", "unset");
-                    }
-                    error1Label.html(error + " " + xhr.responseText);
-                }
-            });
-        });
-        $("#loginBtn").click(function () {
-            const emailAddressGroup = $('#emailAddressGroup');
-            const passwordGroup = $('#passwordGroup');
-            const emailInput = $("#emailInput").val();
-            const passwordInput = $("#passwordInput").val();
-            const type = "POST";
-            const url = "http://localhost/api/users/login";
-            const data = JSON.stringify({email: emailInput, password: passwordInput});
-            $.ajax({
-                url: url,
-                type: type,
-                data: data,
-                contentType: contentType,
-                dataType: dataType,
-                success: function (data, textStatus, response) {
-                    if (response.getResponseHeader('x-auth-token')) {
-                        Cookies.set('token', response.getResponseHeader('x-auth-token'), {expires: 7});
-                        window.location.replace("http://localhost/index.html");
-                    }
-                },
-                error: function (xhr, status, error) {
-                    if (!emailAddressGroup.hasClass('has-danger')) {
-                        emailAddressGroup.addClass("has-danger");
-
-                        // alert(error + xhr.responseText);
-                    }
-                    if (!passwordGroup.hasClass('has-danger')) {
-                        passwordGroup.addClass("has-danger");
-                    }
-                    if (!error1.is(":visible")) {
-                        error1.css("display", "unset");
-                    }
-                    error1Label.html(error + " " + xhr.responseText);
-                }
-            });
-        });
-    });
-</script>
+<% include layout/login/script.ejs %>
+<% include layout/login/specialScript.ejs %>
 </body>
 
 <!-- Mirrored from byrushan.com/projects/material-admin/app/2.0/jquery/bs4/login.html by HTTrack Website Copier/3.x [XR&CO'2010], Mon, 09 Oct 2017 11:34:24 GMT -->

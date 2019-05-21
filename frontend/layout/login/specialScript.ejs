@@ -1,0 +1,93 @@
+<script>
+    $(document).ready(function () {
+        const error1 = $('#error1');
+        const error1Label = $("#error1Label");
+        const contentType = "application/json; charset=utf-8";
+        const dataType = "json";
+        if (Cookies.get("token")) window.location.replace("/");
+        $("#registerBtn").click(function () {
+            const nameGroupRegister = $('#nameGroupRegister');
+            const emailAddressGroupRegister = $('#emailAddressGroupRegister');
+            const passwordGroupRegister = $('#passwordGroupRegister');
+            const nameInputRegister = $("#nameInputRegister").val();
+            const emailInputRegister = $("#emailInputRegister").val();
+            const passwordInputRegister = $("#passwordInputRegister").val();
+            const type = "POST";
+            const url = "/api/users/register";
+            const data = JSON.stringify({
+                name: nameInputRegister,
+                email: emailInputRegister,
+                password: passwordInputRegister
+            });
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                contentType: contentType,
+                dataType: dataType,
+                success: function (data, textStatus, response) {
+                    if (response.getResponseHeader('x-auth-token')) {
+                        Cookies.set('token', response.getResponseHeader('x-auth-token'), {expires: 7});
+                        Cookies.get('token');
+                        window.location.replace("/");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    if (!nameGroupRegister.hasClass('has-danger')) {
+                        nameGroupRegister.addClass("has-danger");
+                    }
+                    if (!emailAddressGroupRegister.hasClass('has-danger')) {
+                        emailAddressGroupRegister.addClass("has-danger");
+
+// alert(error + xhr.responseText);
+                    }
+                    if (!passwordGroupRegister.hasClass('has-danger')) {
+                        passwordGroupRegister.addClass("has-danger");
+                    }
+                    if (!error1.is(":visible")) {
+                        error1.css("display", "unset");
+                    }
+                    error1Label.html(error + " " + xhr.responseText);
+                }
+            });
+        });
+        $("#loginBtn").click(function () {
+            const emailAddressGroup = $('#emailAddressGroup');
+            const passwordGroup = $('#passwordGroup');
+            const emailInput = $("#emailInput").val();
+            const passwordInput = $("#passwordInput").val();
+            const type = "POST";
+            const url = "/api/users/login";
+            const data = JSON.stringify({email: emailInput, password: passwordInput});
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                contentType: contentType,
+                dataType: dataType,
+                success: function (data, textStatus, response) {
+                    if (response.getResponseHeader('x-auth-token')) {
+                        // console.log(Cookies.set('token', response.getResponseHeader('x-auth-token'), {expires: 7}));
+                        console.log(document.cookie = "token="+response.getResponseHeader('x-auth-token'));
+                        Cookies.get();
+                        window.location.replace("/");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    if (!emailAddressGroup.hasClass('has-danger')) {
+                        emailAddressGroup.addClass("has-danger");
+
+// alert(error + xhr.responseText);
+                    }
+                    if (!passwordGroup.hasClass('has-danger')) {
+                        passwordGroup.addClass("has-danger");
+                    }
+                    if (!error1.is(":visible")) {
+                        error1.css("display", "unset");
+                    }
+                    error1Label.html(error + " " + xhr.responseText);
+                }
+            });
+        });
+    });
+</script>

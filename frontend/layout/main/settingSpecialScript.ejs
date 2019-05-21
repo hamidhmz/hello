@@ -1,0 +1,50 @@
+<script>
+    $(function () {
+
+        // First register any plugins
+        $.fn.filepond.registerPlugin(FilePondPluginFileValidateType);
+        $.fn.filepond.registerPlugin(FilePondPluginImageCrop);
+        $.fn.filepond.registerPlugin(FilePondPluginImageResize);
+        $.fn.filepond.registerPlugin(FilePondPluginImagePreview);
+        $.fn.filepond.registerPlugin(FilePondPluginFilePoster);
+
+        // Turn input element into a pond
+        $('.my-pond').filepond();
+        $('.my-pond').filepond({
+            labelIdle: `Drag & Drop your picture or <span class="filepond--label-action">Browse</span>`,
+            imagePreviewHeight: 170,
+            imageCropAspectRatio: '1:1',
+            imageResizeTargetWidth: 200,
+            imageResizeTargetHeight: 200,
+            stylePanelLayout: 'compact circle',
+            styleLoadIndicatorPosition: 'center bottom',
+            styleProgressIndicatorPosition: 'right bottom',
+            styleButtonRemoveItemPosition: 'left bottom',
+            styleButtonProcessItemPosition: 'right bottom',
+            allowImageCrop:true,
+            allowImageResize:true,
+            imageResizeMode:"cover",
+            imageResizeUpscale:true,
+            server: {
+                process: './upload',
+                fetch: null,
+                revert: null
+            },
+            acceptedFileTypes: ['image/png',"image/jpeg","image/gif"]
+
+        });
+        // Set allowMultiple property to true
+        // $('.my-pond').filepond('allowMultiple', true);
+
+        // Listen for addfile event
+        $('.my-pond').on('FilePond:addfile', function (e) {
+            console.log('file added event', e);
+        });
+
+        // Manually add a file using the addfile method
+        // $('.my-pond').first().filepond('addFile', 'index.html').then(function (file) {
+        //     console.log('file added', file);
+        // });
+
+    });
+</script>
