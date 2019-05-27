@@ -28,6 +28,7 @@ export default function(app){
         });
         User.find().select("-password").exec(function(err,docs){
             if(err) throw err;
+
             socket.emit("load all users",docs);
         });
         socket.on("onclickPerson",function () {

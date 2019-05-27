@@ -10,7 +10,7 @@ $(document).ready(function () {
     const contentType = "application/json; charset=utf-8";
     const dataType = "json";
     const type = "GET";
-    const url = "http://localhost/api/users/me";
+    const url = "/api/users/me";
     const header = { 'x-auth-token': Cookies.get("token") };
     $.ajax({
         url: url,
@@ -25,6 +25,7 @@ $(document).ready(function () {
             // }
             userName.html(data.name);
             userEmail.html(data.email);
+            Cookies.set("email",data.email);
         },
         error: function (xhr, status, error) {
 

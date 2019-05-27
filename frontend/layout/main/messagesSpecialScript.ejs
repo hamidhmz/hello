@@ -20,13 +20,13 @@
         });
         logoutBtn.click(function () {
             Cookies.remove("token");
-            window.location.replace("http://localhost/login.html");
+            window.location.replace("/login");
         });
-        if (!Cookies.get("token")) window.location.replace("http://localhost/login.html");
+        if (!Cookies.get("token")) window.location.replace("login");
         const contentType = "application/json; charset=utf-8";
         const dataType = "json";
         const type = "GET";
-        const url = "http://localhost/api/users/me";
+        const url = "/api/users/me";
         const header = { 'x-auth-token': Cookies.get("token") };
         $.ajax({
             url: url,
@@ -98,7 +98,8 @@
                         "                        </div>");
                 }else{
                     message__content.append("   <div id=\""+ data[i]._id +"\"  class=\"messages__item \" >\n" +
-                        "                            <img src=\"demo/img/profile-pics/1.jpg\" class=\"messages__avatar\" alt=\"\">" +
+                        // "                            <img src=\"demo/img/profile-pics/1.jpg\" class=\"messages__avatar\" alt=\"\">" +
+                        "                            <img src=\"profile-image/"+data[i].senderEmail +"\" class=\"messages__avatar\" alt=\"\">" +
                         "                            <div class=\"messages__details\">\n" +
                         "                                <p>" + data[i].content + "</p>\n" +
                         "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss')+ "</small>\n" +
@@ -112,8 +113,9 @@
         socket.on("load all users", function (data) {
 
             for (let i = 0; i < data.length; i++) {
+                if (Cookies.get("email") === data[i].email) continue ;
                 $("#usersList").append("        <a class=\"listview__item people\" onclick='myFunction(this)'>\n" +
-                    "                               <img src=\"demo/img/profile-pics/4.jpg\" alt=\"\" class=\"listview__img\">\n" +
+                    "                               <img src=\"profile-image/"+data[i].email +"\" alt=\"\" class=\"listview__img\">\n" +
                     "\n" +
                     "                               <div class=\"listview__content\">\n" +
                     "                                   <div class=\"listview__heading\">"+ data[i].name+"</div>\n" +
@@ -127,7 +129,8 @@
         $("#message__content").html("");
         receiverEmail = event.childNodes[3].childNodes[3].innerHTML;
         let receiverName = event.childNodes[3].childNodes[1].innerHTML;
-        $("#messageBox").css("display","");
+        $("#messageBox").css("display","-webkit-box");
+        $("#P_select__body").css("display","none");
         $("#P_select").css("display","none");
         $("#receiverName").html(receiverName);
         socket.emit("receiverEmail",receiverEmail.trim());

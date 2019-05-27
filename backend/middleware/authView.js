@@ -14,7 +14,7 @@ export default function (req, res, next) {
     } catch (ex) {
         console.log(ex);
         // cookies.set('token', {expires: Date.now()});
-        console.dir(token);
+        // console.dir(token);
         res.redirect("/login");
     }
 
