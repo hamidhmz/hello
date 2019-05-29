@@ -1,4 +1,4 @@
 {
   "jwtPrivateKey":"1234",
-  "db":"mongodb://mongo:27017/adminPanel"
+  "db":"mongodb://localhost:27017/adminPanel"
 }

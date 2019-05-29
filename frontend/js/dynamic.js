@@ -1,4 +1,7 @@
+// var socket = io();
 $(document).ready(function () {
+    // socket.emit("a user is online",Cookies.get("token"));
+
     const userName = $("#userName");
     const userEmail = $("#userEmail");
     const logoutBtn = $("#logout");

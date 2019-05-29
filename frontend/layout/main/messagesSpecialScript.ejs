@@ -1,8 +1,10 @@
 <script>
-    const socket = io();
+    const socket = io.connect();
     let receiverEmail;
     let senderEmail;
     $(document).ready(function () {
+        socket.emit("a user is online",Cookies.get("token"));
+        let onlineUserss = [];
         let ScrollHeight;
         const message__content= $("#message__content");
         const userName = $("#userName");
@@ -43,6 +45,7 @@
                 userEmail.html(data.email);
 
                 senderToken = Cookies.get("token");
+                // console.log(senderToken);
                 socket.emit("senderToken",senderToken);
             },
             error: function (xhr, status, error) {
@@ -72,8 +75,9 @@
             socket.on("idCreated",function (data) {
                 message["content"] = textarea1.val();
                 message["_id"] = data;
-                textarea1.val("");
+
                 socket.emit("send message", message);
+                textarea1.val("");
             });
             // $("#message__content").append("<div class=\"messages__item messages__item--right\">\n" +
             //     "                            <div class=\"messages__details\">\n" +
@@ -88,7 +92,6 @@
         socket.on("load old messages", function (data) {
             message__content.html("");
             for (let i = 0; i < data.length; i++) {
-                console.log(data[i].createdAt);
                 if((senderEmail.trim()) === data[i].senderEmail){
                     message__content.append("   <div id=\""+ data[i]._id +"\" class=\"messages__item messages__item--right \" >\n" +
                         "                            <div class=\"messages__details\">\n" +
@@ -110,11 +113,15 @@
             ScrollHeight = document.getElementById("message__content").scrollHeight;
             message__content.animate({ scrollTop: (ScrollHeight) }, 50);
         });
-        socket.on("load all users", function (data) {
+        socket.on("online users",function (onlineUsers) {
+            onlineUserss = onlineUsers;
+        });
 
+        socket.on("load all users", function (data) {
+            $("#usersList").html("");
             for (let i = 0; i < data.length; i++) {
                 if (Cookies.get("email") === data[i].email) continue ;
-                $("#usersList").append("        <a class=\"listview__item people\" onclick='myFunction(this)'>\n" +
+                $("#usersList").append("        <a class=\"listview__item people "+ (data[i].isOnline?"chat__available":"") +"\" onclick='myFunction(this)'>\n" +
                     "                               <img src=\"profile-image/"+data[i].email +"\" alt=\"\" class=\"listview__img\">\n" +
                     "\n" +
                     "                               <div class=\"listview__content\">\n" +

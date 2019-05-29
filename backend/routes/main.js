@@ -21,9 +21,9 @@ router.get("/profile-image/:email",async function(req,res){
     }else{
         previousImage = image;
     }
-
-    // res.sendFile(base64str);
+    fs.exists(previousImage,async function() {res.sendFile(previousImage);});
     res.sendFile(previousImage);
+
 });
 router.get("/profile-image",authView,async function(req,res){
     let previousImage ;
@@ -36,17 +36,25 @@ router.get("/profile-image",authView,async function(req,res){
         }else{
             previousImage = image;
         }
-        const base64str = base64_encode(previousImage);
-        // res.sendFile(base64str);
-        res.send(base64str);
+        fs.exists(previousImage,async function(e) {
+
+            const base64str = base64_encode(previousImage);
+            // res.sendFile(base64str);
+            res.send(base64str);
+        });
+
     }catch (e) {
-        console.log(e);
+        // console.log(e);
 
         const image = path.join(__dirname+"/../uploads/default.png");
         previousImage = image;
-        const base64str = base64_encode(previousImage);
+        fs.exists(previousImage,async function() {
+            const base64str = base64_encode(previousImage);
+            // res.sendFile(base64str);
+            res.send(base64str);
+        });
         // res.sendFile(base64str);
-        res.send(base64str);
+
     }
 
 });
@@ -76,16 +84,18 @@ router.post("/upload",authView,upload.single("filepond" /* name attribute of <fi
                     }
                 },async function () {
                     if (previousImage){
-                        fs.unlink(previousImage, err => {
-                            if (err) return console.log(err);
+                        fs.exists(previousImage,async function f() {
+                            fs.unlink(previousImage, err => {
+                                if (err) return console.log(err);
 
-                            fs.rename(tempPath, targetPath, err => {
-                                // if (err) return console.log(err,1);
+                                fs.rename(tempPath, targetPath, err => {
+                                    // if (err) return console.log(err,1);
 
-                                res
-                                    .status(200)
-                                    .contentType("text/plain")
-                                    .end("File uploaded!");
+                                    res
+                                        .status(200)
+                                        .contentType("text/plain")
+                                        .end("File uploaded!");
+                                });
                             });
                         });
                     }else {
