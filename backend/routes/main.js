@@ -4,15 +4,17 @@ import {User} from "../models/user";
 import multer from "multer";
 import path from "path";
 import fs from "fs";
+
 const imageArray = ["https://dummyimage.com/100x100/7a6bed/7a6bed.png"];
 
 const router = express.Router();
+const defaultImagePath = "/../uploads/default/default.png";
 const upload = multer({
     dest: "./uploads"
 });
 router.get("/profile-image/:email",async function(req,res){
 
-    const image = path.join(__dirname+"/../uploads/default.png");
+    const image = path.join(__dirname + defaultImagePath);
     // const image = "https://dummyimage.com/100x100/7a6bed/7a6bed.png";
     let previousImage;
     const thisUser = await User.find({email: req.params.email}).select({ profileImage:1 });
@@ -29,7 +31,7 @@ router.get("/profile-image",authView,async function(req,res){
     let previousImage ;
     try{
 
-        const image = path.join(__dirname+"/../uploads/default.png");
+        const image = path.join(__dirname + defaultImagePath);
         const thisUser = await User.find({_id: req.user._id}).select({ profileImage:1 });
         if (thisUser[0].profileImage) {
             previousImage = thisUser[0].profileImage;
@@ -46,7 +48,7 @@ router.get("/profile-image",authView,async function(req,res){
     }catch (e) {
         // console.log(e);
 
-        const image = path.join(__dirname+"/../uploads/default.png");
+        const image = path.join(__dirname + defaultImagePath);
         previousImage = image;
         fs.exists(previousImage,async function() {
             const base64str = base64_encode(previousImage);
