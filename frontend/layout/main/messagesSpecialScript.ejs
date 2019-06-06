@@ -1,9 +1,9 @@
 <script>
-    const socket = io.connect();
+    // const socket = io.connect();
     let receiverEmail;
     let senderEmail;
     $(document).ready(function () {
-        socket.emit("a user is online",Cookies.get("token"));
+        // socket.emit("a user is online",Cookies.get("token"));
         let onlineUserss = [];
         let ScrollHeight;
         const message__content= $("#message__content");

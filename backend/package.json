@@ -10,6 +10,7 @@
     "config": "^3.1.0",
     "cookie-parser": "^1.4.4",
     "cookies": "^0.7.3",
+    "dotenv": "^8.0.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-async-errors": "^3.1.1",
@@ -44,7 +45,7 @@
     "babel-preset-env": "^1.7.0"
   },
   "scripts": {
-    "start": "nodemon index.js --exec babel-node --presets babel-preset-env",
+    "start": "nodemon index.js --exec babel-node --presets babel-preset-env -L",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

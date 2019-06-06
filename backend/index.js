@@ -1,7 +1,7 @@
 import express from "express";
 import {createLogger, format, transports} from "winston";
 import mongoose from "mongoose";
-
+require('dotenv').config();
 // import startupLogging from "./startup/logging";
 import startupRoutes from "./startup/routes";
 import startupDb from "./startup/db";
@@ -10,10 +10,12 @@ import startupValidation from "./startup/validation";
 import startupProd from "./startup/prod";
 import startupSocket from "./startup/socket";
 import cookieParser from "cookie-parser";
+
+
 const ejs = require('ejs');
 ejs.open = '{{';
 ejs.close = '}}';
-
+// console.log(process.env.adminPanel_jwt);
 const { combine, timestamp, label, prettyPrint } = format;
 const logger = createLogger({
     format: combine(

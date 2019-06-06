@@ -96,8 +96,8 @@ export default function(app){
         });
 
         socket.on("onclickPerson",function () {
-            console.log("senderEmail: "+senderEmail);
-            console.log("recieverEmail: "+receiverEmail);
+            // console.log("senderEmail: "+senderEmail);
+            // console.log("recieverEmail: "+receiverEmail);
             Chat.find().or([{ senderEmail: senderEmail,receiverEmail:receiverEmail },{ senderEmail: receiverEmail,receiverEmail:senderEmail }]).exec(function(err,docs){
                 if(err) throw err;
                 for (let i = 0; i < docs.length; i++) {

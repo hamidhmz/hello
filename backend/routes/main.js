@@ -8,7 +8,7 @@ import fs from "fs";
 const imageArray = ["https://dummyimage.com/100x100/7a6bed/7a6bed.png"];
 
 const router = express.Router();
-const defaultImagePath = "/../uploads/default/default.png";
+const defaultImagePath = "/../defaultImages/default.png";
 const upload = multer({
     dest: "./uploads"
 });
@@ -18,13 +18,20 @@ router.get("/profile-image/:email",async function(req,res){
     // const image = "https://dummyimage.com/100x100/7a6bed/7a6bed.png";
     let previousImage;
     const thisUser = await User.find({email: req.params.email}).select({ profileImage:1 });
-    if (thisUser[0].profileImage) {
-        previousImage = thisUser[0].profileImage;
-    }else{
-        previousImage = image;
-    }
-    fs.exists(previousImage,async function() {res.sendFile(previousImage);});
-    res.sendFile(previousImage);
+
+    // if (fs.existsSync(thisUser[0].profileImage)){
+    //     res.sendFile(thisUser[0].profileImage);
+    // }else {
+    //     res.sendFile(image);
+    // }
+    fs.exists(thisUser[0].profileImage, function(exists) {
+        if (exists) {
+            res.sendFile(thisUser[0].profileImage);
+        }else {
+            res.sendFile(image);
+        }
+    });
+
 
 });
 router.get("/profile-image",authView,async function(req,res){
@@ -33,17 +40,25 @@ router.get("/profile-image",authView,async function(req,res){
 
         const image = path.join(__dirname + defaultImagePath);
         const thisUser = await User.find({_id: req.user._id}).select({ profileImage:1 });
-        if (thisUser[0].profileImage) {
-            previousImage = thisUser[0].profileImage;
-        }else{
-            previousImage = image;
-        }
-        fs.exists(previousImage,async function(e) {
 
-            const base64str = base64_encode(previousImage);
-            // res.sendFile(base64str);
-            res.send(base64str);
+        // if (fs.existsSync(thisUser[0].profileImage)){
+        //     previousImage = thisUser[0].profileImage;
+        // }else{
+        //     previousImage = image
+        // }
+        fs.exists(thisUser[0].profileImage, function(exists) {
+            if (exists) {
+                previousImage = thisUser[0].profileImage;
+            }else {
+                previousImage = image
+            }
         });
+
+        const base64str = base64_encode(previousImage);
+        // res.sendFile(base64str);
+        res.send(base64str);
+
+
 
     }catch (e) {
         // console.log(e);
@@ -66,7 +81,7 @@ router.post("/upload",authView,upload.single("filepond" /* name attribute of <fi
             const targetPath = path.join(__dirname, "../"+req.file.path+(path.extname(req.file.originalname).toLowerCase()));
             // console.log(tempPath.replace(/\\/g, '/'));
             // console.log(targetPath.replace(/\\/g, '/'));
-            console.log(path+(path.extname(req.file.originalname).toLowerCase()));
+            // console.log(path+(path.extname(req.file.originalname).toLowerCase()));
             if (path.extname(req.file.originalname).toLowerCase() === ".png" ||path.extname(req.file.originalname).toLowerCase() === ".jpg"||path.extname(req.file.originalname).toLowerCase() === ".gif"||path.extname(req.file.originalname).toLowerCase() === ".gif") {
                 let previousImage = false;
                 try {
@@ -86,10 +101,21 @@ router.post("/upload",authView,upload.single("filepond" /* name attribute of <fi
                     }
                 },async function () {
                     if (previousImage){
-                        fs.exists(previousImage,async function f() {
-                            fs.unlink(previousImage, err => {
-                                if (err) return console.log(err);
+                        fs.exists(previousImage,async function(exists) {
+                            if (exists){
+                                fs.unlink(previousImage, err => {
+                                    if (err) return console.log(err);
 
+                                    fs.rename(tempPath, targetPath, err => {
+                                        // if (err) return console.log(err,1);
+
+                                        res
+                                            .status(200)
+                                            .contentType("text/plain")
+                                            .end("File uploaded!");
+                                    });
+                                });
+                            }else{
                                 fs.rename(tempPath, targetPath, err => {
                                     // if (err) return console.log(err,1);
 
@@ -98,7 +124,8 @@ router.post("/upload",authView,upload.single("filepond" /* name attribute of <fi
                                         .contentType("text/plain")
                                         .end("File uploaded!");
                                 });
-                            });
+                            }
+
                         });
                     }else {
                         fs.exists(tempPath, (exists) => {

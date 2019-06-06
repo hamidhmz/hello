@@ -1,5 +1,7 @@
 // var socket = io();
+const socket = io.connect();
 $(document).ready(function () {
+    socket.emit("a user is online",Cookies.get("token"));
     // socket.emit("a user is online",Cookies.get("token"));
 
     const userName = $("#userName");

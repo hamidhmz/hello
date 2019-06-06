@@ -29,14 +29,21 @@ export default async function (req, res, next) {
     }
 
     req.user = decoded;
-    const user = await User.find({_id: req.user._id}).select({ profileImage:1 });
-    if (user.length){
-        next();
-    }else {
+    try {
+        const user = await User.find({_id: req.user._id}).select({ profileImage:1 });
+        if (user.length){
+            next();
+        }else {
+            res.clearCookie("token");
+            // console.dir(token);
+            res.redirect("/login");
+        }
+    }catch (e) {
         res.clearCookie("token");
         // console.dir(token);
         res.redirect("/login");
     }
+
 
 
 }
