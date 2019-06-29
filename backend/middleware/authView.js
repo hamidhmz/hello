@@ -22,10 +22,9 @@ export default async function (req, res, next) {
 
         decoded = jwt.verify(token, config.get("jwtPrivateKey"));
     }catch (e) {
-        res.clearCookie("token");
+        res.clearCookie("token").redirect("/login");
         // cookies.set('token', "1",{maxAge: Date.now()});
         // console.dir(token);
-        res.redirect("/login");
     }
 
     req.user = decoded;
@@ -34,14 +33,12 @@ export default async function (req, res, next) {
         if (user.length){
             next();
         }else {
-            res.clearCookie("token");
+            res.clearCookie("token").redirect("/login");
             // console.dir(token);
-            res.redirect("/login");
         }
     }catch (e) {
-        res.clearCookie("token");
+        res.clearCookie("token").redirect("/login");
         // console.dir(token);
-        res.redirect("/login");
     }
 
 

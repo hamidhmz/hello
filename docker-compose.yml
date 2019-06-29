@@ -9,8 +9,8 @@ services:
     tty: true
     ports:
       - '80:3000'
-    links:
-      - mongo
+    # links:
+    #   - mongo
     environment:
       - "NODE_ENV=docker"
       - "admin-panel_jwt=123456"
@@ -18,5 +18,5 @@ services:
     container_name: mongo
     restart: always
     image: mongo
-    ports:
-      - '27017-27019:27017-27019'
+    # ports:
+    #   - '27017-27019:27017-27019'
