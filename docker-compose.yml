@@ -9,13 +9,13 @@ services:
     tty: true
     ports:
       - '80:3000'
-    # links:
-    #   - mongo
+    links:
+      - "mongo:dbmongo"
+      # this feature is no longer need except for aliases
     environment:
       - "NODE_ENV=docker"
       - "admin-panel_jwt=123456"
   mongo:
-    container_name: mongo
     restart: always
     image: mongo
     # ports:
