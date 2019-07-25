@@ -7,5 +7,6 @@ WORKDIR /app
 #RUN cd backend
 #VOLUME .:/app
 #CMD  ["sh","-c","cd backend && npm","start"]
+# test for github branches from remote
 CMD ["sh","-c","ls && cd backend && npm install && npm start"]
 #CMD "npm start"
