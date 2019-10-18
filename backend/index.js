@@ -11,10 +11,6 @@ import startupProd from "./startup/prod";
 import startupSocket from "./startup/socket";
 import cookieParser from "cookie-parser";
 
-const ejs = require("ejs");
-ejs.open = "{{";
-ejs.close = "}}";
-
 // console.log(process.env.adminPanel_jwt);
 const { combine, timestamp, prettyPrint } = format;
 const logger = createLogger({

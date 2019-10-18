@@ -15,6 +15,7 @@ export default async function (req, res, next) {
     const token = cookies.get("token");
     if (!token){
         res.redirect("/login");
+        return;
     }
     // if(!token)return res.redirect("/login");
     // console.log(jwt.verify(token,config.get("jwtPrivateKey")));
