@@ -1,8 +1,6 @@
 import express from "express";
-import { createLogger, format, transports } from "winston";
 import mongoose from "mongoose";
-require("dotenv").config();
-// import startupLogging from "./startup/logging";
+import { logger } from "./startup/logging";
 import startupRoutes from "./startup/routes";
 import startupDb from "./startup/db";
 import startupConfig from "./startup/config";
@@ -11,23 +9,13 @@ import startupProd from "./startup/prod";
 import startupSocket from "./startup/socket";
 import cookieParser from "cookie-parser";
 
-// console.log(process.env.adminPanel_jwt);
-const { combine, timestamp, prettyPrint } = format;
-const logger = createLogger({
-  format: combine(timestamp(), prettyPrint()),
-  transports: [
-    new transports.Console(),
-    new transports.File({ filename: "logFile.log" })
-  ]
-});
 const app = express();
 app.set("view engine", "ejs");
 app.set("views", "../frontend");
 app.use(express.static(__dirname + "/../frontend/"));
 app.use(cookieParser());
-// startupLogging();
-
 // app.use(express.json());
+
 startupRoutes(app);
 startupDb(mongoose);
 startupConfig();

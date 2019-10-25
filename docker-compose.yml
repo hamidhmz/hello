@@ -15,6 +15,9 @@ services:
     environment:
       - "NODE_ENV=docker"
       - "admin-panel_jwt=123456"
+      - "adminPanel_jwt=123456"
+      - "PORT=3000"
+    depends_on: ["mongo"]
   mongo:
     restart: always
     image: mongo

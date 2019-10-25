@@ -4,6 +4,7 @@ import _ from "lodash";
 import config from "config";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
+import { logger } from "./logging";
 
 
 let messageDetails = {};
@@ -90,14 +91,11 @@ export default function(app){
                         oo[i].isOnline = false;
                     }
                 }
-                // console.log(Object.keys(onlineUsers));
                 io.emit("load all users",oo);
             });
         });
 
         socket.on("onclickPerson",function () {
-            // console.log("senderEmail: "+senderEmail);
-            // console.log("recieverEmail: "+receiverEmail);
             Chat.find().or([{ senderEmail: senderEmail,receiverEmail:receiverEmail },{ senderEmail: receiverEmail,receiverEmail:senderEmail }]).exec(function(err,docs){
                 if(err) throw err;
                 for (let i = 0; i < docs.length; i++) {
@@ -114,7 +112,6 @@ export default function(app){
             data["senderEmail"] = senderEmail;
             data["receiverEmail"] = receiverEmail;
             const { error } = validate(data);
-            // if (error) return socket.on("error",error.details[0].message);
             if (error) return 1;
             let senderUser = await User.findOne({email:senderEmail});
             if(!senderUser) socket.on("error","this is false for sender user");
@@ -122,9 +119,8 @@ export default function(app){
             let receiverUser = await User.findOne({email:receiverEmail});
             if(!receiverUser) socket.on("error","this is false for receiver user");
             const chat = new Chat(_.pick(data,["senderEmail","receiverEmail","content","_id"]));
-            // io.emit("new message",data);
             chat.save(function (err) {
-                if (err) console.log(err);
+                if (err) logger.error(e);
                 io.emit("message has been sent",messageDetails);
                 Chat.find().or([{ senderEmail: senderEmail,receiverEmail:receiverEmail },{ senderEmail: receiverEmail,receiverEmail:senderEmail }]).exec(function(err,docs){
                     if(err) throw err;
