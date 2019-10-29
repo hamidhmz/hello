@@ -1,4 +1,4 @@
-FROM node
+FROM node:12.13-alpine
 WORKDIR /app
 #COPY backend/package.json /app
 #VOLUME ./:/app
