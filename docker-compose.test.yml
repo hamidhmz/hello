@@ -1,0 +1,29 @@
+version: '3.5'
+services:
+  app:
+    container_name: admin-pannel
+    build: .
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - '8086:3000'
+    links:
+      - "testmongo"
+      # this feature is no longer need except for aliases
+    environment:
+      - "NODE_ENV=docker"
+      - "admin-panel_jwt=123456"
+      - "adminPanel_jwt=123456"
+      - "PORT=3000"
+    depends_on: ["mongo"]
+  testmongo:
+    restart: always
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27027-27079:27017-27019'
+
+volumes: 
+  mongo-data-test:

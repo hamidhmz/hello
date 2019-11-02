@@ -20,11 +20,6 @@ router.get("/profile-image/:email", async function (req, res) {
     let previousImage;
     try {
         const thisUser = await User.find({ email: req.params.email }).select({ profileImage: 1 });
-        // if (fs.existsSync(thisUser[0].profileImage)){
-        //     res.sendFile(thisUser[0].profileImage);
-        // }else {
-        //     res.sendFile(image);
-        // }
         fs.exists(thisUser[0].profileImage, function (exists) {
             if (exists) {
                 res.sendFile(thisUser[0].profileImage);
