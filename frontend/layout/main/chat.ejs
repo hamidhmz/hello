@@ -1,8 +1,8 @@
 <aside class="chat">
-<!--    TODO: list of all users and specify online users  -->
+    <!--    TODO: list of all users and specify online users  -->
     <div class="chat__header">
-        <h2 class="chat__title" >Chat
-            <small id="onlineUsers" >Currently 20 contacts online</small>
+        <h2 class="chat__title">Chat
+            <small id="onlineUsers">Currently 20 contacts online</small>
         </h2>
 
         <div class="chat__search">
@@ -13,7 +13,7 @@
         </div>
     </div>
 
-    <div class="listview listview--hover chat__buddies scrollbar-inner">
+    <div class="listview listview--hover chat__buddies scrollbar-inner" id="users__buddies">
         <a class="listview__item chat__available">
             <img src="demo/img/profile-pics/7.jpg" class="listview__img" alt="">
 
@@ -59,6 +59,14 @@
             </div>
         </a>
 
+        <a class="listview__item chat__busy">
+            <img src="demo/img/profile-pics/9.jpg" class="listview__img" alt="">
+
+            <div class="listview__content">
+                <div class="listview__heading">Jeannette Lawson</div>
+                <p>cras mattis consectetur purus sit amet fermentum.</p>
+            </div>
+        </a>
         <a class="listview__item chat__busy">
             <img src="demo/img/profile-pics/9.jpg" class="listview__img" alt="">
 

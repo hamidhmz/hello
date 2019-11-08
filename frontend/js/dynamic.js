@@ -1,7 +1,7 @@
 // var socket = io();
 const socket = io.connect();
 $(document).ready(function () {
-    socket.emit("a user is online",Cookies.get("token"));
+    socket.emit("a user is online", Cookies.get("token"));
     // socket.emit("a user is online",Cookies.get("token"));
 
     const userName = $("#userName");
@@ -30,7 +30,7 @@ $(document).ready(function () {
             // }
             userName.html(data.name);
             userEmail.html(data.email);
-            Cookies.set("email",data.email);
+            Cookies.set("email", data.email);
         },
         error: function (xhr, status, error) {
 
@@ -60,6 +60,19 @@ $(document).ready(function () {
             alert(error + xhr.responseText);
 
             // error1Label.html(error + " " + xhr.responseText);
+        }
+    });
+    socket.on("load all users", function (data) {
+        $("#users__buddies").html("");
+        for (let i = 0; i < data.length; i++) {
+            if (Cookies.get("email") === data[i].email) continue;
+            $("#users__buddies").append("   <a href='/messages?email=" + data[i].email + "&name=" + data[i].name + "' class= \"listview__item " + (data[i].isOnline ? "chat__available" : "") + "\" >  <img src=\"profile-image/" + data[i].email + "\" class=\"listview__img\" > " +
+
+                "        <div class=\"listview__content\"> " +
+                "            <div class=\"listview__heading\">" + data[i].name + "</div> " +
+                // "            <p>hey, how are you doing.</p> " +
+                "        </div> </a> " +
+                "    ");
         }
     });
 });

@@ -6,16 +6,16 @@
         // socket.emit("a user is online",Cookies.get("token"));
         let onlineUserss = [];
         let ScrollHeight;
-        const message__content= $("#message__content");
+        const message__content = $("#message__content");
         const userName = $("#userName");
         const userEmail = $("#userEmail");
         const logoutBtn = $("#logout");
         const submit1 = $("#submit1");
         const textarea1 = $('#textarea1');
 
-        textarea1.keypress(function(event){
+        textarea1.keypress(function (event) {
 
-            if(event.keyCode === 13 && !event.shiftKey){
+            if (event.keyCode === 13 && !event.shiftKey) {
                 event.preventDefault();
                 submit1.click();
             }
@@ -46,7 +46,8 @@
 
                 senderToken = Cookies.get("token");
                 // console.log(senderToken);
-                socket.emit("senderToken",senderToken);
+                socket.emit("senderToken", senderToken);
+
             },
             error: function (xhr, status, error) {
 
@@ -62,8 +63,11 @@
 
         socket.on("get sender email", function (data) {
             senderEmail = data;
+            if (checkForParameterAsPerson()) {
+                clickOnPersonOutMsgPage();
+            }
         });
-        socket.emit("senderEmail",senderEmail);
+        socket.emit("senderEmail", senderEmail);
         // socket.emit("user is online", message);
         // senderEmail = $("#userEmail").html();
         // socket.emit("senderEmail",senderEmail);
@@ -72,7 +76,7 @@
 
             const message = {};
             socket.emit("createId");
-            socket.on("idCreated",function (data) {
+            socket.on("idCreated", function (data) {
                 message["content"] = textarea1.val();
                 message["_id"] = data;
 
@@ -92,20 +96,20 @@
         socket.on("load old messages", function (data) {
             message__content.html("");
             for (let i = 0; i < data.length; i++) {
-                if((senderEmail.trim()) === data[i].senderEmail){
-                    message__content.append("   <div id=\""+ data[i]._id +"\" class=\"messages__item messages__item--right \" >\n" +
+                if ((senderEmail.trim()) === data[i].senderEmail) {
+                    message__content.append("   <div id=\"" + data[i]._id + "\" class=\"messages__item messages__item--right \" >\n" +
                         "                            <div class=\"messages__details\">\n" +
                         "                                <p>" + data[i].content + "</p>\n" +
-                        "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss')+ "</small>\n" +
+                        "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss') + "</small>\n" +
                         "                            </div>\n" +
                         "                        </div>");
-                }else{
-                    message__content.append("   <div id=\""+ data[i]._id +"\"  class=\"messages__item \" >\n" +
+                } else {
+                    message__content.append("   <div id=\"" + data[i]._id + "\"  class=\"messages__item \" >\n" +
                         // "                            <img src=\"demo/img/profile-pics/1.jpg\" class=\"messages__avatar\" alt=\"\">" +
-                        "                            <img src=\"profile-image/"+data[i].senderEmail +"\" class=\"messages__avatar\" alt=\"\">" +
+                        "                            <img src=\"profile-image/" + data[i].senderEmail + "\" class=\"messages__avatar\" alt=\"\">" +
                         "                            <div class=\"messages__details\">\n" +
                         "                                <p>" + data[i].content + "</p>\n" +
-                        "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss')+ "</small>\n" +
+                        "                                <small><i class=\"zmdi zmdi-time\"></i> " + moment(data[i].createdAt, 'YYYY/MM/DD h:m:s').locale('fa').format('YYYY/M/D HH:mm:ss') + "</small>\n" +
                         "                            </div>\n" +
                         "                       </div>");
                 }
@@ -113,34 +117,63 @@
             ScrollHeight = document.getElementById("message__content").scrollHeight;
             message__content.animate({ scrollTop: (ScrollHeight) }, 50);
         });
-        socket.on("online users",function (onlineUsers) {
+        socket.on("online users", function (onlineUsers) {
             onlineUserss = onlineUsers;
         });
 
         socket.on("load all users", function (data) {
             $("#usersList").html("");
             for (let i = 0; i < data.length; i++) {
-                if (Cookies.get("email") === data[i].email) continue ;
-                $("#usersList").append("        <a class=\"listview__item people "+ (data[i].isOnline?"chat__available":"") +"\" onclick='myFunction(this)'>\n" +
-                    "                               <img src=\"profile-image/"+data[i].email +"\" alt=\"\" class=\"listview__img\">\n" +
+                if (Cookies.get("email") === data[i].email) continue;
+                $("#usersList").append("        <a class=\"listview__item people " + (data[i].isOnline ? "chat__available" : "") + "\" onclick='clickOnPersonInMsgPage(this)'>\n" +
+                    "                               <img src=\"profile-image/" + data[i].email + "\" alt=\"\" class=\"listview__img\">\n" +
                     "\n" +
                     "                               <div class=\"listview__content\">\n" +
-                    "                                   <div class=\"listview__heading\">"+ data[i].name+"</div>\n" +
-                    "                                   <p id='receiverEmail'>  "+ data[i].email +"</p>\n" +
+                    "                                   <div class=\"listview__heading\">" + data[i].name + "</div>\n" +
+                    "                                   <p id='receiverEmail'>  " + data[i].email + "</p>\n" +
                     "                               </div>\n" +
                     "                           </a>");
             }
         });
+
     });
-    function myFunction(event) {
+    function clickOnPersonInMsgPage(event) {
         $("#message__content").html("");
         receiverEmail = event.childNodes[3].childNodes[3].innerHTML;
         let receiverName = event.childNodes[3].childNodes[1].innerHTML;
-        $("#messageBox").css("display","-webkit-box");
-        $("#P_select__body").css("display","none");
-        $("#P_select").css("display","none");
+        changeUrlWithoutReload("/messages?email=" + receiverEmail.trim() + "&name=" + receiverName.trim());
+        const email = getParametersFromUrl("email");
+        const name = getParametersFromUrl("name");
+        clickOnPerson(email, name);
+    }
+    function clickOnPersonOutMsgPage(event) {
+        $("#message__content").html("");
+        const email = getParametersFromUrl("email");
+        const name = getParametersFromUrl("name");
+        clickOnPerson(email, name);
+    }
+    function clickOnPerson(receiverEmail, receiverName) {
+        $("#messageBox").css("display", "-webkit-box");
+        $("#P_select__body").css("display", "none");
+        $("#P_select").css("display", "none");
         $("#receiverName").html(receiverName);
-        socket.emit("receiverEmail",receiverEmail.trim());
+        console.log(receiverEmail.trim());
+        socket.emit("receiverEmail", receiverEmail.trim());
         socket.emit("onclickPerson");
+    }
+    function changeUrlWithoutReload(newUrl) {
+        window.history.pushState("object or string", "Page Title", newUrl);
+    }
+    function getParametersFromUrl(parameterName) {
+        const url = new URL(window.location.href);
+        const value = url.searchParams.get(parameterName);
+        return value;
+    }
+    function checkForParameterAsPerson() {
+        if (getParametersFromUrl("name") && getParametersFromUrl("email")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 </script>
