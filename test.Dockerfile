@@ -1,3 +1,4 @@
 FROM node:12.13-alpine
+RUN apk add --no-cache git
 WORKDIR /app
-CMD ["sh","-c","ls && cd backend && npm install && npm test"]
+CMD ["sh","-c"," npm install jest -g && cd backend && npm install && jest --watchAll"]
