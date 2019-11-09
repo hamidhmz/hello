@@ -1,5 +1,5 @@
-import express from "express";
-import path from "path";
+const express = require("express");
+const path = require("path");
 // const server = require('http').createServer();
 const app = express();
 const server = require("http").createServer(app);
@@ -18,7 +18,7 @@ io.on("connection",function (socket) {
      socket.broadcast.emit("new message",data);
    });
 });
-app.get("/",async function (req,res) {
+app.get("/",async (req,res) => {
     res.sendFile(path.resolve(__dirname+"/../frontend/index.html"));
 });
 server.listen(3001,()=> console.log("server started localhost port 3001"));

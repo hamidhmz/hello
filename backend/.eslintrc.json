@@ -7,10 +7,6 @@
         "ecmaVersion": 2016
     },
     "rules": {
-        "indent": [
-            "error",
-            "tab"
-        ],
         "linebreak-style": [
             "error",
             "unix"
