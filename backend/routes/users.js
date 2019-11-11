@@ -1,9 +1,9 @@
-import bcrypt from "bcryptjs";
-import _ from "lodash";
-import { User, validateUser, validate } from "../models/user";
-import express from "express";
-import auth from "../middleware/auth";
-import { logger } from "../startup/logging";
+const bcrypt = require("bcryptjs");
+const _ = require("lodash");
+const { User, validateUser, validate } = require("../models/user");
+const express = require("express");
+const auth = require("../middleware/auth");
+const { logger } = require("../startup/logging");
 
 const router = express.Router();
 
@@ -77,4 +77,4 @@ router.post('/login', async (req, res) => {
     }
 });
 
-export default router;
+module.exports = router;

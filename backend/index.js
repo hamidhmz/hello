@@ -1,13 +1,13 @@
-import express from "express";
-import mongoose from "mongoose";
-import { logger } from "./startup/logging";
-import startupRoutes from "./startup/routes";
-import startupDb from "./startup/db";
-import startupConfig from "./startup/config";
-import startupValidation from "./startup/validation";
-import startupProd from "./startup/prod";
-import startupSocket from "./startup/socket";
-import cookieParser from "cookie-parser";
+const express = require("express");
+const mongoose = require("mongoose");
+const { logger } = require("./startup/logging");
+const startupRoutes = require("./startup/routes");
+const startupDb = require("./startup/db");
+const startupConfig = require("./startup/config");
+const startupValidation = require("./startup/validation");
+const startupProd = require("./startup/prod");
+const startupSocket = require("./startup/socket");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 app.set("view engine", "ejs");
@@ -35,4 +35,4 @@ const server1 = server.listen(port, () =>
 );
 // logger.info('hello', { message: 'world' });
 
-export default server1;
+module.exports = server1;

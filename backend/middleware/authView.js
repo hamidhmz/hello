@@ -1,13 +1,13 @@
-import config from "config";
-import jwt from "jsonwebtoken";
-import Cookies from "cookies";
-import { User } from "../models/user";
-import { logger } from "../startup/logging";
+const config = require("config");
+const jwt = require("jsonwebtoken");
+const Cookies = require("cookies");
+const { User } = require("../models/user");
+const { logger } = require("../startup/logging");
 
 
 // Optionally define keys to sign cookie values
 // to prevent client tampering
-export default async function (req, res, next) {
+module.exports = async function (req, res, next) {
     let decoded;
 
     // var cookies = new Cookies(req, res, { keys: keys });
@@ -38,7 +38,4 @@ export default async function (req, res, next) {
         logger.error(e);
         res.clearCookie("token").redirect("/login");
     }
-
-
-
 }

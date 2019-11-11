@@ -1,17 +1,16 @@
-import express from "express";
-
-import users from "../routes/users";
-import main from "../routes/main";
-import error from "../middleware/error";
+const express = require("express");
+const users = require("../routes/users");
+const main = require("../routes/main");
+const error = require("../middleware/error");
 /**
  *
  *
  * @export
  * @param {*} app
  */
-export default function(app){
+module.exports = function(app){
     app.use(express.json());
-    app.use('/api/users', users);
-    app.use('/', main);
+    app.use("/api/users", users);
+    app.use("/", main);
     app.use(error);
-}
+};

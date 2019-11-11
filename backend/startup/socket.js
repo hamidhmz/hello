@@ -1,15 +1,15 @@
-import {User, validateUser} from "../models/user";
-import {Chat,validate} from "../models/Chat";
-import _ from "lodash";
-import config from "config";
-import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
-import { logger } from "./logging";
+const {User, validateUser} = require("../models/user");
+const {Chat,validate} = require("../models/Chat");
+const _ = require("lodash");
+const config = require("config");
+const jwt = require("jsonwebtoken");
+const mongoose = require("mongoose");
+const { logger } = require("./logging");
 
 
 let messageDetails = {};
 let onlineUsers = {};
-export default function(app){
+module.exports = function(app){
     const server = require("http").createServer(app);
     let io;
     io = require('socket.io')(server);
@@ -141,5 +141,5 @@ export default function(app){
     });
 
     return server;
-}
+};
 

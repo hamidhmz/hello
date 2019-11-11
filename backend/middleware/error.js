@@ -1,6 +1,6 @@
-import winston from "winston";
+const winston = require("winston");
 
-export default function(err,req,res,next){
+module.exports = function(err,req,res,next){
     // winston.log("error",err.message,err);
     winston.error(err.message,err/*meta data */);
     //log level:

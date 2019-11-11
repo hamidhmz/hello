@@ -1,10 +1,10 @@
-import express from "express";
-import authView from "../middleware/authView";
-import { User } from "../models/user";
-import multer from "multer";
-import path from "path";
-import fs from "fs";
-import { logger } from "./../startup/logging";
+const express = require("express");
+const authView = require("../middleware/authView");
+const { User } = require("../models/user");
+const multer = require("multer");
+const path = require("path");
+const fs = require("fs");
+const { logger } = require("./../startup/logging");
 
 const imageArray = ["https://dummyimage.com/100x100/7a6bed/7a6bed.png"];
 
@@ -187,4 +187,4 @@ function base64_encode(file) {
     // convert binary data to base64 encoded string
     return new Buffer.from(bitmap).toString('base64');
 }
-export default router;
+module.exports =  router;

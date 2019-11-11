@@ -1,7 +1,7 @@
-import mongoose from "mongoose";
-import Joi from "joi";
-import joi_objectid from "joi-objectid";
-import timeZone from "mongoose-timezone";
+const mongoose = require("mongoose");
+const Joi = require("joi");
+const joi_objectid = require("joi-objectid");
+const timeZone = require("mongoose-timezone");
 
 Joi.objectId = joi_objectid(Joi);
 const chatSchema = new mongoose.Schema({
@@ -44,4 +44,4 @@ function validate(Chat) {
     return Joi.validate(Chat, schema);
 }
 
-export {validate,Chat};
+module.exports =  {validate,Chat};
