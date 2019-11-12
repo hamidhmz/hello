@@ -4,7 +4,7 @@ const Joi = require("joi");
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-	name: {
+    name: {
         type: String,
         required: true,
         minlength: 5,
@@ -30,6 +30,10 @@ userSchema.methods.generateAuthToken = function () {
 };
 const User = mongoose.model("User", userSchema);
 
+/* -------------------------------------------------------------------------- */
+/*                            validate for sign up                            */
+/* -------------------------------------------------------------------------- */
+
 function validateUser(User) {
     const schema = {
         name: Joi.string().min(5).max(50).required(),
@@ -39,6 +43,11 @@ function validateUser(User) {
 
     return Joi.validate(User, schema);
 }
+
+/* -------------------------------------------------------------------------- */
+/*                             validate for login                             */
+/* -------------------------------------------------------------------------- */
+
 function validate(User) {
     const schema = {
         email: Joi.string().email().min(5).max(50).required(),
@@ -47,4 +56,30 @@ function validate(User) {
 
     return Joi.validate(User, schema);
 }
-module.exports = { validateUser, validate, User };
+
+/* -------------------------------------------------------------------------- */
+/*                      validate for change email or name                     */
+/* -------------------------------------------------------------------------- */
+
+function validateForEdit(User) {
+    const schema = {
+        email: Joi.string().email().min(5).max(50).required(),
+        name: Joi.string().min(5).max(50).required()
+    };
+
+    return Joi.validate(User, schema);
+}
+
+/* -------------------------------------------------------------------------- */
+/*                        validate for change password                        */
+/* -------------------------------------------------------------------------- */
+
+function validateForChangePassword(User) {
+    const schema = {
+        password: Joi.string().min(5).max(50).required().strip()
+    };
+
+    return Joi.validate(User, schema);
+}
+
+module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword };

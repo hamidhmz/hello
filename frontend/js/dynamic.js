@@ -5,8 +5,10 @@ $(document).ready(function () {
     // socket.emit("a user is online",Cookies.get("token"));
 
     const userName = $("#userName");
+    const nameForChange = $("#nameForChange");
     const userEmail = $("#userEmail");
     const logoutBtn = $("#logout");
+    const emailForChange = $("#emailForChange");
     logoutBtn.click(function () {
         Cookies.remove("token");
         window.location.replace("/login");
@@ -29,7 +31,10 @@ $(document).ready(function () {
             //     window.location.replace("http://localhost/index.html");
             // }
             userName.html(data.name);
+            nameForChange.val(data.name);
             userEmail.html(data.email);
+            emailForChange.val(data.email);
+
             Cookies.set("email", data.email);
         },
         error: function (xhr, status, error) {

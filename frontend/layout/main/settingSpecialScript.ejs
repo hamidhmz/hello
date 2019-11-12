@@ -1,4 +1,91 @@
 <script>
+
+    /* -------------------------------------------------------------------------- */
+    /*                          edit name and email                               */
+    /* -------------------------------------------------------------------------- */
+
+    $(document).ready(function () {
+        $("#changeBtnNameOrEmail").click(function () {
+            const url = "/api/users/edit-name-or-email";
+            const type = "post";
+            const emailForChangeDiv = $("#emailForChangeDiv");
+            const nameForChangeDiv = $("#nameForChangeDiv");
+            const emailInput = $("#emailForChange");
+            const nameInput = $("#nameForChange");
+            const errorEmailAndName = $("#errorEmailAndName");
+            const errorEmailAndNameLabel = $("#errorEmailAndNameLabel");
+            const data = JSON.stringify({
+                name: nameInput.val(),
+                email: emailInput.val()
+            });
+            const contentType = "application/json; charset=utf-8";
+            const dataType = "json";
+            const header = { 'x-auth-token': Cookies.get("token") };
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                contentType: contentType,
+                dataType: dataType,
+                headers: header,
+                success: function (data, textStatus, response) {
+                    // console.log("response: ", response);
+                    // console.log("data: ", data);
+                    // console.log("textStatus: ", textStatus);
+                    if (nameForChangeDiv.hasClass('has-danger')) {
+                        nameForChangeDiv.removeClass("has-danger");
+                    }
+                    if (!nameForChangeDiv.hasClass('has-success')) {
+                        nameForChangeDiv.addClass("has-success");
+                    }
+                    if (emailForChangeDiv.hasClass('has-danger')) {
+                        emailForChangeDiv.removeClass("has-danger");
+                    }
+                    if (!emailForChangeDiv.hasClass('has-success')) {
+                        emailForChangeDiv.addClass("has-success");
+                    }
+                    if (errorEmailAndName.hasClass('has-danger')) {
+                        errorEmailAndName.removeClass("has-danger");
+                    }
+                    if (!errorEmailAndName.hasClass('has-success')) {
+                        errorEmailAndName.addClass("has-success");
+                    }
+                    if (!errorEmailAndName.is(":visible")) {
+                        errorEmailAndName.css("display", "unset");
+                    }
+                    errorEmailAndNameLabel.html("done");
+                },
+                error: function (xhr, status, error) {
+                    if (!nameForChangeDiv.hasClass('has-danger')) {
+                        nameForChangeDiv.addClass("has-danger");
+                    }
+                    if (nameForChangeDiv.hasClass('has-success')) {
+                        nameForChangeDiv.removeClass("has-success");
+                    }
+                    if (!emailForChangeDiv.hasClass('has-danger')) {
+                        emailForChangeDiv.addClass("has-danger");
+                    }
+                    if (emailForChangeDiv.hasClass('has-success')) {
+                        emailForChangeDiv.removeClass("has-success");
+                    }
+                    if (!errorEmailAndName.hasClass('has-danger')) {
+                        errorEmailAndName.addClass("has-danger");
+                    }
+                    if (errorEmailAndName.hasClass('has-success')) {
+                        errorEmailAndName.removeClass("has-success");
+                    }
+                    if (!errorEmailAndName.is(":visible")) {
+                        errorEmailAndName.css("display", "unset");
+                    }
+                    errorEmailAndNameLabel.html(error + " " + xhr.responseText);
+                }
+            });
+        });
+    });
+
+    /* -------------------------------------------------------------------------- */
+    /*                               image upload                                 */
+    /* -------------------------------------------------------------------------- */
     $(function () {
 
         // First register any plugins
@@ -21,16 +108,16 @@
             styleProgressIndicatorPosition: 'right bottom',
             styleButtonRemoveItemPosition: 'left bottom',
             styleButtonProcessItemPosition: 'right bottom',
-            allowImageCrop:true,
-            allowImageResize:true,
-            imageResizeMode:"cover",
-            imageResizeUpscale:true,
+            allowImageCrop: true,
+            allowImageResize: true,
+            imageResizeMode: "cover",
+            imageResizeUpscale: true,
             server: {
                 process: './upload',
                 fetch: null,
                 revert: null
             },
-            acceptedFileTypes: ['image/png',"image/jpeg","image/gif"]
+            acceptedFileTypes: ['image/png', "image/jpeg", "image/gif"]
 
         });
         // Set allowMultiple property to true

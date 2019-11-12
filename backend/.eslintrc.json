@@ -4,7 +4,7 @@
         "node": true
     },
     "parserOptions": {
-        "ecmaVersion": 2016
+        "ecmaVersion": 9
     },
     "rules": {
         "linebreak-style": [
