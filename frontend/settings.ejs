@@ -30,33 +30,17 @@
                 <header class="content__title">
                     <h1>Form Elements</h1>
 
-                    <div class="actions">
-                        <a href="#" class="actions__item zmdi zmdi-trending-up"></a>
-                        <a href="#" class="actions__item zmdi zmdi-check-all"></a>
-
-                        <div class="dropdown actions__item">
-                            <i data-toggle="dropdown" class="zmdi zmdi-more-vert"></i>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#" class="dropdown-item">Refresh</a>
-                                <a href="#" class="dropdown-item">Manage Widgets</a>
-                                <a href="#" class="dropdown-item">Settings</a>
-                            </div>
-                        </div>
-                    </div>
                 </header>
 
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="card-title">Textual inputs</h2>
-                        <small class="card-subtitle">Basic Textual inputs with different sizes by height and
-                            column.</small>
+                        <h2 class="card-title">Change Picture</h2>
+                        <small class="card-subtitle">You Can change your picture easily.</small>
                     </div>
 
                     <div class="card-block">
-                        <h3 class="card-block__title">Control sizing</h3>
 
                         <br>
-
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <input accept="image/x-png, image/gif, image/jpeg" type="file" class="my-pond"
@@ -64,82 +48,6 @@
                                 <i class="form-group__bar"></i>
                             </div>
                         </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Input Default">
-                            <i class="form-group__bar"></i>
-                        </div>
-
-                        <div class="form-group">
-                            <input type="text" class="form-control form-control-lg" placeholder="Input Large">
-                            <i class="form-group__bar"></i>
-                        </div>
-
-                        <br>
-
-                        <h3 class="card-block__title">Column sizing</h3>
-
-                        <br>
-
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-4">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-4">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-4">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-3">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-3">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-3">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-3">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-6">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="col-sm-6">
-                                    <i class="form-group__bar"></i>
-                                </div>
-                            </div>
-                        </div>
-
                         <br />
                     </div>
                 </div>
@@ -179,8 +87,8 @@
                             <label></label>
                             <i class="form-group__bar"></i>
                         </div>
-                        <button type="button" id="changeBtnNameOrEmail" class="btn btn-primary waves-effect" data-toggle="button"
-                            aria-pressed="false" autocomplete="off">
+                        <button type="button" id="changeBtnNameOrEmail" class="btn btn-primary waves-effect"
+                            data-toggle="button" aria-pressed="false" autocomplete="off">
                             Change
                         </button>
                         <!-- <div class="form-group has-danger " id="errorEmailAndName" style="display: none">
@@ -191,14 +99,14 @@
                 <div class="card">
                     <div class="card-header">
                         <h2 class="card-title">Change Password</h2>
-                        <small class="card-subtitle" id="errorEmailAndName" style="display: none">
-                            <label class="form-control-label" id="errorEmailAndNameLabel">error</label>
+                        <small class="card-subtitle" id="changePassErrorSmallTag" style="display: none">
+                            <label class="form-control-label" id="changePassErrorLabel">error</label>
                         </small>
                     </div>
                     <div class="card-block">
                         <!-- <h5 class="card-block__title">Old Password: </h5> -->
-                        <div class="form-group form-group--float" id="previousPasswordDiv">
-                            <input type="text" id="previousPasswordInput" class="form-control form-control-lg">
+                        <div class="form-group form-group--float" id="oldPasswordDiv">
+                            <input type="text" id="oldPasswordInput" class="form-control form-control-lg">
                             <label>Old Password</label>
                             <i class="form-group__bar"></i>
                         </div>
@@ -215,8 +123,8 @@
                             <label>Confirm Password</label>
                             <i class="form-group__bar"></i>
                         </div>
-                        <button type="button" id="changeBtnPassword" class="btn btn-primary waves-effect" data-toggle="button"
-                            aria-pressed="false" autocomplete="off">
+                        <button type="button" id="changeBtnPassword" class="btn btn-primary waves-effect"
+                            data-toggle="button" aria-pressed="false" autocomplete="off">
                             Change Password
                         </button>
                         <!-- <div class="form-group has-danger " id="errorEmailAndName" style="display: none">

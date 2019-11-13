@@ -1,10 +1,11 @@
 <script>
 
-    /* -------------------------------------------------------------------------- */
-    /*                          edit name and email                               */
-    /* -------------------------------------------------------------------------- */
 
     $(document).ready(function () {
+
+        /* -------------------------------------------------------------------------- */
+        /*                          edit name and email                               */
+        /* -------------------------------------------------------------------------- */
         $("#changeBtnNameOrEmail").click(function () {
             const url = "/api/users/edit-name-or-email";
             const type = "post";
@@ -29,9 +30,6 @@
                 dataType: dataType,
                 headers: header,
                 success: function (data, textStatus, response) {
-                    // console.log("response: ", response);
-                    // console.log("data: ", data);
-                    // console.log("textStatus: ", textStatus);
                     if (nameForChangeDiv.hasClass('has-danger')) {
                         nameForChangeDiv.removeClass("has-danger");
                     }
@@ -81,7 +79,125 @@
                 }
             });
         });
+
+        /* -------------------------------------------------------------------------- */
+        /*                                edit password                               */
+        /* -------------------------------------------------------------------------- */
+        $("#changeBtnPassword").click(function () {
+            const url = "/api/users/edit-password";
+            const type = "put";
+            const oldPasswordDiv = $("#oldPasswordDiv");
+            const newPasswordDiv = $("#newPasswordDiv");
+            const confirmPasswordDiv = $("#confirmPasswordDiv");
+            const oldPasswordInput = $("#oldPasswordInput");
+            const newPasswordInput = $("#newPasswordInput");
+            const confirmPasswordInput = $("#confirmPasswordInput");
+            const changePassErrorSmallTag = $("#changePassErrorSmallTag");
+            const changePassErrorLabel = $("#changePassErrorLabel");
+            if (newPasswordInput.val() != confirmPasswordInput.val()) {
+                if (!confirmPasswordDiv.hasClass('has-danger')) {
+                    confirmPasswordDiv.addClass("has-danger");
+                }
+                if (confirmPasswordDiv.hasClass('has-success')) {
+                    confirmPasswordDiv.removeClass("has-success");
+                }
+                if (!changePassErrorSmallTag.hasClass('has-danger')) {
+                    changePassErrorSmallTag.addClass("has-danger");
+                }
+                if (changePassErrorSmallTag.hasClass('has-success')) {
+                    changePassErrorSmallTag.removeClass("has-success");
+                }
+                if (!changePassErrorSmallTag.is(":visible")) {
+                    changePassErrorSmallTag.css("display", "unset");
+                }
+                changePassErrorLabel.html("Your new Password And Confirm didn't Match.");
+                return;
+            }
+            const data = JSON.stringify({
+                oldPassword: oldPasswordInput.val(),
+                newPassword: newPasswordInput.val(),
+                confirmPassword: confirmPasswordInput.val()
+            });
+            const contentType = "application/json; charset=utf-8";
+            const dataType = "json";
+            const header = { 'x-auth-token': Cookies.get("token") };
+            $.ajax({
+                url: url,
+                type: type,
+                data: data,
+                contentType: contentType,
+                dataType: dataType,
+                headers: header,
+                success: function (data, textStatus, response) {
+                    console.log("data: ", data);
+                    console.log("textStatus: ", textStatus);
+                    console.log("response: ", response);
+                    if (oldPasswordDiv.hasClass('has-danger')) {
+                        oldPasswordDiv.removeClass("has-danger");
+                    }
+                    if (!oldPasswordDiv.hasClass('has-success')) {
+                        oldPasswordDiv.addClass("has-success");
+                    }
+                    if (newPasswordDiv.hasClass('has-danger')) {
+                        newPasswordDiv.removeClass("has-danger");
+                    }
+                    if (!newPasswordDiv.hasClass('has-success')) {
+                        newPasswordDiv.addClass("has-success");
+                    }
+                    if (confirmPasswordDiv.hasClass('has-danger')) {
+                        confirmPasswordDiv.removeClass("has-danger");
+                    }
+                    if (!confirmPasswordDiv.hasClass('has-success')) {
+                        confirmPasswordDiv.addClass("has-success");
+                    }
+                    if (!changePassErrorSmallTag.hasClass('has-success')) {
+                        changePassErrorSmallTag.addClass("has-success");
+                    }
+                    if (changePassErrorSmallTag.hasClass('has-danger')) {
+                        changePassErrorSmallTag.removeClass("has-danger");
+                    }
+                    if (!changePassErrorSmallTag.is(":visible")) {
+                        changePassErrorSmallTag.css("display", "unset");
+                    }
+                    changePassErrorLabel.html("done");
+                },
+                error: function (xhr, status, error) {
+                    console.log("xhr: ", xhr);
+                    console.log("status: ", status);
+                    console.log("error: ", error);
+                    if (!oldPasswordDiv.hasClass('has-danger')) {
+                        oldPasswordDiv.addClass("has-danger");
+                    }
+                    if (oldPasswordDiv.hasClass('has-success')) {
+                        oldPasswordDiv.removeClass("has-success");
+                    }
+                    if (!newPasswordDiv.hasClass('has-danger')) {
+                        newPasswordDiv.addClass("has-danger");
+                    }
+                    if (newPasswordDiv.hasClass('has-success')) {
+                        newPasswordDiv.removeClass("has-success");
+                    }
+                    if (!confirmPasswordDiv.hasClass('has-danger')) {
+                        confirmPasswordDiv.addClass("has-danger");
+                    }
+                    if (confirmPasswordDiv.hasClass('has-success')) {
+                        confirmPasswordDiv.removeClass("has-success");
+                    }
+                    if (!changePassErrorSmallTag.hasClass('has-danger')) {
+                        changePassErrorSmallTag.addClass("has-danger");
+                    }
+                    if (changePassErrorSmallTag.hasClass('has-success')) {
+                        changePassErrorSmallTag.removeClass("has-success");
+                    }
+                    if (!changePassErrorSmallTag.is(":visible")) {
+                        changePassErrorSmallTag.css("display", "unset");
+                    }
+                    changePassErrorLabel.html(error + " " + xhr.responseText);
+                }
+            });
+        });
     });
+
 
     /* -------------------------------------------------------------------------- */
     /*                               image upload                                 */

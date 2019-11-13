@@ -9,7 +9,7 @@ const { logger } = require("../startup/logging");
 // to prevent client tampering
 module.exports = async function (req, res, next) {
     let decoded;
-
+    
     // var cookies = new Cookies(req, res, { keys: keys });
     const cookies = new Cookies(req, res);
 

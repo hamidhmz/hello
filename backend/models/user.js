@@ -34,6 +34,16 @@ const User = mongoose.model("User", userSchema);
 /*                            validate for sign up                            */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * validateUser.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @global
+ * @param	mixed	User	
+ * @return	mixed
+ */
 function validateUser(User) {
     const schema = {
         name: Joi.string().min(5).max(50).required(),
@@ -48,6 +58,16 @@ function validateUser(User) {
 /*                             validate for login                             */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * validate.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @global
+ * @param	mixed	User	
+ * @return	mixed
+ */
 function validate(User) {
     const schema = {
         email: Joi.string().email().min(5).max(50).required(),
@@ -61,6 +81,16 @@ function validate(User) {
 /*                      validate for change email or name                     */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * validateForEdit.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @global
+ * @param	mixed	User	
+ * @return	mixed
+ */
 function validateForEdit(User) {
     const schema = {
         email: Joi.string().email().min(5).max(50).required(),
@@ -74,9 +104,21 @@ function validateForEdit(User) {
 /*                        validate for change password                        */
 /* -------------------------------------------------------------------------- */
 
+/**
+ * validateForChangePassword.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @global
+ * @param	mixed	User	
+ * @return	mixed
+ */
 function validateForChangePassword(User) {
     const schema = {
-        password: Joi.string().min(5).max(50).required().strip()
+        oldPassword: Joi.string().min(5).max(50).required(),
+        newPassword: Joi.string().min(5).max(50).required(),
+        confirmPassword: Joi.string().min(5).max(50).required()
     };
 
     return Joi.validate(User, schema);

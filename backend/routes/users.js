@@ -1,3 +1,22 @@
+/*
+ 
+   _   _                    _          _ 
+  | | | |___  ___ _ __     / \   _ __ (_)
+  | | | / __|/ _ \ '__|   / _ \ | '_ \| |
+  | |_| \__ \  __/ |     / ___ \| |_) | |
+   \___/|___/\___|_|    /_/   \_\ .__/|_|
+                                |_|      
+ 
+*/
+
+/************************************************************************
+ *  GET               /ME                  GET USER DETAILS             *
+ *  POST              /REGISTER            REGISTER NEW USER            *
+ *  POST              /LOGIN               USER LOGIN                   *
+ *  POST              /EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL *
+ *  PUT               /EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD *
+ ************************************************************************/
+
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const { User, validateUser, validate, validateForEdit, validateForChangePassword } = require("../models/user");
@@ -11,7 +30,16 @@ const router = express.Router();
 /* -------------------------------------------------------------------------- */
 /*                                    show                                    */
 /* -------------------------------------------------------------------------- */
-
+/**
+ * /me => user details.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @param	nothing	
+ * @header  x-auth-token => valid token
+ * @return  user details 
+ */
 router.get("/me", auth, async (req, res) => {
     try {
         const user = await User.findById(req.user._id).select("-password");
@@ -25,7 +53,15 @@ router.get("/me", auth, async (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                  register                                  */
 /* -------------------------------------------------------------------------- */
-
+/**
+ * /register => user sign up.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @param	{name,email,password} => object
+ * @return  token in header and name and email of user in body of the response
+ */
 router.post("/register", async (req, res) => {
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -64,7 +100,15 @@ router.post("/register", async (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                                    login                                   */
 /* -------------------------------------------------------------------------- */
-
+/**
+ * /login => user sign in.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @param	{email,password} => object
+ * @return  token in header and name and email of user in body of the response
+ */
 router.post("/login", async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -93,7 +137,16 @@ router.post("/login", async (req, res) => {
 /* -------------------------------------------------------------------------- */
 /*                             edit name or email                             */
 /* -------------------------------------------------------------------------- */
-
+/**
+ * /edit-name-or-email => change name or change email ro both.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @param	{email,name} => object
+ * @header  x-auth-token => valid token
+ * @return  success => status:200 data:{done:true}
+ */
 router.post("/edit-name-or-email", auth, async (req, res) => {
     const { error } = validateForEdit(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -129,18 +182,59 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
 });
 
 /* -------------------------------------------------------------------------- */
-/*                               Change password                              */
+/*                               change password                              */
 /* -------------------------------------------------------------------------- */
-
+/**
+ * /edit-password => change the password.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @param	{oldPassword,newPassword,confirmPassword} => object
+ * @header  x-auth-token => valid token
+ * @return  success => status:200 data:{done:true}
+ */
 router.put("/edit-password", auth, async (req, res) => {
     const { error } = validateForChangePassword(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     try {
-        let user = await findUserAndReturnWithId(req);
+        let user = await User.findOne({"_id":req.user._id});
         if (!user) return res.status(400).send("Invalid Token.");
         
+        /* -------------------------- compare two passwords ------------------------- */
+        bcrypt.compare(req.body.oldPassword, user.password, async function (err, validPassword) {
+            if (err) {
+                logger.error(err);
+                return res.status(500);
+            }
+            if (!validPassword) return res.status(400).send("Your Previous Password didn't Match.");
+            if (req.body.newPassword != req.body.confirmPassword) {
+                return res.status(400).send("Your new Password And Confirm didn't Match.");
+            } else {
+                
+                /* --------------------------- create new password -------------------------- */
+                
+                bcrypt.genSalt(10, async function (err, salt) {
+                    if (err) {
+                        logger.error(err);
+                        return res.status(500);
+                    }
+                    bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
+                        if (err) {
+                            logger.error(err);
+                            return res.status(500);
+                        }
+                        user.password = hash;
+                        await user.save();
+                        
+                        res.status(200).send({ "done": true });
+                    });
+                });
+            }
+        });
     } catch (error) {
-        
+        logger.error(error);
+        return res.status(500);
     }
 });
 
