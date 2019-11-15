@@ -10,11 +10,11 @@ const { logger } = require("./logging");
 let messageDetails = {};
 let onlineUsers = {};
 module.exports = function(app){
-    const server = require("http").createServer(app);
+    const server = require("http").Server(app);
     let io;
-    io = require('socket.io')(server);
+    io = require("socket.io")(server);
 
-    io.on('connection', function(socket){
+    io.on("connection", function(socket){
         let senderEmail;
         let receiverEmail;
         let senderToken;
@@ -24,7 +24,7 @@ module.exports = function(app){
             socket.email = user.email;
             onlineUsers[socket.email] = user;
             io.emit("online users",Object.keys(onlineUsers));
-            User.find().select('-__v -password').exec(function(err,docs){
+            User.find().select("-__v -password").exec(function(err,docs){
 
                 const oo = [];
                 docs.forEach(function(element,i) {
@@ -51,7 +51,7 @@ module.exports = function(app){
                 io.emit("load all users",oo);
             });
         });
-        socket.on('senderToken', async function(data){
+        socket.on("senderToken", async function(data){
             // const user = await giveMeUserInformation(data);
             // senderToken = data;
             const user1 = jwt.verify(data,config.get("jwtPrivateKey"));
@@ -60,13 +60,13 @@ module.exports = function(app){
             senderEmail = user.email;
             socket.emit("get sender email",senderEmail);
         });
-        socket.on('receiverEmail', function(data){
+        socket.on("receiverEmail", function(data){
             receiverEmail = data;
         });
-        socket.on('disconnect', function(){
+        socket.on("disconnect", function(){
             delete onlineUsers[socket.email];
             io.emit("online users",Object.keys(onlineUsers));
-            User.find().select('-__v -password').exec(function(err,docs){
+            User.find().select("-__v -password").exec(function(err,docs){
 
                 const oo = [];
                 docs.forEach(function(element,i) {

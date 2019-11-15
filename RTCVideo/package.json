@@ -1,0 +1,11 @@
+{
+  "name": "rtcvideo",
+  "version": "1.0.0",
+  "description": "this is one of admin panel services",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "hamidreza nasrollahi",
+  "license": "ISC"
+}
