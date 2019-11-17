@@ -4,7 +4,9 @@ const port = 3000;
 
 const server = require("http").Server(app);
 let io = require('socket.io')(server);
-
+app.set("view engine", "ejs");
+app.set("views", "./");
+app.use(express.static(__dirname ));
 function connection(socket) {
 	var channel_id;
 
@@ -66,7 +68,9 @@ function connection(socket) {
 }
 
 
-app.get('/', (req, res) => res.send('Hello World!'));
-app.listen(port, () => console.log(`Example app listening on port port!`));
+// app.get('/', (req, res) => {
+// 	res.render("11", { page: "video-call" });
+// });
+app.listen(port, () => console.log(`Example app listening on port ${port}!`));
 
 io.of("/rtc").on("connection",connection);
