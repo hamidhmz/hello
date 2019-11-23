@@ -78,7 +78,7 @@
             socket.emit("createId");
             socket.on("idCreated", function (data) {
                 message["content"] = textarea1.val();
-                // message["_id"] = data;//error in mongoose
+                message["_id"] = data;
 
                 socket.emit("send message", message);
                 textarea1.val("");
