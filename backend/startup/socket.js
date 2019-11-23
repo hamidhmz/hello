@@ -106,6 +106,12 @@ module.exports = function(app){
         });
         socket.on("createId",function () {
             const _id = mongoose.Types.ObjectId();
+            const chat = new Chat({_id});
+            chat.save(function(err){
+                if(err){
+                    logger.error(err)
+                }
+            });
             io.emit("idCreated",_id);
         });
         socket.on("send message",async function(data){
