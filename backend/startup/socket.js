@@ -118,9 +118,9 @@ module.exports = function(app){
 
             let receiverUser = await User.findOne({email:receiverEmail});
             if(!receiverUser) socket.on("error","this is false for receiver user");
-            const chat = new Chat(_.pick(data,["senderEmail","receiverEmail","content","_id"]));
+            const chat = new Chat(_.pick(data,["senderEmail","receiverEmail","content"]));
             chat.save(function (err) {
-                if (err) logger.error(e);
+                if (err) logger.error(err);
                 io.emit("message has been sent",messageDetails);
                 Chat.find().or([{ senderEmail: senderEmail,receiverEmail:receiverEmail },{ senderEmail: receiverEmail,receiverEmail:senderEmail }]).exec(function(err,docs){
                     if(err) throw err;
