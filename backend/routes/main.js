@@ -293,4 +293,9 @@ router.get("/video-call", authView, async function (req, res) {
     res.render("videoCall", { page: "video-call" });
 });
 
+render and show video-call page to user
+router.get("/video-call", authView, async function (req, res) {
+    res.render("videoCall", { page: "video-call" });
+});
+
 module.exports = router;
