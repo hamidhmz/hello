@@ -109,10 +109,10 @@ module.exports = function(app){
             const chat = new Chat({_id});
             chat.save(function(err){
                 if(err){
-                    logger.error(err)
+                    logger.error(err);
                 }
             });
-            io.emit("idCreated",_id);
+            socket.emit("idCreated",_id); // it must just send to one user
         });
         socket.on("send message",async function(data){
             data["senderEmail"] = senderEmail;
