@@ -293,9 +293,21 @@ router.get("/video-call", authView, async function (req, res) {
     res.render("videoCall", { page: "video-call" });
 });
 
-render and show video-call page to user
-router.get("/video-call", authView, async function (req, res) {
-    res.render("videoCall", { page: "video-call" });
+/* -------------------------------------------------------------------------- */
+/*                   render and show video-call page to user                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * /voip => render and show voip page to user .this page is for voice call 
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @cookie  token => valid token
+ * @return  render voip page for user  
+ */
+router.get("/voip", authView, async function (req, res) {
+    res.render("voip", { page: "voip" });
 });
 
 module.exports = router;
