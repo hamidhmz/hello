@@ -25,14 +25,26 @@ services:
       - mongo-data:/data/db
     ports:
       - "27057:27017"
-  apache:
-    container_name: apache-admin-panel
+  nginx:
+    container_name: nginx-modsecurity-reverse-proxy
     restart: always
-    build:
+    build: 
       context: .
-      dockerfile: Dockerfile-apache
+      dockerfile: nginx.Dockerfile
+
+    environment: 
+      - PROXYLOCATION=http://app:3000/
+      - PROXY=1
+      - PARANOIA=5
     ports:
-      - "8383:80"
+      - "4430:443"
+      - "8000:80"
     tty: true
+    volumes:
+        - ./nginx-modsecurity/modsecurity/modsecurity.d:/etc/modsecurity.d
+        - ./nginx:/etc/nginx
+        - ./nginx-modsecurity:/var/log/nginx
+        - ./nginx-modsecurity/modsec_audit.log:/var/log/modsec_audit.log
+      
 volumes:
   mongo-data:

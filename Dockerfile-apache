@@ -1,8 +1,0 @@
-FROM ubuntu:latest 
-RUN apt-get update
-RUN apt-get install apache2 -y
-RUN a2enmod proxy
-RUN a2enmod proxy_http
-RUN service apache2 restart
-RUN apt-get install -y libapache2-mod-security2
-RUN apt-cache show libapache2-mod-security2
