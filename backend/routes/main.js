@@ -194,7 +194,7 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
         } else {
             fs.unlink(tempPath, err => {
                 if (err) {
-                    logger.error(err)
+                    logger.error(err);
                     return res.status(500);
                 }
 
