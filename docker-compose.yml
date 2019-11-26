@@ -37,8 +37,8 @@ services:
       - PROXY=1
       - PARANOIA=5
     ports:
-      - "4430:443"
-      - "8000:80"
+      - "443:443"
+      - "80:80"
     tty: true
     volumes:
         - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
