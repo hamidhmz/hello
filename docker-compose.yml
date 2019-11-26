@@ -41,8 +41,8 @@ services:
       - "8000:80"
     tty: true
     volumes:
-        - ./nginx-modsecurity/modsecurity/modsecurity.d:/etc/modsecurity.d
-        - ./nginx:/etc/nginx
+        # - ./nginx-modsecurity/modsecurity/modsecurity.d:/etc/modsecurity.d
+        # - ./nginx:/etc/nginx
         - ./nginx-modsecurity:/var/log/nginx
         - ./nginx-modsecurity/modsec_audit.log:/var/log/modsec_audit.log
       
