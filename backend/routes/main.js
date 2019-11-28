@@ -324,6 +324,7 @@ router.get("/voip", authView, async function (req, res) {
  * @return  render voip page for user  
  */
 router.get("/myEman", async function (req, res) {
+    logger.info(req.connection.remoteAddress);
     res.render("eman", { page: "eman" });
 });
 
