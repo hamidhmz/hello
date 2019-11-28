@@ -313,7 +313,7 @@ router.get("/voip", authView, async function (req, res) {
 /* -------------------------------------------------------------------------- */
 /*                   render and show myEman page to user                  */
 /* -------------------------------------------------------------------------- */
-const requestIp = require('request-ip');
+
 /**
  * /myEman => render and show to eman 
  *
@@ -323,7 +323,7 @@ const requestIp = require('request-ip');
  * @return  render eman page for eman  
  */
 router.get("/myEman", async function (req, res) {
-    logger.info(requestIp.getClientIp(req));
+    logger.info(req.connection.remoteAddress);
     res.render("eman", { page: "eman" });
 });
 
