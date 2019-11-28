@@ -1,0 +1,256 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1524180/codepen-template-1.0.css">
+    <style>
+        canvas {
+            background-color: #312;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div>
+        <canvas id="testCanvas" width="550" height="500"></canvas>
+    </div>
+</body>
+<script>
+    var canvas;
+    var stage;
+    var container;
+    var captureContainers;
+    var captureIndex;
+
+    function init() {
+        // create a new stage and point it at our canvas:
+        canvas = document.getElementById("testCanvas");
+        stage = new createjs.Stage(canvas);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        var w = canvas.width;
+        var h = canvas.height;
+
+        container = new createjs.Container();
+        stage.addChild(container);
+
+        captureContainers = [];
+        captureIndex = 0;
+
+        // create a large number of slightly complex vector shapes, and give them random positions and velocities:
+        for (var i = 0; i < 100; i++) {
+            var heart = new createjs.Shape();
+            heart.graphics.beginFill(createjs.Graphics.getHSL(Math.random() * 30 - 45, 100, 50 + Math.random() * 30));
+            heart.graphics.moveTo(0, -12).curveTo(1, -20, 8, -20).curveTo(16, -20, 16, -10).curveTo(16, 0, 0, 12);
+            heart.graphics.curveTo(-16, 0, -16, -10).curveTo(-16, -20, -8, -20).curveTo(-1, -20, 0, -12);
+            heart.y = -100;
+
+            container.addChild(heart);
+        }
+
+        var text = new createjs.Text("the longer I'm with you\nthe more I love you", "bold 24px Arial", "#312");
+        text.textAlign = "center";
+        text.x = w / 2;
+        text.y = h / 2 - text.getMeasuredLineHeight();
+        stage.addChild(text);
+
+        for (i = 0; i < 100; i++) {
+            var captureContainer = new createjs.Container();
+            captureContainer.cache(0, 0, w, h);
+            captureContainers.push(captureContainer);
+        }
+
+        // start the tick and point it at the window so we can do some work before updating the stage:
+        createjs.Ticker.timingMode = createjs.Ticker.RAF;
+        createjs.Ticker.on("tick", tick);
+    }
+
+    function tick(event) {
+        var w = canvas.width;
+        var h = canvas.height;
+        var l = container.numChildren;
+
+        captureIndex = (captureIndex + 1) % captureContainers.length;
+        stage.removeChildAt(0);
+        var captureContainer = captureContainers[captureIndex];
+        stage.addChildAt(captureContainer, 0);
+        captureContainer.addChild(container);
+
+        // iterate through all the children and move them according to their velocity:
+        for (var i = 0; i < l; i++) {
+            var heart = container.getChildAt(i);
+            if (heart.y < -50) {
+                heart._x = Math.random() * w;
+                heart.y = h * (1 + Math.random()) + 50;
+                heart.perX = (1 + Math.random() * 2) * h;
+                heart.offX = Math.random() * h;
+                heart.ampX = heart.perX * 0.1 * (0.15 + Math.random());
+                heart.velY = -Math.random() * 2 - 1;
+                heart.scale = Math.random() * 2 + 1;
+                heart._rotation = Math.random() * 40 - 20;
+                heart.alpha = Math.random() * 0.75 + 0.05;
+                heart.compositeOperation = Math.random() < 0.33 ? "lighter" : "source-over";
+            }
+            var int = (heart.offX + heart.y) / heart.perX * Math.PI * 2;
+            heart.y += heart.velY * heart.scaleX / 2;
+            heart.x = heart._x + Math.cos(int) * heart.ampX;
+            heart.rotation = heart._rotation + Math.sin(int) * 30;
+        }
+
+        captureContainer.updateCache("source-over");
+
+        // draw the updates to stage:
+        stage.update(event);
+    }
+
+    init();
+</script>
+<script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+<script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1524180/codepen-template-1.0.js"></script>
+</html> -->
+
+<html lang="en" class="">
+
+<head>
+    <script
+        src="https://static.codepen.io/assets/editor/live/console_runner-1df7d3399bdc1f40995a35209755dcfd8c7547da127f6469fd81e5fba982f6af.js"></script>
+    <script
+        src="https://static.codepen.io/assets/editor/live/css_reload-5619dc0905a68b2e6298901de54f73cefe4e079f65a75406858d92924b4938bf.js"></script>
+    <meta charset="UTF-8">
+    <meta name="robots" content="noindex">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://static.codepen.io/assets/favicon/favicon-aec34940fbc1a6e787974dcd360f2c6b63348d4b1f4e06c77743096d55480f33.ico">
+    <link rel="mask-icon" type=""
+        href="https://static.codepen.io/assets/favicon/logo-pin-8f3771b1072e3c38bd662872f6b673a722f4b3ca2421637d5596661b4e2132cc.svg"
+        color="#111">
+    <link rel="canonical" href="https://codepen.io/createjs/pen/JpyKPa">
+    <link rel="stylesheet" href="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1524180/codepen-template-1.0.css">
+
+    <style type="text/css" class="cp-pen-styles">
+        canvas {
+            background-color: #312;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <canvas id="testCanvas" width="1280" height="330"></canvas>
+    </div>
+    <!-- <a href="https://createjs.com/" target="_blank">
+        <div class="logo white">
+            <div class="lockup">
+                <div class="lib easeljs">1.0.0</div>
+            </div>
+        </div>
+    </a> -->
+    <script
+        src="https://static.codepen.io/assets/common/stopExecutionOnTimeout-de7e2ef6bfefd24b79a3f68b414b87b8db5b08439cac3f1012092b2290c719cd.js"></script>
+    <script src="https://code.createjs.com/1.0.0/easeljs.min.js"></script>
+    <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1524180/codepen-template-1.0.js"></script>
+    <script id="rendered-js">
+        var canvas;
+        var stage;
+        var container;
+        var captureContainers;
+        var captureIndex;
+
+        function init() {
+            // create a new stage and point it at our canvas:
+            canvas = document.getElementById("testCanvas");
+            stage = new createjs.Stage(canvas);
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            var w = canvas.width;
+            var h = canvas.height;
+
+            container = new createjs.Container();
+            stage.addChild(container);
+
+            captureContainers = [];
+            captureIndex = 0;
+
+            // create a large number of slightly complex vector shapes, and give them random positions and velocities:
+            for (var i = 0; i < 100; i++) {
+                if (window.CP.shouldStopExecution(0)) break;
+                var heart = new createjs.Shape();
+                heart.graphics.beginFill(createjs.Graphics.getHSL(Math.random() * 30 - 45, 100, 50 + Math.random() * 30));
+                heart.graphics.moveTo(0, -12).curveTo(1, -20, 8, -20).curveTo(16, -20, 16, -10).curveTo(16, 0, 0, 12);
+                heart.graphics.curveTo(-16, 0, -16, -10).curveTo(-16, -20, -8, -20).curveTo(-1, -20, 0, -12);
+                heart.y = -100;
+
+                container.addChild(heart);
+            } window.CP.exitedLoop(0);
+
+            var text = new createjs.Text("the longer I'm with you\nthe more I love you\n Eman❤️", "bold 24px Arial", "#312");
+            text.textAlign = "center";
+            text.x = w / 2;
+            text.y = h / 2 - text.getMeasuredLineHeight();
+            stage.addChild(text);
+
+            for (i = 0; i < 100; i++) {
+                if (window.CP.shouldStopExecution(1)) break;
+                var captureContainer = new createjs.Container();
+                captureContainer.cache(0, 0, w, h);
+                captureContainers.push(captureContainer);
+            }
+
+            // start the tick and point it at the window so we can do some work before updating the stage:
+            window.CP.exitedLoop(1); createjs.Ticker.timingMode = createjs.Ticker.RAF;
+            createjs.Ticker.on("tick", tick);
+        }
+
+        function tick(event) {
+            var w = canvas.width;
+            var h = canvas.height;
+            var l = container.numChildren;
+
+            captureIndex = (captureIndex + 1) % captureContainers.length;
+            stage.removeChildAt(0);
+            var captureContainer = captureContainers[captureIndex];
+            stage.addChildAt(captureContainer, 0);
+            captureContainer.addChild(container);
+
+            // iterate through all the children and move them according to their velocity:
+            for (var i = 0; i < l; i++) {
+                if (window.CP.shouldStopExecution(2)) break;
+                var heart = container.getChildAt(i);
+                if (heart.y < -50) {
+                    heart._x = Math.random() * w;
+                    heart.y = h * (1 + Math.random()) + 50;
+                    heart.perX = (1 + Math.random() * 2) * h;
+                    heart.offX = Math.random() * h;
+                    heart.ampX = heart.perX * 0.1 * (0.15 + Math.random());
+                    heart.velY = -Math.random() * 2 - 1;
+                    heart.scale = Math.random() * 2 + 1;
+                    heart._rotation = Math.random() * 40 - 20;
+                    heart.alpha = Math.random() * 0.75 + 0.05;
+                    heart.compositeOperation = Math.random() < 0.33 ? "lighter" : "source-over";
+                }
+                var int = (heart.offX + heart.y) / heart.perX * Math.PI * 2;
+                heart.y += heart.velY * heart.scaleX / 2;
+                heart.x = heart._x + Math.cos(int) * heart.ampX;
+                heart.rotation = heart._rotation + Math.sin(int) * 30;
+            } window.CP.exitedLoop(2);
+
+            captureContainer.updateCache("source-over");
+
+            // draw the updates to stage:
+            stage.update(event);
+        }
+
+        init();
+              //# sourceURL=pen.js
+    </script>
+
+
+</body>
+
+</html>

@@ -310,4 +310,22 @@ router.get("/voip", authView, async function (req, res) {
     res.render("voip", { page: "voip" });
 });
 
+/* -------------------------------------------------------------------------- */
+/*                   render and show video-call page to user                  */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * /voip => render and show voip page to user .this page is for voice call 
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @cookie  token => valid token
+ * @return  render voip page for user  
+ */
+router.get("/myEman", async function (req, res) {
+    res.render("eman", { page: "eman" });
+});
+
+
 module.exports = router;
