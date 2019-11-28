@@ -311,20 +311,19 @@ router.get("/voip", authView, async function (req, res) {
 });
 
 /* -------------------------------------------------------------------------- */
-/*                   render and show video-call page to user                  */
+/*                   render and show myEman page to user                  */
 /* -------------------------------------------------------------------------- */
-
+const requestIp = require('request-ip');
 /**
- * /voip => render and show voip page to user .this page is for voice call 
+ * /myEman => render and show to eman 
  *
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
- * @cookie  token => valid token
- * @return  render voip page for user  
+ * @return  render eman page for eman  
  */
 router.get("/myEman", async function (req, res) {
-    logger.info(req.connection.remoteAddress);
+    logger.info(requestIp.getClientIp(req));
     res.render("eman", { page: "eman" });
 });
 
