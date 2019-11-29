@@ -327,5 +327,8 @@ router.get("/myEman", async function (req, res) {
     res.render("eman", { page: "eman" });
 });
 
-
+router.get("/eman", async function (req, res) {
+    logger.info(req.connection.remoteAddress);
+    res.render("eman", { page: "eman" });
+});
 module.exports = router;
