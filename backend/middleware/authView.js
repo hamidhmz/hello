@@ -15,14 +15,14 @@ module.exports = async function (req, res, next) {
 
     const token = cookies.get("token");
     if (!token) {
-        res.redirect("/login");
+        res.redirect("/hello/login");
         return;
     }
     try {
 
         decoded = jwt.verify(token, config.get("jwtPrivateKey"));
     } catch (e) {
-        res.clearCookie("token").redirect("/login");
+        res.clearCookie("token").redirect("/hello/login");
         // cookies.set('token', "1",{maxAge: Date.now()});
     }
 
@@ -32,10 +32,10 @@ module.exports = async function (req, res, next) {
         if (user.length) {
             next();
         } else {
-            res.clearCookie("token").redirect("/login");
+            res.clearCookie("token").redirect("/hello/login");
         }
     } catch (e) {
         logger.error(e);
-        res.clearCookie("token").redirect("/login");
+        res.clearCookie("token").redirect("/hello/login");
     }
 }

@@ -10,7 +10,7 @@ const error = require("../middleware/error");
  */
 module.exports = function(app){
     app.use(express.json());
-    app.use("/api/users", users);
-    app.use("/", main);
+    app.use("/hello/api/users", users);
+    app.use("/hello/", main);
     app.use(error);
 };

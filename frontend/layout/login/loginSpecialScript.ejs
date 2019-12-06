@@ -4,7 +4,7 @@
         const error1Label = $("#error1Label");
         const contentType = "application/json; charset=utf-8";
         const dataType = "json";
-        if (Cookies.get("token")) window.location.replace("/");
+        if (Cookies.get("token")) window.location.replace("/hello/");
         $("#registerBtn").click(function () {
             const nameGroupRegister = $('#nameGroupRegister');
             const emailAddressGroupRegister = $('#emailAddressGroupRegister');
@@ -13,7 +13,7 @@
             const emailInputRegister = $("#emailInputRegister").val();
             const passwordInputRegister = $("#passwordInputRegister").val();
             const type = "POST";
-            const url = "/api/users/register";
+            const url = "/hello/api/users/register";
             const data = JSON.stringify({
                 name: nameInputRegister,
                 email: emailInputRegister,
@@ -29,7 +29,7 @@
                     if (response.getResponseHeader('x-auth-token')) {
                         Cookies.set('token', response.getResponseHeader('x-auth-token'), { expires: 7 });
                         Cookies.get('token');
-                        window.location.replace("/");
+                        window.location.replace("/hello/");
                     }
                 },
                 error: function (xhr, status, error) {
@@ -71,7 +71,7 @@
             const emailInput = $("#emailInput").val();
             const passwordInput = $("#passwordInput").val();
             const type = "POST";
-            const url = "/api/users/login";
+            const url = "/hello/api/users/login";
             const data = JSON.stringify({ email: emailInput, password: passwordInput });
             $.ajax({
                 url: url,
@@ -84,7 +84,7 @@
                         // console.log(Cookies.set('token', response.getResponseHeader('x-auth-token'), {expires: 7}));
                         console.log(document.cookie = "token=" + response.getResponseHeader('x-auth-token'));
                         Cookies.get();
-                        window.location.replace("/");
+                        window.location.replace("/hello/");
                     }
                 },
                 error: function (xhr, status, error) {
