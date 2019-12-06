@@ -1,4 +1,5 @@
 {
   "jwtPrivateKey":"123456",
-  "db":"mongodb://dbmongo:27017/adminPanel"
+  "db":"mongodb://dbmongo:27017/adminPanel",
+  "PORT":"3000"
 }

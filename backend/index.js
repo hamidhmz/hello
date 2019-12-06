@@ -8,6 +8,7 @@ const startupValidation = require("./startup/validation");
 const startupProd = require("./startup/prod");
 const startupSocket = require("./startup/socket");
 const cookieParser = require("cookie-parser");
+const config = require("config");
 
 const app = express();
 app.set("trust proxy", true);
@@ -30,9 +31,9 @@ const server = startupSocket(app);
 //     res.sendFile(path.resolve(__dirname+"/../frontend/index.html"));
 // });
 
-const port = process.env.PORT || 3000;
-const server1 = server.listen(port, () =>
-  logger.info(`Listening on port ${port}...`)
+// const port = process.env.PORT || 3000;
+const server1 = server.listen(config.get("PORT"), () =>
+  logger.info(`Listening on port ${config.get("PORT")}...`)
 );
 // logger.info('hello', { message: 'world' });
 
