@@ -3,7 +3,9 @@ services:
   app:
     container_name: admin-pannel
     restart: always
-    build: .
+    build: 
+      context: ./backend/
+      dockerfile: Dockerfile
     volumes:
       - ./:/app
     tty: true
@@ -18,6 +20,23 @@ services:
       - "adminPanel_jwt=123456"
       - "PORT=3000"
     depends_on: ["mongo"]
+  app-cv:
+    container_name: cv
+    restart: always
+    build: 
+      context: ./CV/
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - "8086:1337"
+    links:
+      - "mongo:dbmongo"
+      # this feature is no longer need except for aliases
+    environment:
+      - "NODE_ENV=production"
+    depends_on: ["mongo"]
   mongo:
     restart: always
     image: mongo
@@ -29,7 +48,7 @@ services:
     container_name: nginx-modsecurity-reverse-proxy
     restart: always
     build: 
-      context: .
+      context: ./nginx-modsecurity/
       dockerfile: nginx.Dockerfile
 
     environment: 

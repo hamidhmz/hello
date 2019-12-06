@@ -12,7 +12,9 @@ let onlineUsers = {};
 module.exports = function (app) {
     const server = require("http").Server(app);
     let io;
-    io = require("socket.io")(server);
+    io = require("socket.io")(server,{
+        path: "/hello/socket"
+    });
 
     io.on("connection", function (socket) {
         let senderEmail;

@@ -1,4 +1,7 @@
-const socket = io.connect();
+const socketConnection = io("", {
+    path: "/hello/socket"
+  });
+const socket = socketConnection.connect();
 $(document).ready(function () {
     socket.emit("a user is online", Cookies.get("token"));
     // socket.emit("a user is online",Cookies.get("token"));
