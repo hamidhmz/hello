@@ -25,16 +25,10 @@ startupValidation();
 startupProd(app);
 const server = startupSocket(app);
 
-// for log of beyond from express you we must do this
-
-// app.get("/",async function (req,res) {
-//     res.sendFile(path.resolve(__dirname+"/../frontend/index.html"));
-// });
 
 // const port = process.env.PORT || 3000;
 const server1 = server.listen(config.get("PORT"), () =>
   logger.info(`Listening on port ${config.get("PORT")}...`)
 );
-// logger.info('hello', { message: 'world' });
 
 module.exports = server1;
