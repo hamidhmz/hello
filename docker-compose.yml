@@ -44,7 +44,7 @@ services:
         - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
         - ./nginx-modsecurity/nginx:/etc/nginx
         - ./nginx-modsecurity/:/var/log/nginx
-        - ./nginx-modsecurity/modlog/:/var/log/modsec_audit.log
+        - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
       
 volumes:
   mongo-data:
