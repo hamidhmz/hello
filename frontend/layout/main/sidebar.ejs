@@ -17,19 +17,19 @@
         </div>
 
         <ul class="navigation">
-            <li class="<%= (page == 'index')?'navigation__active':'@@indexactive' %>"><a href="/"><i class="zmdi zmdi-home"></i> Home</a></li>
+            <li class="<%= (page == 'index')?'navigation__active':'@@indexactive' %>"><a href="/hello/"><i class="zmdi zmdi-home"></i> Home</a></li>
 
 
             <li class="navigation__sub <%= (page == 'messages')?'navigation__sub--active navigation__sub--toggled':'@@samplepagesactive' %>">
                 <a href="#"><i class="zmdi zmdi-collection-item"></i> Contacts</a>
 
                 <ul>
-                    <li class="<%= (page == 'messages')?'navigation__active':'@@messagesactive' %>"><a href="/messages">Messages</a></li>
+                    <li class="<%= (page == 'messages')?'navigation__active':'@@messagesactive' %>"><a href="/hello/messages">Messages</a></li>
                 </ul>
             </li>
-            <li class="<%= (page == 'video-call')?'navigation__active':'@@indexactive' %>"><a href="/video-call"><i class="zmdi zmdi-videocam"></i> video call</a></li>
-            <li class="<%= (page == 'voip')?'navigation__active':'@@indexactive' %>"><a href="/voip"><i class="zmdi zmdi-phone"></i> VOIP</a></li>
-            <li class="<%= (page == 'settings')?'navigation__active':'@@indexactive' %>"><a href="/settings"><i class="zmdi zmdi-settings"></i> Settings</a></li>
+            <li class="<%= (page == 'video-call')?'navigation__active':'@@indexactive' %>"><a href="/hello/video-call"><i class="zmdi zmdi-videocam"></i> video call</a></li>
+            <li class="<%= (page == 'voip')?'navigation__active':'@@indexactive' %>"><a href="/hello/voip"><i class="zmdi zmdi-phone"></i> VOIP</a></li>
+            <li class="<%= (page == 'settings')?'navigation__active':'@@indexactive' %>"><a href="/hello/settings"><i class="zmdi zmdi-settings"></i> Settings</a></li>
         </ul>
     </div>
 </aside>

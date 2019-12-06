@@ -14,7 +14,7 @@ const app = express();
 app.set("trust proxy", true);
 app.set("view engine", "ejs");
 app.set("views", "../frontend");
-app.use(express.static(__dirname + "/../frontend/"));
+app.use("/hello",express.static(__dirname + "/../frontend/"));
 app.use(cookieParser());
 // app.use(express.json());
 

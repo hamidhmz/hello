@@ -22,13 +22,13 @@
         });
         logoutBtn.click(function () {
             Cookies.remove("token");
-            window.location.replace("/login");
+            window.location.replace("/hello/login");
         });
         if (!Cookies.get("token")) window.location.replace("login");
         const contentType = "application/json; charset=utf-8";
         const dataType = "json";
         const type = "GET";
-        const url = "/api/users/me";
+        const url = "/hello/api/users/me";
         const header = { 'x-auth-token': Cookies.get("token") };
         $.ajax({
             url: url,
@@ -138,7 +138,7 @@
         $("#message__content").html("");
         receiverEmail = event.childNodes[3].childNodes[3].innerHTML;
         let receiverName = event.childNodes[3].childNodes[1].innerHTML;
-        changeUrlWithoutReload("/messages?email=" + receiverEmail.trim() + "&name=" + receiverName.trim());
+        changeUrlWithoutReload("/hello/messages?email=" + receiverEmail.trim() + "&name=" + receiverName.trim());
         const email = getParametersFromUrl("email");
         const name = getParametersFromUrl("name");
         clickOnPerson(email, name);

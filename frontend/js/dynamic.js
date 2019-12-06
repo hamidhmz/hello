@@ -1,4 +1,3 @@
-// var socket = io();
 const socket = io.connect();
 $(document).ready(function () {
     socket.emit("a user is online", Cookies.get("token"));
@@ -11,13 +10,13 @@ $(document).ready(function () {
     const emailForChange = $("#emailForChange");
     logoutBtn.click(function () {
         Cookies.remove("token");
-        window.location.replace("/login");
+        window.location.replace("/hello/login");
     });
-    if (!Cookies.get("token")) window.location.replace("/login");
+    if (!Cookies.get("token")) window.location.replace("/hello/login");
     const contentType = "application/json; charset=utf-8";
     const dataType = "json";
     const type = "GET";
-    const url = "/api/users/me";
+    const url = "/hello/api/users/me";
     const header = { 'x-auth-token': Cookies.get("token") };
     $.ajax({
         url: url,
@@ -45,7 +44,7 @@ $(document).ready(function () {
         }
     });
     $.ajax({
-        url: "/profile-image",
+        url: "/hello/profile-image",
         type: type,
         contentType: 'Content-Type: text/html; charset=ISO-8859-15',
         dataType: 'html',
@@ -71,7 +70,7 @@ $(document).ready(function () {
         $("#users__buddies").html("");
         for (let i = 0; i < data.length; i++) {
             if (Cookies.get("email") === data[i].email) continue;
-            $("#users__buddies").append("   <a href='/messages?email=" + data[i].email + "&name=" + data[i].name + "' class= \"listview__item " + (data[i].isOnline ? "chat__available" : "") + "\" >  <img src=\"profile-image/" + data[i].email + "\" class=\"listview__img\" > " +
+            $("#users__buddies").append("   <a href='/hello/messages?email=" + data[i].email + "&name=" + data[i].name + "' class= \"listview__item " + (data[i].isOnline ? "chat__available" : "") + "\" >  <img src=\"profile-image/" + data[i].email + "\" class=\"listview__img\" > " +
 
                 "        <div class=\"listview__content\"> " +
                 "            <div class=\"listview__heading\">" + data[i].name + "</div> " +
