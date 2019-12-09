@@ -27,8 +27,10 @@ const server = startupSocket(app);
 
 
 // const port = process.env.PORT || 3000;
+app.get('/2222', (req, res) => {
+  res.status(200);
+});
 const server1 = server.listen(config.get("PORT"), () =>
   logger.info(`Listening on port ${config.get("PORT")}...`)
 );
-
 module.exports = server1;

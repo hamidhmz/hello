@@ -238,8 +238,4 @@ router.put("/edit-password", auth, async (req, res) => {
     }
 });
 
-router.get("/fortest", (req, res) => {
-    res.status(200);
-});
-
 module.exports = router;

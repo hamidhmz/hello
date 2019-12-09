@@ -1,9 +1,9 @@
 // /* eslint-disable linebreak-style */
 // /* eslint-disable no-undef */
-const { User } = require("../../models/user");
-const jwt = require("jsonwebtoken");
-const config = require("config");
-const mongoose = require("mongoose");
+// const { User } = require("../../models/user");
+// const jwt = require("jsonwebtoken");
+// const config = require("config");
+// const mongoose = require("mongoose");
 
 describe("user.generateAuthToken", () => {
     it("should return a valid JWT", () => {
