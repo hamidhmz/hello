@@ -108,24 +108,28 @@ jQuery(document).ready(function ($) {
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function (msg) {
+        console.log("");
+        $("#sendmessage").addClass("show");
+        $("#errormessage").removeClass("show");
+        $('.contactForm').find("input, textarea").val("");
         // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
+        // if (msg == 'OK') {
+        //   $("#sendmessage").addClass("show");
+        //   $("#errormessage").removeClass("show");
+        //   $('.contactForm').find("input, textarea").val("");
+        // } else {
+        //   $("#sendmessage").removeClass("show");
+        //   $("#errormessage").addClass("show");
+        //   $('#errormessage').html(msg);
+      }
 
-      },
+    },
       error: function (xhr, status, error) {
 
         alert(error + xhr.responseText);
       }
     });
-    return false;
-  });
+  return false;
+});
 
 });
