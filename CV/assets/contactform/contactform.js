@@ -121,7 +121,7 @@ jQuery(document).ready(function ($) {
         //   $("#sendmessage").removeClass("show");
         //   $("#errormessage").addClass("show");
         //   $('#errormessage').html(msg);
-      }
+        // }
 
     },
       error: function (xhr, status, error) {
