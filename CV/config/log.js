@@ -13,7 +13,8 @@ var winston = require('winston');
 var options = {
   debug: {
     level: 'debug',
-    colorize: true
+    colorize: true,
+    filename: `./debug.log`
   },
   info: {
     level: 'info',
