@@ -99,7 +99,7 @@ jQuery(document).ready(function ($) {
     });
     if (!action) {
       console.log(data);
-      action = 'http://localhost/hello/api/users/contact-form';
+      action = '/hello/api/users/contact-form';
     }
     $.ajax({
       type: "POST",
