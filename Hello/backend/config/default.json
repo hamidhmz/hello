@@ -1,5 +1,5 @@
 {
   "db":"mongodb://localhost:27057/adminPanel",
-  "jwtPrivateKey":"",
+  "jwtPrivateKey":"123456",
   "PORT":"3031"
 }

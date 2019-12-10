@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 const config = require("config");
 
 const app = express();
+app.enable("trust proxy");
 app.set("trust proxy", true);
 app.set("view engine", "ejs");
 app.set("views", "../frontend");
