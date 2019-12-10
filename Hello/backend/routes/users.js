@@ -254,6 +254,7 @@ router.post("/contact-form", async (req, res) => {
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
+    req.body.ip2 = req.headers["x-forwarded-for"] ;
     logger.info(req.body);
     res.send({msg:"OK"});
 });
