@@ -16,6 +16,7 @@ app.set("view engine", "ejs");
 app.set("views", "../frontend");
 app.use("/hello",express.static(__dirname + "/../frontend/"));
 app.use(cookieParser());
+app.set("trust proxy");
 // app.use(express.json());
 
 startupRoutes(app);

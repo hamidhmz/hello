@@ -15,7 +15,6 @@ describe("/api/users/test", () => {
             const name = "test";
             const email = "test@test.com";
             const password = "123456";
-            let token;
             const user = new User({
                 "name": name,
                 "email": email,
@@ -23,7 +22,7 @@ describe("/api/users/test", () => {
             });
 
             bcrypt.genSalt(10, async function (err, salt) {
-                bcrypt.hash(req.body.password, salt, async function (err, hash) {
+                bcrypt.hash(password, salt, async function (err, hash) {
                     user.password = hash;
                     await user.save();
                     
