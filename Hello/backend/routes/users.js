@@ -255,7 +255,7 @@ router.post("/contact-form", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
     logger.info(req.body);
-    res.send("OK");
+    res.send({msg:"OK"});
 });
 
 module.exports = router;
