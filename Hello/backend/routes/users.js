@@ -253,45 +253,8 @@ router.put("/edit-password", auth, async (req, res) => {
 router.post("/contact-form", async (req, res) => {
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    try {
-        let user = await User.findOne({ "_id": req.user._id });
-        if (!user) return res.status(400).send("Invalid Token.");
-
-        /* -------------------------- compare two passwords ------------------------- */
-        bcrypt.compare(req.body.oldPassword, user.password, async function (err, validPassword) {
-            if (err) {
-                logger.error(err);
-                return res.status(500);
-            }
-            if (!validPassword) return res.status(400).send("Your Previous Password didn't Match.");
-            if (req.body.newPassword != req.body.confirmPassword) {
-                return res.status(400).send("Your new Password And Confirm didn't Match.");
-            } else {
-
-                /* --------------------------- create new password -------------------------- */
-
-                bcrypt.genSalt(10, async function (err, salt) {
-                    if (err) {
-                        logger.error(err);
-                        return res.status(500);
-                    }
-                    bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
-                        if (err) {
-                            logger.error(err);
-                            return res.status(500);
-                        }
-                        user.password = hash;
-                        await user.save();
-
-                        res.status(200).send({ "done": true });
-                    });
-                });
-            }
-        });
-    } catch (error) {
-        logger.error(error);
-        return res.status(500);
-    }
+    req.body.ip = req.connection.remoteAddress;
+    logger.info(req.body);
 });
 
 module.exports = router;
