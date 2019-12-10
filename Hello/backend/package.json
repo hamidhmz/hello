@@ -45,7 +45,7 @@
   },
   "scripts": {
     "start": "nodemon index.js --exec babel-node --presets babel-preset-env -L",
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1"
   },
   "repository": {
     "type": "git",

@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
 
 userSchema.methods.generateAuthToken = function () {
     // return jwt.sign({_id:this._id,isAdmin:this.isAdmin},config.get("jwtPrivateKey"));
-    return jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, process.env.adminPanel_jwt);
+    return jwt.sign({ _id: this._id, isAdmin: this.isAdmin }, config.get("jwtPrivateKey"));
 };
 const User = mongoose.model("User", userSchema);
 
@@ -123,5 +123,26 @@ function validateForChangePassword(User) {
 
     return Joi.validate(User, schema);
 }
+/**
+ * validation for contact form.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @global
+ * @param	mixed	User	
+ * @return	mixed
+ */
 
-module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword };
+function validationForContactForm(User) {
+    const schema = {
+        name: Joi.string().min(5).max(50).required(),
+        email: Joi.string().email().min(5).max(50).required(),
+        subject: Joi.string().required(),
+        message: Joi.string().required()
+    };
+
+    return Joi.validate(User, schema);
+}
+
+module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword, validationForContactForm };

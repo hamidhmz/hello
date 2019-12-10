@@ -1,18 +1,34 @@
 const request = require("supertest");
+const bcrypt = require("bcryptjs");
+const { User } = require("../models/user");
 
-let server;
-
-describe("/api/genres", () => {
+describe("/api/users/test", () => {
+    let server;
     beforeEach(() => {
-        const server = require("../../index");
+        server = require("../../index");
     });
-    afterEach(() => {
-        server.close();
+    afterEach(async () => {
+        await server.close();
     });
-    describe("GET /", () => {
+    describe("GET /", async () => {
         it("should return one user details", async () => {
-            const res = await request(server).get("/hello/api/users/test");
-            expect(res.status).toBe(200);
+            const name = "test";
+            const email = "test@test.com";
+            const password = "123456";
+            const user = new User({
+                "name": name,
+                "email": email,
+                "password": password
+            });
+
+            bcrypt.genSalt(10, async function (err, salt) {
+                bcrypt.hash(password, salt, async function (err, hash) {
+                    user.password = hash;
+                    await user.save();
+                    
+                    request(server).get("/login").expect(200);
+                });
+            });
         });
     });
 });

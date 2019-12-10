@@ -9,17 +9,18 @@
  
 */
 
-/****************************************************************************************
- *  GET               /hello/api/users/ME                  GET USER DETAILS             *
- *  POST              /hello/api/users/REGISTER            REGISTER NEW USER            *
- *  POST              /hello/api/users/LOGIN               USER LOGIN                   *
- *  POST              /hello/api/users/EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL *
- *  PUT               /hello/api/users/EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD *
- ****************************************************************************************/
+/******************************************************************************************
+ *  GET               /hello/api/users/ME                  GET USER DETAILS               *
+ *  POST              /hello/api/users/REGISTER            REGISTER NEW USER              *
+ *  POST              /hello/api/users/LOGIN               USER LOGIN                     *
+ *  POST              /hello/api/users/EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL   *
+ *  PUT               /hello/api/users/EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD   *
+ *  POST              /hello/api/users/contact-form        SEND MESSAGE FROM CLIENT IN CV *
+ ******************************************************************************************/
 
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
-const { User, validateUser, validate, validateForEdit, validateForChangePassword } = require("../models/user");
+const { User, validateUser, validate, validateForEdit, validateForChangePassword, validationForContactForm } = require("../models/user");
 const express = require("express");
 const auth = require("../middleware/auth");
 const { logger } = require("../startup/logging");
@@ -237,9 +238,60 @@ router.put("/edit-password", auth, async (req, res) => {
         return res.status(500);
     }
 });
+/* -------------------------------------------------------------------------- */
+/*                        receive message from contact us                     */
+/* -------------------------------------------------------------------------- */
+/**
+ * /contact-form => change the password.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @param	{name,email,subject,message} => object
+ * @return  success => status:200 data:{done:true}
+ */
+router.post("/contact-form", async (req, res) => {
+    const { error } = validationForContactForm(req.body);
+    if (error) return res.status(400).send(error.details[0].message);
+    try {
+        let user = await User.findOne({ "_id": req.user._id });
+        if (!user) return res.status(400).send("Invalid Token.");
 
-router.get("/fortest", (req, res) => {
-    res.status(200);
+        /* -------------------------- compare two passwords ------------------------- */
+        bcrypt.compare(req.body.oldPassword, user.password, async function (err, validPassword) {
+            if (err) {
+                logger.error(err);
+                return res.status(500);
+            }
+            if (!validPassword) return res.status(400).send("Your Previous Password didn't Match.");
+            if (req.body.newPassword != req.body.confirmPassword) {
+                return res.status(400).send("Your new Password And Confirm didn't Match.");
+            } else {
+
+                /* --------------------------- create new password -------------------------- */
+
+                bcrypt.genSalt(10, async function (err, salt) {
+                    if (err) {
+                        logger.error(err);
+                        return res.status(500);
+                    }
+                    bcrypt.hash(req.body.newPassword, salt, async function (err, hash) {
+                        if (err) {
+                            logger.error(err);
+                            return res.status(500);
+                        }
+                        user.password = hash;
+                        await user.save();
+
+                        res.status(200).send({ "done": true });
+                    });
+                });
+            }
+        });
+    } catch (error) {
+        logger.error(error);
+        return res.status(500);
+    }
 });
 
 module.exports = router;
