@@ -1,10 +1,10 @@
 version: "3.5"
 services:
   app:
-    container_name: admin-pannel
+    container_name: hello
     restart: always
     build: 
-      context: ./backend/
+      context: ./Hello/backend/
       dockerfile: Dockerfile
     volumes:
       - ./:/app
@@ -34,8 +34,8 @@ services:
     links:
       - "mongo:dbmongo"
       # this feature is no longer need except for aliases
-    environment:
-      - "NODE_ENV=production"
+    # environment:
+      # - "NODE_ENV=production"
     depends_on: ["mongo"]
   mongo:
     restart: always

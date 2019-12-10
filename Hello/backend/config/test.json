@@ -1,0 +1,6 @@
+{
+  "adminPanel_jwt":"123456",
+  "jwtPrivateKey":"123456",
+  "db":"mongodb://localhost:27057/adminPanelTest",
+  "PORT":"3201"
+}
