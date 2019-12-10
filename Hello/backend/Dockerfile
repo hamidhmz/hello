@@ -9,5 +9,5 @@ WORKDIR /app
 #CMD  ["sh","-c","cd backend && npm","start"]
 # test for github branches from local
 # test for github branches from remote
-CMD ["sh","-c","ls && cd hello/backend && npm install && npm start"]
+CMD ["sh","-c","ls && cd Hello/backend && npm install && npm start"]
 #CMD "npm start"
