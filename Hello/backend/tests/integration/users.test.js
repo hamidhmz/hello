@@ -9,7 +9,6 @@ describe("/api/users/test", () => {
     });
     afterAll(async () => {
         // await User.remove({});
-        console.log("afterAll");
         await server.close();
     });
     describe("POST /hello/api/users/login ", () => {
