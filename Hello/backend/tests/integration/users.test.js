@@ -11,6 +11,10 @@ describe("/api/users/test", () => {
         // await User.remove({});
         await server.close();
     });
+    afterEach(async () => {
+        await User.remove({});
+        await server.close();
+    });
     describe("POST /hello/api/users/login ", () => {
         it("should return 200 after login", async () => {
             console.log("1");
@@ -22,13 +26,14 @@ describe("/api/users/test", () => {
                 "email": email,
                 "password": password
             });
-
+            
             bcrypt.genSalt(10, async function (err, salt) {
                 bcrypt.hash(password, salt, async function (err, hash) {
                     user.password = hash;
                     await user.save();
-                    await request(server).post("/hello/api/users/login").send({ "email": email, "password": password }).expect(200);
-
+                    const response = await request(server).post("/hello/api/users/login").send({ "email": email, "password": password });
+                    await User.remove({});
+                    expect(response.statusCode).toBe(200);
                 });
             });
         });
@@ -47,8 +52,9 @@ describe("/api/users/test", () => {
                 bcrypt.hash(password, salt, async function (err, hash) {
                     user.password = hash;
                     await user.save();
-                    await request(server).post("/hello/api/users/login").send({ "email": "wrongEmail", "password": password }).expect(400);
-
+                    const response = await request(server).post("/hello/api/users/login").send({ "email": "wrongEmail", "password": password });
+                    await User.remove({});
+                    expect(response.statusCode).toBe(400);
                 });
             });
         });
@@ -62,20 +68,16 @@ describe("/api/users/test", () => {
                 "email": email,
                 "password": password
             });
-
+            
             bcrypt.genSalt(10, async function (err, salt) {
                 bcrypt.hash(password, salt, async function (err, hash) {
                     user.password = hash;
                     await user.save();
-                    request(server).post("/hello/api/users/login").send({ "email": email, "password": "WrongPass" }).expect(400);
+                    const response = await request(server).post("/hello/api/users/login").send({ "email": email, "password": "WrongPass" });
+                    await User.remove({});
+                    expect(response.statusCode).toBe(400);
                 });
             });
-        });
-        afterEach(async () => {
-            // await User.remove({});
-            // console.log("afterEach");
-            await User.remove({});
-
         });
     });
 });
