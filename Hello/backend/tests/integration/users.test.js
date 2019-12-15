@@ -68,7 +68,7 @@ describe("/api/users/test", () => {
                 bcrypt.hash(password, salt, async function (err, hash) {
                     user.password = hash;
                     await user.save();
-                    await request(server).post("/hello/api/users/login").send({ "email": email, "password": "WrongPass" }).expect(400);
+                    request(server).post("/hello/api/users/login").send({ "email": email, "password": "WrongPass" }).expect(400);
                 });
             });
         });

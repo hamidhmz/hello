@@ -95,11 +95,11 @@ jQuery(document).ready(function ($) {
       name: $("#name").val(),
       subject: $("#subject").val(),
       email: $("#email").val(),
-      messageText: $("#messageText").val()
+      message: $("#messageText").val()
     });
     if (!action) {
       console.log(data);
-      action = 'http://localhost/hello/api/users/contact-form';
+      action = '/hello/api/users/contact-form';
     }
     $.ajax({
       type: "POST",
@@ -108,24 +108,28 @@ jQuery(document).ready(function ($) {
       contentType: "application/json; charset=utf-8",
       dataType: "json",
       success: function (msg) {
+        console.log("");
+        $("#sendmessage").addClass("show");
+        $("#errormessage").removeClass("show");
+        $('.contactForm').find("input, textarea").val("");
         // alert(msg);
-        if (msg == 'OK') {
-          $("#sendmessage").addClass("show");
-          $("#errormessage").removeClass("show");
-          $('.contactForm').find("input, textarea").val("");
-        } else {
-          $("#sendmessage").removeClass("show");
-          $("#errormessage").addClass("show");
-          $('#errormessage').html(msg);
-        }
+        // if (msg == 'OK') {
+        //   $("#sendmessage").addClass("show");
+        //   $("#errormessage").removeClass("show");
+        //   $('.contactForm').find("input, textarea").val("");
+        // } else {
+        //   $("#sendmessage").removeClass("show");
+        //   $("#errormessage").addClass("show");
+        //   $('#errormessage').html(msg);
+        // }
 
-      },
+    },
       error: function (xhr, status, error) {
 
         alert(error + xhr.responseText);
       }
     });
-    return false;
-  });
+  return false;
+});
 
 });
