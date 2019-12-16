@@ -41,11 +41,13 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "jasmine": "^3.5.0"
   },
   "scripts": {
     "start": "nodemon index.js --exec babel-node --presets babel-preset-env -L",
-    "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1"
+    "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1",
+    "test-jasmine": "jasmine"
   },
   "repository": {
     "type": "git",
