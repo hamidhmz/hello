@@ -16,6 +16,7 @@
  *  POST              /hello/api/users/EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL   *
  *  PUT               /hello/api/users/EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD   *
  *  POST              /hello/api/users/contact-form        SEND MESSAGE FROM CLIENT IN CV *
+ *  POST              /hello/api/users/list                SEND LIST OF USERS             *
  ******************************************************************************************/
 
 const bcrypt = require("bcryptjs");
@@ -255,6 +256,23 @@ router.post("/contact-form", async (req, res) => {
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
     req.body.ip2 = req.headers["x-forwarded-for"] ;
+    logger.info(req.body);
+    res.send({msg:"OK"});
+});
+
+/* -------------------------------------------------------------------------- */
+/*                           show list of all users                           */
+/* -------------------------------------------------------------------------- */
+/**
+ * /list => return list of all users.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @header  x-auth-token => valid token
+ * @return  success => status:200 data:{done:true}
+ */
+router.post("/list",auth, async (req, res) => {
     logger.info(req.body);
     res.send({msg:"OK"});
 });
