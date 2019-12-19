@@ -159,23 +159,24 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
 
         User.findById(user._id, async (err, doc) => {
             if (err) return res.status(500);
-
-            doc.name = req.body.name;
-            doc.email = req.body.email;
-            const thisUser = await User.find({ "email": doc.email, "_id": user._id });
-            if (!thisUser.length) {
-                const duplicateEmailUser = await User.find({ "email": doc.email });
-                if (duplicateEmailUser.length) {
-                    return res.status(400).send("duplicate email.");
+            if (doc.length) {
+                doc.name = req.body.name;
+                doc.email = req.body.email;
+                const thisUser = await User.find({ "email": doc.email, "_id": user._id });
+                if (!thisUser.length) {
+                    const duplicateEmailUser = await User.find({ "email": doc.email });
+                    if (duplicateEmailUser.length) {
+                        return res.status(400).send("duplicate email.");
+                    }
                 }
-            }
-            doc.save((err) => {
-                if (err) {
-                    if (err) return res.status(500);
-                }
+                doc.save((err) => {
+                    if (err) {
+                        if (err) return res.status(500);
+                    }
 
-                res.status(200).send({ "done": true });
-            });
+                    res.status(200).send({ "done": true });
+                });
+            } return res.status(400).send("invalid user");
         });
     } catch (error) {
         logger.error(error);
@@ -255,9 +256,9 @@ router.post("/contact-form", async (req, res) => {
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
-    req.body.ip2 = req.headers["x-forwarded-for"] ;
+    req.body.ip2 = req.headers["x-forwarded-for"];
     logger.info(req.body);
-    res.send({msg:"OK"});
+    res.send({ msg: "OK" });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -272,9 +273,14 @@ router.post("/contact-form", async (req, res) => {
  * @header  x-auth-token => valid token
  * @return  success => status:200 data:{done:true}
  */
-router.post("/list",auth, async (req, res) => {
-    logger.info(req.body);
-    res.send({msg:"OK"});
+router.get("/list", auth, async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.send(users);
+    } catch (error) {
+        logger.error(error);
+        return res.status(500);
+    }
 });
 
 module.exports = router;
