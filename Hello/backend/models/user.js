@@ -123,26 +123,5 @@ function validateForChangePassword(User) {
 
     return Joi.validate(User, schema);
 }
-/**
- * validation for contact form.
- *
- * @author	hamidreza nasrollahi
- * @since	v0.0.1
- * @version	v1.0.0	Wednesday, November 13th, 2019.
- * @global
- * @param	mixed	User	
- * @return	mixed
- */
 
-function validationForContactForm(User) {
-    const schema = {
-        name: Joi.string().min(5).max(50).required(),
-        email: Joi.string().email().min(5).max(50).required(),
-        subject: Joi.string().required(),
-        message: Joi.string().required()
-    };
-
-    return Joi.validate(User, schema);
-}
-
-module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword, validationForContactForm };
+module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword };

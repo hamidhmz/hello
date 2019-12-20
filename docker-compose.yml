@@ -34,8 +34,8 @@ services:
     links:
       - "mongo:dbmongo"
       # this feature is no longer need except for aliases
-    # environment:
-      # - "NODE_ENV=production"
+    environment:
+      - "NODE_ENV=production"
     depends_on: ["mongo"]
   mongo:
     restart: always
