@@ -6,6 +6,7 @@
   "dependencies": {
     "@babel/runtime": "^7.4.4",
     "bcryptjs": "^2.4.3",
+    "chai": "^4.2.0",
     "compression": "^1.7.4",
     "config": "^3.1.0",
     "cookie-parser": "^1.4.4",
@@ -21,6 +22,7 @@
     "js-cookie": "^2.2.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.11",
+    "mocha": "^6.2.2",
     "moment": "^2.24.0",
     "mongoose": "^5.7.12",
     "mongoose-timezone": "^1.1.0",
@@ -41,11 +43,14 @@
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.5",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "jasmine": "^3.5.0"
   },
   "scripts": {
     "start": "nodemon index.js --exec babel-node --presets babel-preset-env -L",
-    "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1"
+    "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1",
+    "test-jasmine": "jasmine",
+    "test-mocha-chai": "mocha"
   },
   "repository": {
     "type": "git",

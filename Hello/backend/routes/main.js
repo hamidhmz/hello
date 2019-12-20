@@ -14,9 +14,11 @@
  *  GET           /profile-image           user own image base64        *
  *  POST          /upload                  upload image for user        *
  *  GET           /                        EDIT USER NAME OR USER EMAIL *
- *  GET           /login                   EDIT AND CHANGE THE PASSWORD *
- *  GET           /messages                EDIT AND CHANGE THE PASSWORD *
- *  GET           /settings                EDIT AND CHANGE THE PASSWORD *
+ *  GET           /login                   RENDER LOGIN PAGE            *
+ *  GET           /messages                RENDER MESSAGES PAGE         *
+ *  GET           /settings                RENDER SETTING PAGE          *
+ *  GET           /video-call              RENDER VIDEO CALL PAGE       *
+ *  GET           /voip                    RENDER VOIP PAGE             *
  ************************************************************************/
 
 const express = require("express");
@@ -46,11 +48,12 @@ const upload = multer({
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @controller	imageController.js	
  * @param	email	
  * @cookie  token => valid token
  * @return  user image file 
  */
-router.get("/profile-image/:email",authView, async function (req, res) {
+router.get("/profile-image/:email", authView, async function (req, res) {
 
     const image = path.join(__dirname + defaultImagePath);
     try {
