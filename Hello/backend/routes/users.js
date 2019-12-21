@@ -158,8 +158,9 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid Token.");
 
         User.findById(user._id, async (err, doc) => {
-            if (err) return res.status(500);
-            if (doc.length) {
+            if (err) {console.log(err);return res.status(500);}
+            console.log(doc.length);
+            if (Object.keys(doc).length) {
                 doc.name = req.body.name;
                 doc.email = req.body.email;
                 const thisUser = await User.find({ "email": doc.email, "_id": user._id });
@@ -176,7 +177,7 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
 
                     res.status(200).send({ "done": true });
                 });
-            } return res.status(400).send("invalid user");
+            }else  return res.status(400).send("invalid user");
         });
     } catch (error) {
         logger.error(error);

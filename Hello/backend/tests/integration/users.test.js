@@ -341,6 +341,19 @@ describe("/api/users/test", () => {
             const name2 = "testtest2";
             const email2 = "test@test.com2";
             const result = await request(server).post("/hello/api/users/edit-name-or-email").set({ "x-auth-token": token }).send({ "name": name2, "email": email2 });
+            await Model.find({ 
+                field: filter
+            }, (err, docs) => {
+               if(err){
+                   console.log(`Error: ` + err)
+               } else{
+                 if(docs.length === 0){
+                     console.log("message")
+                 } else{
+                   
+                 }
+               }
+            });
             expect(result.status).toBe(200);
             expect(user.name).toBe(name2);
             expect(user.email).toBe(email2);
