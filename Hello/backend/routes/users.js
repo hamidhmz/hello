@@ -159,7 +159,6 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
 
         User.findById(user._id, async (err, doc) => {
             if (err) {console.log(err);return res.status(500);}
-            console.log(doc.length);
             if (Object.keys(doc).length) {
                 doc.name = req.body.name;
                 doc.email = req.body.email;
@@ -217,7 +216,6 @@ router.put("/edit-password", auth, async (req, res) => {
             } else {
 
                 /* --------------------------- create new password -------------------------- */
-
                 bcrypt.genSalt(10, async function (err, salt) {
                     if (err) {
                         logger.error(err);

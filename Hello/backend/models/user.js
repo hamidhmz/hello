@@ -123,6 +123,7 @@ function validateForChangePassword(User) {
 
     return Joi.validate(User, schema);
 }
+
 /**
  * validation for contact form.
  *
@@ -133,7 +134,6 @@ function validateForChangePassword(User) {
  * @param	mixed	User	
  * @return	mixed
  */
-
 function validationForContactForm(User) {
     const schema = {
         name: Joi.string().min(5).max(50).required(),
