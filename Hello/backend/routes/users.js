@@ -255,6 +255,7 @@ router.put("/edit-password", auth, async (req, res) => {
 router.post("/contact-form", async (req, res) => { 
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
+    console.log(req.body);
     req.body.ip = req.connection.remoteAddress;
     req.body.ip2 = req.headers["x-forwarded-for"];
     req.body.message2 = req.body.message;
