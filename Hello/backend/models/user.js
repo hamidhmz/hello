@@ -126,4 +126,4 @@ function validateForChangePassword(User) {
 
 
 
-module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword, validationForContactForm };
+module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword };
