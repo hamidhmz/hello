@@ -93,12 +93,12 @@ jQuery(document).ready(function ($) {
     if (ferror) return false;
     else var str = $(this).serialize();
     var action = $(this).attr('action');
-    const data = {
+    const data = JSON.stringify({
       name: $("#name").val(),
       subject: $("#subject").val(),
       email: $("#email").val(),
       message: $("#messageText").val()
-    };
+    });
     if (!action) {
       console.log(data);
       action = '/hello/api/users/contact-form';
@@ -108,7 +108,7 @@ jQuery(document).ready(function ($) {
       url: action,
       data: data,
       contentType: "application/json; charset=utf-8",
-      dataType: "json",
+      dataType: "text",
       success: function (msg) {
         console.log("");
         $("#sendmessage").addClass("show");

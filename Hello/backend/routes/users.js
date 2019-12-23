@@ -252,8 +252,8 @@ router.put("/edit-password", auth, async (req, res) => {
  * @param	{name,email,subject,message} => object
  * @return  success => status:200 data:{done:true}
  */
-router.post("/contact-form", async (req, res) => {
-    console.log(req.body.message);
+router.post("/contact-form", async (req, res) => { 
+    console.log(JSON.parse(req.body));
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
