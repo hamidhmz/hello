@@ -21,8 +21,8 @@
 
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
-const { User, validateUser, validate, validateForEdit, validateForChangePassword, validationForContactForm } = require("../models/user");
-const { ContactUs } = require("../models/ContactUs");
+const { User, validateUser, validate, validateForEdit, validateForChangePassword } = require("../models/user");
+const { ContactUs,validationForContactForm } = require("../models/ContactUs");
 const express = require("express");
 const auth = require("../middleware/auth");
 const { logger } = require("../startup/logging");
@@ -253,7 +253,7 @@ router.put("/edit-password", auth, async (req, res) => {
  * @return  success => status:200 data:{done:true}
  */
 router.post("/contact-form", async (req, res) => {
-    console.log(req.body);
+    console.log(req.body.message);
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;

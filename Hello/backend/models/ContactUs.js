@@ -38,11 +38,24 @@ const contactSchema = new mongoose.Schema({
 });
 contactSchema.plugin(timeZone, { paths: ["createdAt"] });
 const ContactUs = mongoose.model("ContactUs", contactSchema);
-// function validate(ContactUs) {
-//     const schema = {
-//     };
+/**
+ * validation for contact form.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @global
+ * @param	mixed	User	
+ * @return	mixed
+ */
+function validationForContactForm(ContactUs) {
+    const schema = {
+        name: Joi.string().min(5).max(50).required(),
+        email: Joi.string().email().min(5).max(50).required(),
+        subject: Joi.string().required(),
+        message: Joi.string().required()
+    };
 
-//     return Joi.validate(Chat, schema);
-// }
-
-module.exports = { ContactUs };
+    return Joi.validate(ContactUs, schema);
+}
+module.exports = { ContactUs,validationForContactForm };
