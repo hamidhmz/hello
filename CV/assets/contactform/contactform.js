@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-undef */
 jQuery(document).ready(function ($) {
   "use strict";
 
@@ -91,12 +93,12 @@ jQuery(document).ready(function ($) {
     if (ferror) return false;
     else var str = $(this).serialize();
     var action = $(this).attr('action');
-    const data = JSON.stringify({
+    const data = {
       name: $("#name").val(),
       subject: $("#subject").val(),
       email: $("#email").val(),
       message: $("#messageText").val()
-    });
+    };
     if (!action) {
       console.log(data);
       action = '/hello/api/users/contact-form';
