@@ -253,14 +253,16 @@ router.put("/edit-password", auth, async (req, res) => {
  * @return  success => status:200 data:{done:true}
  */
 router.post("/contact-form", async (req, res) => { 
-    // console.log(JSON.parse(req.body));
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
     req.body.ip2 = req.headers["x-forwarded-for"];
+    // req.body.message2 = req.body.message;
+    
+    console.log(JSON.parse(req.body));
     try {
         await ContactUs.create(
-            req.body.message
+            req.body
         );
         logger.info(req.body);
         res.send({ msg: "OK" });
