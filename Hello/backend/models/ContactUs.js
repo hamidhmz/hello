@@ -18,6 +18,11 @@ const contactSchema = new mongoose.Schema({
         minlength: 4,
         maxlength: 50
     },
+    message: {
+        type: String,
+        required: true,
+        minlength: 1,
+    },
     email: {
         type: String,
         required: true,
