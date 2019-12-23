@@ -16,11 +16,13 @@
  *  POST              /hello/api/users/EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL   *
  *  PUT               /hello/api/users/EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD   *
  *  POST              /hello/api/users/contact-form        SEND MESSAGE FROM CLIENT IN CV *
+ *  POST              /hello/api/users/list                SEND LIST OF USERS             *
  ******************************************************************************************/
 
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const { User, validateUser, validate, validateForEdit, validateForChangePassword, validationForContactForm } = require("../models/user");
+const { ContactUs } = require("../models/ContactUs");
 const express = require("express");
 const auth = require("../middleware/auth");
 const { logger } = require("../startup/logging");
@@ -157,24 +159,25 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid Token.");
 
         User.findById(user._id, async (err, doc) => {
-            if (err) return res.status(500);
-
-            doc.name = req.body.name;
-            doc.email = req.body.email;
-            const thisUser = await User.find({ "email": doc.email, "_id": user._id });
-            if (!thisUser.length) {
-                const duplicateEmailUser = await User.find({ "email": doc.email });
-                if (duplicateEmailUser.length) {
-                    return res.status(400).send("duplicate email.");
+            if (err) { console.log(err); return res.status(500); }
+            if (Object.keys(doc).length) {
+                doc.name = req.body.name;
+                doc.email = req.body.email;
+                const thisUser = await User.find({ "email": doc.email, "_id": user._id });
+                if (!thisUser.length) {
+                    const duplicateEmailUser = await User.find({ "email": doc.email });
+                    if (duplicateEmailUser.length) {
+                        return res.status(400).send("duplicate email.");
+                    }
                 }
-            }
-            doc.save((err) => {
-                if (err) {
-                    if (err) return res.status(500);
-                }
+                doc.save((err) => {
+                    if (err) {
+                        if (err) return res.status(500);
+                    }
 
-                res.status(200).send({ "done": true });
-            });
+                    res.status(200).send({ "done": true });
+                });
+            } else return res.status(400).send("invalid user");
         });
     } catch (error) {
         logger.error(error);
@@ -214,7 +217,6 @@ router.put("/edit-password", auth, async (req, res) => {
             } else {
 
                 /* --------------------------- create new password -------------------------- */
-
                 bcrypt.genSalt(10, async function (err, salt) {
                     if (err) {
                         logger.error(err);
@@ -251,12 +253,43 @@ router.put("/edit-password", auth, async (req, res) => {
  * @return  success => status:200 data:{done:true}
  */
 router.post("/contact-form", async (req, res) => {
+    console.log(req.body);
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
-    req.body.ip2 = req.headers["x-forwarded-for"] ;
-    logger.info(req.body);
-    res.send({msg:"OK"});
+    req.body.ip2 = req.headers["x-forwarded-for"];
+    try {
+        await ContactUs.create(
+            req.body
+        );
+        logger.info(req.body);
+        res.send({ msg: "OK" });
+    } catch (error) {
+        logger.error(error);
+        return res.status(500);
+    }
+});
+
+/* -------------------------------------------------------------------------- */
+/*                           show list of all users                           */
+/* -------------------------------------------------------------------------- */
+/**
+ * /list => return list of all users.
+ *
+ * @author	hamidreza nasrollahi
+ * @since	v0.0.1
+ * @version	v1.0.0	Wednesday, November 13th, 2019.
+ * @header  x-auth-token => valid token
+ * @return  success => status:200 data:{done:true}
+ */
+router.get("/list", auth, async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.send(users);
+    } catch (error) {
+        logger.error(error);
+        return res.status(500);
+    }
 });
 
 module.exports = router;
