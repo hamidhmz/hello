@@ -260,7 +260,7 @@ router.post("/contact-form", async (req, res) => {
     req.body.ip2 = req.headers["x-forwarded-for"];
     try {
         await ContactUs.create(
-            req.body,req.body.message
+            req.body.message
         );
         logger.info(req.body);
         res.send({ msg: "OK" });
