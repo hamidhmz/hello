@@ -1,6 +1,7 @@
 const request = require("supertest");
 const bcrypt = require("bcryptjs");
 const { User } = require("../../models/user");
+const { ContactUs } = require("../../models/ContactUs");
 // const expect = require("chai").expect;
 
 describe("/api/users/test", () => {
@@ -892,6 +893,70 @@ describe("/api/users/test", () => {
             });
             expect(result.status).toBe(400);
             expect(result.text).toBe("\"confirmPassword\" length must be less than or equal to 50 characters long");
+        });
+    });
+
+    describe("POST /hello/api/users/contact-form", () => {
+        /* ------------------------------- happy path ------------------------------- */
+        it("should return 200 status code if every thing is okay", async () => {
+            const name = "testtest";
+            const email = "test@test.com";
+            const subject = "test subject";
+            const message = "test message test message";
+            const result = await request(server).post("/hello/api/users/contact-form").set({"x-forwarded-for":"192.168.1.1"}).send({
+                name: name, email: email, subject: subject, message: message
+            });
+            const messageObj = await ContactUs.findOne();
+
+            expect(result.status).toBe(200);
+            expect(messageObj.name).toBe(name);
+            expect(messageObj.email).toBe(email);
+            expect(messageObj.subject).toBe(subject);
+            expect(messageObj.message).toBe(message);
+        });
+        it("should return 400 status code if name doesn't exist", async () => {
+            const name = "test";
+            const email = "test@test.com";
+            const subject = "test subject";
+            const message = "test message test message";
+            const result = await request(server).post("/hello/api/users/contact-form").set({"x-forwarded-for":"192.168.1.1"}).send({
+                email: email, subject: subject, message: message
+            });
+
+            expect(result.status).toBe(400);
+        });
+        it("should return 400 status code if email doesn't exist", async () => {
+            const name = "testtest";
+            const email = "test@test.com";
+            const subject = "test subject";
+            const message = "test message test message";
+            const result = await request(server).post("/hello/api/users/contact-form").set({"x-forwarded-for":"192.168.1.1"}).send({
+                name: name, subject: subject, message: message
+            });
+
+            expect(result.status).toBe(400);
+        });
+        it("should return 400 status code if subject doesn't exist ", async () => {
+            const name = "testtest";
+            const email = "test@test.com";
+            const subject = "test subject";
+            const message = "test message test message";
+            const result = await request(server).post("/hello/api/users/contact-form").set({"x-forwarded-for":"192.168.1.1"}).send({
+                name: name, email: email, message: message
+            });
+
+            expect(result.status).toBe(400);
+        });
+        it("should return 400 status code if message doesn't exist", async () => {
+            const name = "testtest";
+            const email = "test@test.com";
+            const subject = "test subject";
+            const message = "test message test message";
+            const result = await request(server).post("/hello/api/users/contact-form").set({"x-forwarded-for":"192.168.1.1"}).send({
+                name: name, email: email, subject: subject
+            });
+
+            expect(result.status).toBe(400);
         });
     });
 
