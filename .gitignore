@@ -69,4 +69,4 @@ backend/uploads/
 # for nginx modsecurity ruls you should have this file inside of docker 
 
 nginx-modsecurity/modsecurity.d/owasp-crs/
-CV/.tmps/
+CV/.tmp
