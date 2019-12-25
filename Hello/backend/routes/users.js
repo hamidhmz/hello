@@ -257,23 +257,6 @@ router.put("/edit-password", auth, async (req, res) => {
  * @param	{name,email,subject,message} => object
  * @return  success => status:200 data:{done:true}
  */
-<<<<<<< HEAD
-router.post("/contact-form", async (req, res) => {
-    req.body.ip = req.connection.remoteAddress;
-    req.body.ip2 = req.headers["x-forwarded-for"];
-    logger.info(req.body);
-    const { error } = validationForContactForm(req.body);
-    if (error) return res.status(400).send(error.details[0].message);
-    ContactUs.create(req.body, function (err) {
-        if (err) {
-            logger.error(err);
-            return res.status(500);
-        }
-        // saved!
-        return res.send({ msg: "OK" });
-    });
-    res.send({ msg: "OK" });
-=======
 router.post("/contact-form", async (req, res) => { 
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -290,7 +273,6 @@ router.post("/contact-form", async (req, res) => {
         logger.error(error);
         return res.status(500);
     }
->>>>>>> f48a8a95613c4662328a0fc4ef9c8bb1da6bbafd
 });
 
 /* -------------------------------------------------------------------------- */
