@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow-callback */
+/* eslint-disable no-undef */
 jQuery(document).ready(function ($) {
   "use strict";
 
@@ -106,7 +108,7 @@ jQuery(document).ready(function ($) {
       url: action,
       data: data,
       contentType: "application/json; charset=utf-8",
-      dataType: "json",
+      dataType: "text",
       success: function (msg) {
         console.log("");
         $("#sendmessage").addClass("show");

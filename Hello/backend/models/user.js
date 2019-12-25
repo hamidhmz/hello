@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 const config = require("config");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
@@ -123,5 +124,7 @@ function validateForChangePassword(User) {
 
     return Joi.validate(User, schema);
 }
+
+
 
 module.exports = { validateUser, validate, User, validateForEdit, validateForChangePassword };

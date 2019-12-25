@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /*
  
    _   _                    _          _ 
@@ -22,7 +23,7 @@
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const { User, validateUser, validate, validateForEdit, validateForChangePassword } = require("../models/user");
-const { ContactUs, validationForContactForm } = require("../models/ContactUs");
+const { ContactUs,validationForContactForm } = require("../models/ContactUs");
 const express = require("express");
 const auth = require("../middleware/auth");
 const { logger } = require("../startup/logging");
@@ -159,8 +160,8 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid Token.");
 
         User.findById(user._id, async (err, doc) => {
-            if (err) return res.status(500);
-            if (doc.length) {
+            if (err) { console.log(err); return res.status(500); }
+            if (Object.keys(doc).length) {
                 doc.name = req.body.name;
                 doc.email = req.body.email;
                 const thisUser = await User.find({ "email": doc.email, "_id": user._id });
@@ -177,7 +178,7 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
 
                     res.status(200).send({ "done": true });
                 });
-            } return res.status(400).send("invalid user");
+            } else return res.status(400).send("invalid user");
         });
     } catch (error) {
         logger.error(error);
@@ -217,7 +218,6 @@ router.put("/edit-password", auth, async (req, res) => {
             } else {
 
                 /* --------------------------- create new password -------------------------- */
-
                 bcrypt.genSalt(10, async function (err, salt) {
                     if (err) {
                         logger.error(err);
@@ -254,21 +254,22 @@ router.put("/edit-password", auth, async (req, res) => {
  * @param	{name,email,subject,message} => object
  * @return  success => status:200 data:{done:true}
  */
-router.post("/contact-form", async (req, res) => {
-    req.body.ip = req.connection.remoteAddress;
-    req.body.ip2 = req.headers["x-forwarded-for"];
-    logger.info(req.body);
+router.post("/contact-form", async (req, res) => { 
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
-    ContactUs.create(req.body, function (err) {
-        if (err) {
-            logger.error(err);
-            return res.status(500);
-        }
-        // saved!
-        return res.send({ msg: "OK" });
-    });
-    res.send({ msg: "OK" });
+    req.body.ip = req.connection.remoteAddress;
+    req.body.ip2 = req.headers["x-forwarded-for"];
+    
+    try {
+        await ContactUs.create(
+            req.body
+        );
+        logger.info(req.body);
+        res.send({ msg: "OK" });
+    } catch (error) {
+        logger.error(error);
+        return res.status(500);
+    }
 });
 
 /* -------------------------------------------------------------------------- */
