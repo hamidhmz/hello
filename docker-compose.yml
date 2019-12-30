@@ -37,6 +37,20 @@ services:
     environment:
       - "NODE_ENV=production"
     depends_on: ["mongo"]
+  app-rtc:
+      container_name: video-call
+      restart: always
+      build: 
+        context: ./RTCVideo/
+        dockerfile: Dockerfile
+      volumes:
+        - ./:/app
+      tty: true
+      ports:
+        - "8080:8080"
+      links:
+        - "mongo:dbmongo"
+      depends_on: ["app"]
   mongo:
     restart: always
     image: mongo
