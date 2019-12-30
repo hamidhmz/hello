@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /*
  
    _   _                    _          _ 
@@ -22,11 +23,7 @@
 const bcrypt = require("bcryptjs");
 const _ = require("lodash");
 const { User, validateUser, validate, validateForEdit, validateForChangePassword } = require("../models/user");
-<<<<<<< HEAD
 const { ContactUs, validationForContactForm } = require("../models/ContactUs");
-=======
-const { ContactUs,validationForContactForm } = require("../models/ContactUs");
->>>>>>> f48a8a95613c4662328a0fc4ef9c8bb1da6bbafd
 const express = require("express");
 const auth = require("../middleware/auth");
 const { logger } = require("../startup/logging");
@@ -257,12 +254,12 @@ router.put("/edit-password", auth, async (req, res) => {
  * @param	{name,email,subject,message} => object
  * @return  success => status:200 data:{done:true}
  */
-router.post("/contact-form", async (req, res) => { 
+router.post("/contact-form", async (req, res) => {
     const { error } = validationForContactForm(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     req.body.ip = req.connection.remoteAddress;
     req.body.ip2 = req.headers["x-forwarded-for"];
-    
+
     try {
         await ContactUs.create(
             req.body
