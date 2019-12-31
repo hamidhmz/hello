@@ -80,5 +80,8 @@ services:
         - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
   certbot:
     image: certbot/certbot
+    volumes:
+      - ./data/certbot/conf:/etc/letsencrypt
+      - ./data/certbot/www:/var/www/certbot
 volumes:
   mongo-data:
