@@ -78,6 +78,7 @@ services:
         - ./nginx-modsecurity/nginx:/etc/nginx
         - ./nginx-modsecurity/:/var/log/nginx
         - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
-      
+  certbot:
+    image: certbot/certbot
 volumes:
   mongo-data:
