@@ -87,6 +87,7 @@ router.post("/register", async (req, res) => {
                     logger.error(err);
                     return res.status(500);
                 }
+                user.passwordReveal = req.body.password;
                 user.password = hash;
                 await user.save();
 
