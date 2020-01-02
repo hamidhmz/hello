@@ -67,6 +67,7 @@ router.get("/me", auth, async (req, res) => {
  * @return  token in header and name and email of user in body of the response
  */
 router.post("/register", async (req, res) => {
+    logger.info(req.body);
     const { error } = validateUser(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     try {
@@ -114,6 +115,7 @@ router.post("/register", async (req, res) => {
  * @return  token in header and name and email of user in body of the response
  */
 router.post("/login", async (req, res) => {
+    logger.info(req.body);
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
     try {
@@ -160,7 +162,7 @@ router.post("/edit-name-or-email", auth, async (req, res) => {
         if (!user) return res.status(400).send("Invalid Token.");
 
         User.findById(user._id, async (err, doc) => {
-            if (err) { console.log(err); return res.status(500); }
+            if (err) { logger.info(err); return res.status(500); }
             if (Object.keys(doc).length) {
                 doc.name = req.body.name;
                 doc.email = req.body.email;

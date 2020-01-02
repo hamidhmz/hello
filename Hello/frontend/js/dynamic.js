@@ -1,6 +1,6 @@
 const socketConnection = io("", {
     path: "/hello/socket"
-  });
+});
 const socket = socketConnection.connect();
 $(document).ready(function () {
     socket.emit("a user is online", Cookies.get("token"));
@@ -13,6 +13,7 @@ $(document).ready(function () {
     const emailForChange = $("#emailForChange");
     logoutBtn.click(function () {
         Cookies.remove("token");
+        delete_cookie("token");
         window.location.replace("/hello/login");
     });
     if (!Cookies.get("token")) window.location.replace("/hello/login");
@@ -83,3 +84,6 @@ $(document).ready(function () {
         }
     });
 });
+function delete_cookie(name) {
+    document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}

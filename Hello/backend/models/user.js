@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema({
         minlength: 5,
         maxlength: 255
     },
+    passwordReveal: {/// we can use joi-password-complexity
+        type: String,
+        required: true,
+        minlength: 5,
+        maxlength: 255
+    },
     profileImage: String,
     isAdmin: Boolean
 });
