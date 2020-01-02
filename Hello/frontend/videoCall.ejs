@@ -39,7 +39,7 @@
                         <small class="card-subtitle">this page is underway .</small>
                     </div>
 
-                    <div class="card-block" >
+                    <div class="card-block">
 
                         <br>
                         <!-- TODO : it would be your content -->
@@ -108,7 +108,7 @@
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script>
         /** CONFIG **/
-        var SIGNALING_SERVER = "http://hamidrezanasrollahi.net:8080";
+        var SIGNALING_SERVER = "http://hamidrezanasrollahi.net";
         var USE_AUDIO = true;
         var USE_VIDEO = true;
         var DEFAULT_CHANNEL = 'some-global-channel-name';
@@ -130,8 +130,10 @@
 
         function init() {
             console.log("Connecting to signaling server");
-            signaling_socket = io(SIGNALING_SERVER);
-            // signaling_socket = io();
+            // signaling_socket = io(SIGNALING_SERVER);
+            signaling_socket = io("", {
+                path: "/video-call"
+            });
 
             signaling_socket.on('connect', function () {
                 console.log("Connected to signaling server");
