@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /*
  
    __  __       _            _          _  
@@ -130,7 +131,7 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
     try {
         const tempPath = path.join(__dirname, "../" + req.file.path);
         const targetPath = path.join(__dirname, "../" + req.file.path + (path.extname(req.file.originalname).toLowerCase()));
-        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".gif" || path.extname(req.file.originalname).toLowerCase() === ".gif") {
+        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".gif" || path.extname(req.file.originalname).toLowerCase() === ".jpeg" || path.extname(req.file.originalname).toLowerCase() === ".TIFF") {
             let previousImage = false;
             const thisUser = await User.find({ _id: req.user._id }).select({ profileImage: 1 });
             previousImage = thisUser[0].profileImage;
@@ -204,7 +205,7 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
                 res
                     .status(403)
                     .contentType("text/plain")
-                    .end("Only .png files are allowed!");
+                    .end("Only images files are allowed!");
             });
         }
     } catch (e) {
