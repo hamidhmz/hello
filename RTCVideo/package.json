@@ -1,17 +1,19 @@
 {
-  "name": "rtcvideo",
+  "name": "simple-videochat-webrtc",
   "version": "1.0.0",
-  "description": "this is one of admin panel services",
-  "main": "index.js",
+  "description": "Video Chat between 2 people using simple-peer",
+  "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node server.js",
+    "watch": "npx watchify ./public/main.js -o ./public/bundle.js"
   },
-  "author": "hamidreza nasrollahi",
-  "license": "ISC",
+  "author": "Vinayak Sinha",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "express": "^4.17.1",
-    "socket.io": "^2.3.0"
+    "express": "^4.16.4",
+    "simple-peer": "^9.2.1",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "watchify": "^3.11.1"
   }
 }
