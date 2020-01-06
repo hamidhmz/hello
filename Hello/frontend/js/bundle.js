@@ -7640,7 +7640,9 @@
         }
 
         function RemovePeer() {
-          document.getElementById("peerVideo").remove();
+          if(document.getElementById("peerVideo")){
+            document.getElementById("peerVideo").remove();
+          }
           document.getElementById("muteText").remove();
           if (client.peer) {
             client.peer.destroy()
