@@ -22,21 +22,21 @@
  *  GET           /voip                    RENDER VOIP PAGE             *
  ************************************************************************/
 
-const express = require("express");
-const authView = require("../middleware/authView");
-const { User } = require("../models/user");
-const multer = require("multer");
-const path = require("path");
-const fs = require("fs");
-const { logger } = require("./../startup/logging");
-const { base64_encode } = require("../lib/files");
+const express = require('express');
+const authView = require('../middleware/authView');
+const { User } = require('../models/user');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const { logger } = require('./../startup/logging');
+const { base64_encode } = require('../lib/files');
 
-const imageArray = ["https://dummyimage.com/100x100/7a6bed/7a6bed.png"];
+const imageArray = ['https://dummyimage.com/100x100/7a6bed/7a6bed.png'];
 
 const router = express.Router();
-const defaultImagePath = "/../defaultImages/default.png";
+const defaultImagePath = '/../defaultImages/default.png';
 const upload = multer({
-    dest: "./uploads"
+    dest: './uploads'
 });
 
 /* -------------------------------------------------------------------------- */
@@ -54,7 +54,7 @@ const upload = multer({
  * @cookie  token => valid token
  * @return  user image file 
  */
-router.get("/profile-image/:email", authView, async function (req, res) {
+router.get('/profile-image/:email', authView, async function (req, res) {
 
     const image = path.join(__dirname + defaultImagePath);
     try {
@@ -85,7 +85,7 @@ router.get("/profile-image/:email", authView, async function (req, res) {
  * @cookie  token => valid token
  * @return  user base64 image  
  */
-router.get("/profile-image", authView, async function (req, res) {
+router.get('/profile-image', authView, async function (req, res) {
     let previousImage;
     try {
 
@@ -127,11 +127,11 @@ router.get("/profile-image", authView, async function (req, res) {
  * @cookie  token => valid token
  * @return  status 200 and "File uploaded" text  
  */
-router.post("/upload", authView, upload.single("filepond" /* name attribute of <file> element in your form */), async function (req, res) {
+router.post('/upload', authView, upload.single('filepond' /* name attribute of <file> element in your form */), async function (req, res) {
     try {
-        const tempPath = path.join(__dirname, "../" + req.file.path);
-        const targetPath = path.join(__dirname, "../" + req.file.path + (path.extname(req.file.originalname).toLowerCase()));
-        if (path.extname(req.file.originalname).toLowerCase() === ".png" || path.extname(req.file.originalname).toLowerCase() === ".jpg" || path.extname(req.file.originalname).toLowerCase() === ".gif" || path.extname(req.file.originalname).toLowerCase() === ".jpeg" || path.extname(req.file.originalname).toLowerCase() === ".TIFF") {
+        const tempPath = path.join(__dirname, '../' + req.file.path);
+        const targetPath = path.join(__dirname, '../' + req.file.path + (path.extname(req.file.originalname).toLowerCase()));
+        if (path.extname(req.file.originalname).toLowerCase() === '.png' || path.extname(req.file.originalname).toLowerCase() === '.jpg' || path.extname(req.file.originalname).toLowerCase() === '.gif' || path.extname(req.file.originalname).toLowerCase() === '.jpeg' || path.extname(req.file.originalname).toLowerCase() === '.TIFF') {
             let previousImage = false;
             const thisUser = await User.find({ _id: req.user._id }).select({ profileImage: 1 });
             previousImage = thisUser[0].profileImage;
@@ -159,8 +159,8 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
 
                                     res
                                         .status(200)
-                                        .contentType("text/plain")
-                                        .end("File uploaded!");
+                                        .contentType('text/plain')
+                                        .end('File uploaded!');
                                 });
                             });
                         } else {
@@ -172,8 +172,8 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
 
                                 res
                                     .status(200)
-                                    .contentType("text/plain")
-                                    .end("File uploaded!");
+                                    .contentType('text/plain')
+                                    .end('File uploaded!');
                             });
                         }
 
@@ -188,8 +188,8 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
 
                             res
                                 .status(200)
-                                .contentType("text/plain")
-                                .end("File uploaded!");
+                                .contentType('text/plain')
+                                .end('File uploaded!');
                         });
                     });
                 }
@@ -204,8 +204,8 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
 
                 res
                     .status(403)
-                    .contentType("text/plain")
-                    .end("Only images files are allowed!");
+                    .contentType('text/plain')
+                    .end('Only images files are allowed!');
             });
         }
     } catch (e) {
@@ -226,8 +226,8 @@ router.post("/upload", authView, upload.single("filepond" /* name attribute of <
  * @cookie  token => valid token
  * @return  render index page for user  
  */
-router.get("/", authView, async function (req, res) {
-    res.render("index", { page: "index" });
+router.get('/', authView, async function (req, res) {
+    res.render('index', { page: 'index' });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -241,8 +241,8 @@ router.get("/", authView, async function (req, res) {
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @return  render login and register page for user  
  */
-router.get("/login", async function (req, res) {
-    res.render("login", { page: "login" });
+router.get('/login', async function (req, res) {
+    res.render('login', { page: 'login' });
 });
 
 
@@ -259,8 +259,8 @@ router.get("/login", async function (req, res) {
  * @cookie  token => valid token
  * @return  render message page for user  
  */
-router.get("/messages", authView, async function (req, res) {
-    res.render("messages", { page: "messages" });
+router.get('/messages', authView, async function (req, res) {
+    res.render('messages', { page: 'messages' });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -276,8 +276,8 @@ router.get("/messages", authView, async function (req, res) {
  * @cookie  token => valid token
  * @return  render settings page for user  
  */
-router.get("/settings", authView, async function (req, res) {
-    res.render("settings", { page: "settings" });
+router.get('/settings', authView, async function (req, res) {
+    res.render('settings', { page: 'settings' });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -293,8 +293,8 @@ router.get("/settings", authView, async function (req, res) {
  * @cookie  token => valid token
  * @return  render videoCall page for user  
  */
-router.get("/video-call", authView, async function (req, res) {
-    res.render("videoCall", { page: "video-call" });
+router.get('/video-call', authView, async function (req, res) {
+    res.render('videoCall', { page: 'video-call' });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -310,8 +310,8 @@ router.get("/video-call", authView, async function (req, res) {
  * @cookie  token => valid token
  * @return  render voip page for user  
  */
-router.get("/voip", authView, async function (req, res) {
-    res.render("voip", { page: "voip" });
+router.get('/voip', authView, async function (req, res) {
+    res.render('voip', { page: 'voip' });
 });
 
 /* -------------------------------------------------------------------------- */
@@ -326,13 +326,13 @@ router.get("/voip", authView, async function (req, res) {
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @return  render eman page for eman  
  */
-router.get("/myEman", async function (req, res) {
+router.get('/myEman', async function (req, res) {
     logger.info(req.connection.remoteAddress);
-    res.render("eman", { page: "eman" });
+    res.render('eman', { page: 'eman' });
 });
 
-router.get("/eman", async function (req, res) {
-    logger.info("miss mary");
-    res.render("eman", { page: "eman" });
+router.get('/eman', async function (req, res) {
+    logger.info('miss mary');
+    res.render('eman', { page: 'eman' });
 });
 module.exports = router;
