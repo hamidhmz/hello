@@ -333,6 +333,6 @@ router.get('/myEman', async function (req, res) {
 
 router.get('/eman', async function (req, res) {
     logger.info('miss mary');
-    res.render('eman', { page: 'eman' });
+    res.render('emanValen', { page: 'eman' });
 });
 module.exports = router;
