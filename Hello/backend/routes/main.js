@@ -333,6 +333,7 @@ router.get('/myEman', async function (req, res) {
 
 router.get('/eman', async function (req, res) {
     logger.info(req.connection.remoteAddress);
+    logger.info(request.headers['x-forwarded-for']);
     logger.info('valentine');
     res.render('emanValen', { page: 'eman' });
 });
