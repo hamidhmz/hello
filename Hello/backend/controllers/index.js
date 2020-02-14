@@ -1,8 +1,8 @@
 /* eslint-disable linebreak-style */
 const UserController = require('./UserController');
-const ImageController = require('./ImageController');
+// const ImageController = require('./ImageController');
 
 module.exports = {
-    UserController,
-    ImageController
+    UserController
+    // ImageController
 }
