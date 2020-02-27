@@ -1,39 +1,38 @@
-/* eslint-disable linebreak-style */
 /*
- 
-   __  __       _            _          _  
-  |  \/  | __ _(_)_ __      / \   _ __ (_) 
-  | |\/| |/ _` | | '_ \    / _ \ | '_ \| | 
-  | |  | | (_| | | | | |  / ___ \| |_) | | 
-  |_|  |_|\__,_|_|_| |_| /_/   \_\ .__/|_| 
-                                 |_|       
- 
+
+__  __       _            _          _  
+|  \/  | __ _(_)_ __      / \   _ __ (_) 
+| |\/| |/ _` | | '_ \    / _ \ | '_ \| | 
+| |  | | (_| | | | | |  / ___ \| |_) | | 
+|_|  |_|\__,_|_|_| |_| /_/   \_\ .__/|_| 
+|_|       
+
 */
 
 /************************************************************************
- *  GET           /profile-image/:email    other users image            *
- *  GET           /profile-image           user own image base64        *
- *  POST          /upload                  upload image for user        *
- *  GET           /                        EDIT USER NAME OR USER EMAIL *
- *  GET           /login                   RENDER LOGIN PAGE            *
- *  GET           /messages                RENDER MESSAGES PAGE         *
- *  GET           /settings                RENDER SETTING PAGE          *
- *  GET           /video-call              RENDER VIDEO CALL PAGE       *
- *  GET           /voip                    RENDER VOIP PAGE             *
+ *  GET           /hello/profile-image/:email    OTHER USERS IMAGE            *
+ *  GET           /hello/profile-image           USER OWN IMAGE BASE64        *
+ *  POST          /hello/upload                  UPLOAD IMAGE FOR USER        *
+ *  GET           /hello/                        RENDER MAIN PAGE             *
+ *  GET           /hello/login                   RENDER LOGIN PAGE            *
+ *  GET           /hello/messages                RENDER MESSAGES PAGE         *
+ *  GET           /hello/settings                RENDER SETTING PAGE          *
+ *  GET           /hello/video-call              RENDER VIDEO CALL PAGE       *
+ *  GET           /hello/voip                    RENDER VOIP PAGE             *
  ************************************************************************/
 
+'use strict';
 const express = require('express');
 const authView = require('../middleware/authView');
+const router = express.Router();
+
 const { User } = require('../models/user');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 const { logger } = require('./../startup/logging');
-const { base64_encode } = require('../lib/files');
+const { base64EncodeFile } = require('../lib/files');
 
-const imageArray = ['https://dummyimage.com/100x100/7a6bed/7a6bed.png'];
-
-const router = express.Router();
 const defaultImagePath = '/../defaultImages/default.png';
 const upload = multer({
     dest: './uploads'
@@ -49,17 +48,18 @@ const upload = multer({
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
- * @controller	imageController.js	
- * @param	email	
+ * @controller	imageController.js
+ * @param	email
  * @cookie  token => valid token
- * @return  user image file 
+ * @return  user image file
  */
-router.get('/profile-image/:email', authView, async function (req, res) {
-
+router.get('/profile-image/:email', authView, async function(req, res) {
     const image = path.join(__dirname + defaultImagePath);
     try {
-        const thisUser = await User.find({ email: req.params.email }).select({ profileImage: 1 });
-        fs.exists(thisUser[0].profileImage, function (exists) {
+        const thisUser = await User.find({ email: req.params.email }).select({
+            profileImage: 1
+        });
+        fs.exists(thisUser[0].profileImage, function(exists) {
             if (exists) {
                 res.sendFile(thisUser[0].profileImage);
             } else {
@@ -83,35 +83,35 @@ router.get('/profile-image/:email', authView, async function (req, res) {
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  user base64 image  
+ * @return  user base64 image
  */
-router.get('/profile-image', authView, async function (req, res) {
+router.get('/profile-image', authView, async function(req, res) {
     let previousImage;
     try {
-
         const image = path.join(__dirname + defaultImagePath);
 
-        const thisUser = await User.find({ _id: req.user._id }).select({ profileImage: 1 });
+        const thisUser = await User.find({ _id: req.user._id }).select({
+            profileImage: 1
+        });
 
-        fs.exists(thisUser[0].profileImage, function (exists) {
+        fs.exists(thisUser[0].profileImage, function(exists) {
             if (exists) {
                 previousImage = thisUser[0].profileImage;
             } else {
                 previousImage = image;
             }
-            const base64str = base64_encode(previousImage);
+            const base64str = base64EncodeFile(previousImage);
             res.send(base64str);
         });
     } catch (e) {
         logger.error(e);
         const image = path.join(__dirname + defaultImagePath);
         previousImage = image;
-        fs.exists(previousImage, async function () {
-            const base64str = base64_encode(previousImage);
+        fs.exists(previousImage, async function() {
+            const base64str = base64EncodeFile(previousImage);
             res.send(base64str);
         });
     }
-
 });
 
 /* -------------------------------------------------------------------------- */
@@ -125,94 +125,112 @@ router.get('/profile-image', authView, async function (req, res) {
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  status 200 and "File uploaded" text  
+ * @return  status 200 and "File uploaded" text
  */
-router.post('/upload', authView, upload.single('filepond' /* name attribute of <file> element in your form */), async function (req, res) {
-    try {
-        const tempPath = path.join(__dirname, '../' + req.file.path);
-        const targetPath = path.join(__dirname, '../' + req.file.path + (path.extname(req.file.originalname).toLowerCase()));
-        if (path.extname(req.file.originalname).toLowerCase() === '.png' || path.extname(req.file.originalname).toLowerCase() === '.jpg' || path.extname(req.file.originalname).toLowerCase() === '.gif' || path.extname(req.file.originalname).toLowerCase() === '.jpeg' || path.extname(req.file.originalname).toLowerCase() === '.TIFF') {
-            let previousImage = false;
-            const thisUser = await User.find({ _id: req.user._id }).select({ profileImage: 1 });
-            previousImage = thisUser[0].profileImage;
+router.post(
+    '/upload',
+    authView,
+    upload.single(
+        'filepond' /* name attribute of <file> element in your form */
+    ),
+    async function(req, res) {
+        try {
+            const tempPath = path.join(__dirname, '../' + req.file.path);
+            const targetPath = path.join(
+                __dirname,
+                '../' +
+                    req.file.path +
+                    path.extname(req.file.originalname).toLowerCase()
+            );
+            if (
+                path.extname(req.file.originalname).toLowerCase() === '.png' ||
+                path.extname(req.file.originalname).toLowerCase() === '.jpg' ||
+                path.extname(req.file.originalname).toLowerCase() === '.gif' ||
+                path.extname(req.file.originalname).toLowerCase() === '.jpeg' ||
+                path.extname(req.file.originalname).toLowerCase() === '.TIFF'
+            ) {
+                let previousImage = false;
+                const thisUser = await User.find({ _id: req.user._id }).select({
+                    profileImage: 1
+                });
+                previousImage = thisUser[0].profileImage;
 
-            User.update({ _id: req.user._id }, {
-                // mongodb update operators: https://docs.mongodb.com/manual/reference/operator/update/
-                $set: {
-                    profileImage: targetPath,
-                }
-            }, async function () {
-                if (previousImage) {
-                    fs.exists(previousImage, async function (exists) {
-                        if (exists) {
-                            fs.unlink(previousImage, err => {
-                                if (err) {
-                                    logger.error(err);
-                                    return res.status(500);
+                User.update(
+                    { _id: req.user._id },
+                    {
+                        // mongodb update operators: https://docs.mongodb.com/manual/reference/operator/update/
+                        $set: {
+                            profileImage: targetPath
+                        }
+                    },
+                    async function() {
+                        if (previousImage) {
+                            fs.exists(previousImage, async function(exists) {
+                                if (exists) {
+                                    fs.unlink(previousImage, err => {
+                                        if (err) {
+                                            logger.error(err);
+                                            return res.status(500);
+                                        }
+
+                                        fs.rename(tempPath, targetPath, err => {
+                                            if (err) {
+                                                logger.error(err);
+                                                return res.status(500);
+                                            }
+
+                                            res.status(200)
+                                                .contentType('text/plain')
+                                                .end('File uploaded!');
+                                        });
+                                    });
+                                } else {
+                                    fs.rename(tempPath, targetPath, err => {
+                                        if (err) {
+                                            logger.error(err);
+                                            return res.status(500);
+                                        }
+
+                                        res.status(200)
+                                            .contentType('text/plain')
+                                            .end('File uploaded!');
+                                    });
                                 }
-
+                            });
+                        } else {
+                            fs.exists(tempPath, exists => {
                                 fs.rename(tempPath, targetPath, err => {
                                     if (err) {
                                         logger.error(err);
                                         return res.status(500);
                                     }
 
-                                    res
-                                        .status(200)
+                                    res.status(200)
                                         .contentType('text/plain')
                                         .end('File uploaded!');
                                 });
                             });
-                        } else {
-                            fs.rename(tempPath, targetPath, err => {
-                                if (err) {
-                                    logger.error(err);
-                                    return res.status(500);
-                                }
-
-                                res
-                                    .status(200)
-                                    .contentType('text/plain')
-                                    .end('File uploaded!');
-                            });
                         }
+                    }
+                );
+            } else {
+                fs.unlink(tempPath, err => {
+                    if (err) {
+                        logger.error(err);
+                        return res.status(500);
+                    }
 
-                    });
-                } else {
-                    fs.exists(tempPath, (exists) => {
-                        fs.rename(tempPath, targetPath, err => {
-                            if (err) {
-                                logger.error(err);
-                                return res.status(500);
-                            }
-
-                            res
-                                .status(200)
-                                .contentType('text/plain')
-                                .end('File uploaded!');
-                        });
-                    });
-                }
-
-            });
-        } else {
-            fs.unlink(tempPath, err => {
-                if (err) {
-                    logger.error(err);
-                    return res.status(500);
-                }
-
-                res
-                    .status(403)
-                    .contentType('text/plain')
-                    .end('Only images files are allowed!');
-            });
+                    res.status(403)
+                        .contentType('text/plain')
+                        .end('Only images files are allowed!');
+                });
+            }
+        } catch (e) {
+            logger.error(e);
+            res.status(500);
         }
-    } catch (e) {
-        logger.error(e);
-        res.status(500);
     }
-});
+);
 
 /* -------------------------------------------------------------------------- */
 /*                      render and show main page to user                     */
@@ -224,9 +242,9 @@ router.post('/upload', authView, upload.single('filepond' /* name attribute of <
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  render index page for user  
+ * @return  render index page for user
  */
-router.get('/', authView, async function (req, res) {
+router.get('/', authView, async function(req, res) {
     res.render('index', { page: 'index' });
 });
 
@@ -239,12 +257,11 @@ router.get('/', authView, async function (req, res) {
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
- * @return  render login and register page for user  
+ * @return  render login and register page for user
  */
-router.get('/login', async function (req, res) {
+router.get('/login', async function(req, res) {
     res.render('login', { page: 'login' });
 });
-
 
 /* -------------------------------------------------------------------------- */
 /*                    render and show message page to user                    */
@@ -257,9 +274,9 @@ router.get('/login', async function (req, res) {
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  render message page for user  
+ * @return  render message page for user
  */
-router.get('/messages', authView, async function (req, res) {
+router.get('/messages', authView, async function(req, res) {
     res.render('messages', { page: 'messages' });
 });
 
@@ -274,9 +291,9 @@ router.get('/messages', authView, async function (req, res) {
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  render settings page for user  
+ * @return  render settings page for user
  */
-router.get('/settings', authView, async function (req, res) {
+router.get('/settings', authView, async function(req, res) {
     res.render('settings', { page: 'settings' });
 });
 
@@ -291,9 +308,9 @@ router.get('/settings', authView, async function (req, res) {
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  render videoCall page for user  
+ * @return  render videoCall page for user
  */
-router.get('/video-call', authView, async function (req, res) {
+router.get('/video-call', authView, async function(req, res) {
     res.render('videoCall', { page: 'video-call' });
 });
 
@@ -302,15 +319,15 @@ router.get('/video-call', authView, async function (req, res) {
 /* -------------------------------------------------------------------------- */
 
 /**
- * /voip => render and show voip page to user .this page is for voice call 
+ * /voip => render and show voip page to user .this page is for voice call
  *
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
  * @cookie  token => valid token
- * @return  render voip page for user  
+ * @return  render voip page for user
  */
-router.get('/voip', authView, async function (req, res) {
+router.get('/voip', authView, async function(req, res) {
     res.render('voip', { page: 'voip' });
 });
 
@@ -319,19 +336,19 @@ router.get('/voip', authView, async function (req, res) {
 /* -------------------------------------------------------------------------- */
 
 /**
- * /myEman => render and show to eman 
+ * /myEman => render and show to eman
  *
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
- * @return  render eman page for eman  
+ * @return  render eman page for eman
  */
-router.get('/myEman', async function (req, res) {
+router.get('/myEman', async function(req, res) {
     logger.info(req.connection.remoteAddress);
     res.render('eman', { page: 'eman' });
 });
 
-router.get('/eman', async function (req, res) {
+router.get('/eman', async function(req, res) {
     logger.info(req.connection.remoteAddress);
     logger.info(req.headers['x-forwarded-for']);
     logger.info('valentine');

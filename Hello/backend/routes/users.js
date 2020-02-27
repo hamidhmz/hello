@@ -1,4 +1,4 @@
-/* eslint-disable linebreak-style */
+'use strict';
 /*
  
    _   _                    _          _ 
@@ -10,15 +10,15 @@
  
 */
 
-/******************************************************************************************
- *  GET               /hello/api/users/ME                  GET USER DETAILS               *
- *  POST              /hello/api/users/REGISTER            REGISTER NEW USER              *
- *  POST              /hello/api/users/LOGIN               USER LOGIN                     *
- *  POST              /hello/api/users/EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL   *
- *  PUT               /hello/api/users/EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD   *
- *  POST              /hello/api/users/contact-form        SEND MESSAGE FROM CLIENT IN CV *
- *  POST              /hello/api/users/list                SEND LIST OF USERS             *
- ******************************************************************************************/
+/******************************************************************************
+ * GET    /hello/api/users/ME                  GET USER DETAILS               *
+ * POST   /hello/api/users/REGISTER            REGISTER NEW USER              *
+ * POST   /hello/api/users/LOGIN               USER LOGIN                     *
+ * POST   /hello/api/users/EDIT-NAME-OR-EMAIL  EDIT USER NAME OR USER EMAIL   *
+ * PUT    /hello/api/users/EDIT-PASSWORD       EDIT AND CHANGE THE PASSWORD   *
+ * POST   /hello/api/users/contact-form        SEND MESSAGE FROM CLIENT IN CV *
+ * POST   /hello/api/users/list                SEND LIST OF USERS             *
+ ******************************************************************************/
 const express = require('express');
 const auth = require('../middleware/auth');
 const { UserController } = require('../controllers');
@@ -34,9 +34,9 @@ const router = express.Router();
  * @author	hamidreza nasrollahi
  * @since	v0.0.1
  * @version	v1.0.0	Wednesday, November 13th, 2019.
- * @param	nothing	
+ * @param	nothing
  * @header  x-auth-token => valid token
- * @return  user details 
+ * @return  user details
  */
 router.get('/me', auth, UserController.userDetails);
 

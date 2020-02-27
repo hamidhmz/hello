@@ -1,5 +1,5 @@
-require("@babel/register")({
-    presets: ["@babel/preset-env"]
+require('@babel/register')({
+    presets: ['@babel/preset-env']
 });
 
 // Import the rest of our application.

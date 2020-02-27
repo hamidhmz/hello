@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 
-const { User } = require("../models/user");
+const { User } = require('../models/user');
 
 /**
  * findUserAndReturnWithId.
@@ -13,7 +13,7 @@ const { User } = require("../models/user");
  * @return	user detail from DB
  */
 async function findUserAndReturnWithId(req){
-    const user = await User.findById(req.user._id).select("-password");
+    const user = await User.findById(req.user._id).select('-password');
     return user;
 }
 

@@ -88,7 +88,9 @@ const editNameAndEmail = async (req, res) => {
         if (!user) return res.status(400).send('Invalid Token.');
 
         User.findById(user._id, async (err, doc) => {
-            if (err) { logger.info(err); return res.status(500); }
+            if (err) {
+                logger.info(err); return res.status(500); 
+            }
             if (Object.keys(doc).length) {
                 doc.name = req.body.name;
                 doc.email = req.body.email;
