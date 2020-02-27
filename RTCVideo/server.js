@@ -22,7 +22,10 @@ io.on('connection', function (socket) {
              console.log('SessionActive');
              this.emit('SessionActive')
         clients++;
+        console.log('clients: ',clients);
     })
+    console.log('clients: ',clients);
+
     console.log('connection');
     socket.on('Offer', SendOffer)
     socket.on('Answer', SendAnswer)

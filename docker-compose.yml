@@ -53,7 +53,7 @@ services:
       depends_on: ["app"]
   mongo:
     restart: always
-    image: mongo
+    image: mongo:4
     volumes:
       - mongo-data:/data/db
     ports:
@@ -78,10 +78,5 @@ services:
         - ./nginx-modsecurity/nginx:/etc/nginx
         - ./nginx-modsecurity/:/var/log/nginx
         - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
-  certbot:
-    image: certbot/certbot
-    volumes:
-      - ./data/certbot/conf:/etc/letsencrypt
-      - ./data/certbot/www:/var/www/certbot
 volumes:
   mongo-data:

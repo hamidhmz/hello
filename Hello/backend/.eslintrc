@@ -1,0 +1,54 @@
+{
+    "env": {
+        "node": true,
+        "es6": true,
+        "commonjs": true
+    },
+    "extends": ["eslint:recommended"],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2020
+    },
+    "ignorePatterns": ["package-lock.json", "package.json", "node_modules/*"],
+    "rules": {
+        "strict": ["error", "global"],
+        "semi-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "space-in-parens": ["error", "never"],
+        "block-spacing": ["error", "always"],
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "semi": ["error", "always"],
+        "quotes": ["error", "single"],
+        "indent": ["error", 4],
+        "max-len": [
+            "error",
+            {
+                "code": 80,
+                "comments": 80
+            }
+        ],
+        "brace-style": ["error", "1tbs"],
+        "one-var-declaration-per-line": ["error", "always"],
+        "camelcase": [
+            "error",
+            {
+                "properties": "never"
+            }
+        ],
+        "linebreak-style": ["error", "unix"]
+    }
+}
