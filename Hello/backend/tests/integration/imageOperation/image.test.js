@@ -52,11 +52,10 @@ describe('/profile-image/', () => {
                 .get('/hello/profile-image/')
                 .set('Cookie', ['token=' + token]);
 
-            console.log(res);
             expect(base64EncodeFile(profileImage)).toBe(res.text);
             testFilePath = profileImage;
         });
-    }, 10000);
+    });
     describe('GET /profile-image/:email', () => {
         it('should return image file for specific user', async () => {
             const name = 'testtest';
@@ -86,7 +85,7 @@ describe('/profile-image/', () => {
             expect(res.body.equals(mainFile)).toBe(true);
             testFilePath = profileImage;
         });
-    }, 10000);
+    });
     describe('POST /profile-image upload a new image', () => {
         // Upload first test file to CDN
         it('should upload the test file to server', async () => {
@@ -126,6 +125,6 @@ describe('/profile-image/', () => {
             const fileExists = await fs.exists(thisUser[0].profileImage);
             expect(fileExists).toBe(true);
             testFilePath = thisUser[0].profileImage;
-        }, 10000);
+        });
     });
 });

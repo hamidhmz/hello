@@ -1,15 +1,15 @@
 /* eslint-disable */
 const request = require('supertest');
 const bcrypt = require('bcryptjs');
-const { User } = require('../../models/user');
-const { ContactUs } = require('../../models/ContactUs');
+const { User } = require('../../../models/user');
+const { ContactUs } = require('../../../models/ContactUs');
 // const expect = require("chai").expect;
 
 describe('/hello/api/users/test', () => {
     let server;
 
     beforeEach(() => {
-        server = require('../../index');
+        server = require('../../../index');
     });
     afterEach(async () => {
         try {
@@ -648,7 +648,7 @@ describe('/hello/api/users/test', () => {
         });
     });
 
-    describe('PUT /hello/api/users/edit-password', async () => {
+    describe('PUT /hello/api/users/edit-password', () => {
         /* ------------------------------- happy path ------------------------------- */
         it('should return 200 after change password', async () => {
             const name = 'testtest';
@@ -837,7 +837,7 @@ describe('/hello/api/users/test', () => {
                     confirmPassword: confirmPassword
                 });
             expect(result.status).toBe(400);
-            expect(result.text).toBe("Your Previous Password didn't Match.");
+            expect(result.text).toBe('Your Previous Password did not Match.');
         });
         it("should return 400 status if new password and confirm password didn't match ", async () => {
             const name = 'testtest';
@@ -868,7 +868,7 @@ describe('/hello/api/users/test', () => {
                 });
             expect(result.status).toBe(400);
             expect(result.text).toBe(
-                "Your new Password And Confirm didn't Match."
+                'Your new Password And Confirm did not Match.'
             );
         });
         it('should return error with 400 status code if oldPassword was little than 5 characters ', async () => {
