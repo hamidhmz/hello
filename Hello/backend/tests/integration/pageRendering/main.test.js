@@ -37,14 +37,14 @@ describe('/profile-image/', () => {
 
             expect(res.status).toBe(200);
         });
-    }, 10000);
+    });
     describe('GET /login', () => {
         it('should render login page', async () => {
             const res = await request(server).get('/hello/login');
 
             expect(res.status).toBe(200);
         });
-    }, 10000);
+    });
     describe('GET /messages', () => {
         it('should render messages page', async () => {
             const name = 'testtest';
@@ -68,7 +68,7 @@ describe('/profile-image/', () => {
 
             expect(res.status).toBe(200);
         });
-    }, 10000);
+    });
     describe('GET /settings', () => {
         it('should render settings page', async () => {
             const name = 'testtest';
@@ -92,7 +92,7 @@ describe('/profile-image/', () => {
 
             expect(res.status).toBe(200);
         });
-    }, 10000);
+    });
     describe('GET /video-call', () => {
         it('should render video-call page', async () => {
             const name = 'testtest';
@@ -116,7 +116,7 @@ describe('/profile-image/', () => {
 
             expect(res.status).toBe(200);
         });
-    }, 10000);
+    });
     describe('GET /voip', () => {
         it('should render voip page', async () => {
             const name = 'testtest';
@@ -140,5 +140,5 @@ describe('/profile-image/', () => {
 
             expect(res.status).toBe(200);
         });
-    }, 10000);
+    });
 });

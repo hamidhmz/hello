@@ -3,7 +3,7 @@ services:
   app:
     container_name: hello
     restart: always
-    build: 
+    build:
       context: ./Hello/backend/
       dockerfile: Dockerfile
     volumes:
@@ -23,7 +23,7 @@ services:
   app-cv:
     container_name: cv
     restart: always
-    build: 
+    build:
       context: ./CV/
       dockerfile: Dockerfile
     volumes:
@@ -38,19 +38,19 @@ services:
       - "NODE_ENV=production"
     depends_on: ["mongo"]
   app-rtc:
-      container_name: video-call
-      restart: always
-      build: 
-        context: ./RTCVideo/
-        dockerfile: Dockerfile
-      volumes:
-        - ./:/app
-      tty: true
-      ports:
-        - "8080:8080"
-      links:
-        - "mongo:dbmongo"
-      depends_on: ["app"]
+    container_name: video-call
+    restart: always
+    build:
+      context: ./RTCVideo/
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - "8080:8080"
+    links:
+      - "mongo:dbmongo"
+    depends_on: ["app"]
   mongo:
     restart: always
     image: mongo:4
@@ -61,11 +61,11 @@ services:
   nginx:
     container_name: nginx-modsecurity-reverse-proxy
     restart: always
-    build: 
+    build:
       context: ./nginx-modsecurity/
       dockerfile: nginx.Dockerfile
 
-    environment: 
+    environment:
       - PROXYLOCATION=http://app:3000/
       - PROXY=1
       - PARANOIA=5
@@ -74,9 +74,16 @@ services:
       - "80:80"
     tty: true
     volumes:
-        - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
-        - ./nginx-modsecurity/nginx:/etc/nginx
-        - ./nginx-modsecurity/:/var/log/nginx
-        - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
+      - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
+      - ./nginx-modsecurity/nginx:/etc/nginx
+      - ./nginx-modsecurity/:/var/log/nginx
+      - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
+  redis:
+    container_name: redis
+    image: redis:6.0-rc1
+    restart: always
+    ports:
+      - "6379:6379"
+
 volumes:
   mongo-data:
