@@ -30,7 +30,7 @@ services:
       - ./:/app
     tty: true
     ports:
-      - "8086:1337"
+      - "8087:1337"
     links:
       - "mongo:dbmongo"
       # this feature is no longer need except for aliases
