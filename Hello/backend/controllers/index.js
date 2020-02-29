@@ -1,7 +1,7 @@
 'use strict';
 
 const UserController = require('./UserController');
-const ImageController = require('./imageController');
+const ImageController = require('./ImageController');
 
 module.exports = {
     UserController,

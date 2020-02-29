@@ -49,10 +49,11 @@
         "jasmine": "^3.5.0"
     },
     "scripts": {
-        "start": "nodemon index.js --exec babel-node --presets babel-preset-env -L",
+        "start": "nodemon index.js",
         "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1",
         "test-jasmine": "jasmine",
-        "test-mocha-chai": "mocha"
+        "test-mocha-chai": "mocha",
+        "start_watch_inspect": "nodemon --delay 80ms --watch . index.js "
     },
     "repository": {
         "type": "git",
