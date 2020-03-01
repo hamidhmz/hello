@@ -1,12 +1,14 @@
 language: node_js
-node_js:
-  - '8'
+
 
 services:
   - docker
 
-before_install:
+script:
   - docker-compose up 
+  - sleep 3
+  - cd ./Hello/backend/
+  - npm run test 
 
 env:
   - NODE_ENV=test
@@ -17,7 +19,4 @@ cache:
     - ./RTCVideo-previous/node_modules
     - ./CV/node_modules
 
-script:
-  - sleep 3
-  - cd ./Hello/backend/
-  - npm run test 
+  
