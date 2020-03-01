@@ -1,5 +1,6 @@
 {
   "jwtPrivateKey":"123456",
   "db":"mongodb://dbmongo:27017/adminPanel",
-  "PORT":"3000"
+  "PORT":"3000",
+  "redis":"redis://redis:6379"
 }

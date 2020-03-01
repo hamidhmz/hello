@@ -1,5 +1,6 @@
 {
   "db":"mongodb://localhost:27057/adminPanel",
   "jwtPrivateKey":"123456",
-  "PORT":"3031"
+  "PORT":"3031",
+  "redis":"redis://localhost:6379"
 }

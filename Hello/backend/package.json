@@ -28,7 +28,7 @@
         "mongoose-timezone": "^1.1.0",
         "multer": "^1.4.1",
         "mz": "^2.7.0",
-        "nodemon": "^1.18.11",
+        "nodemon": "^1.19.4",
         "redis": "^3.0.2",
         "socket.io": "^2.2.0",
         "supertest": "^4.0.2",
@@ -49,10 +49,11 @@
         "jasmine": "^3.5.0"
     },
     "scripts": {
-        "start": "nodemon index.js --exec babel-node --presets babel-preset-env -L",
+        "start": "nodemon index.js",
         "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1",
         "test-jasmine": "jasmine",
-        "test-mocha-chai": "mocha"
+        "test-mocha-chai": "mocha",
+        "start_watch_inspect": "nodemon --delay 80ms --watch . index.js "
     },
     "repository": {
         "type": "git",
