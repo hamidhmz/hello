@@ -73,11 +73,11 @@ services:
       - "443:443"
       - "80:80"
     tty: true
-    volumes:
-      - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
-      - ./nginx-modsecurity/nginx:/etc/nginx
-      - ./nginx-modsecurity/:/var/log/nginx
-      - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
+    # volumes:
+    #   - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
+    #   - ./nginx-modsecurity/nginx:/etc/nginx
+    #   - ./nginx-modsecurity/:/var/log/nginx
+    #   - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
   redis:
     container_name: redis
     image: redis:6.0-rc1
