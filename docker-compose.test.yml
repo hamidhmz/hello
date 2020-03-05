@@ -1,0 +1,89 @@
+version: "3.5"
+services:
+  app:
+    container_name: hello
+    restart: always
+    build:
+      context: ./Hello/backend/
+      dockerfile: test.Dockerfile
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - "8085:3000"
+    links:
+      - "mongo:dbmongo"
+      # this feature is no longer need except for aliases
+    environment:
+      - "NODE_ENV=docker"
+      - "admin-panel_jwt=123456"
+      - "adminPanel_jwt=123456"
+      - "PORT=3000"
+    depends_on: ["mongo"]
+  app-cv:
+    container_name: cv
+    restart: always
+    build:
+      context: ./CV/
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - "8087:1337"
+    links:
+      - "mongo:dbmongo"
+      # this feature is no longer need except for aliases
+    environment:
+      - "NODE_ENV=production"
+    depends_on: ["mongo"]
+  app-rtc:
+    container_name: video-call
+    restart: always
+    build:
+      context: ./RTCVideo/
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    tty: true
+    ports:
+      - "8080:8080"
+    links:
+      - "mongo:dbmongo"
+    depends_on: ["app"]
+  mongo:
+    restart: always
+    image: mongo:4
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27057:27017"
+  nginx:
+    container_name: nginx-modsecurity-reverse-proxy
+    restart: always
+    build:
+      context: ./nginx-modsecurity/
+      dockerfile: nginx.Dockerfile
+
+    environment:
+      - PROXYLOCATION=http://app:3000/
+      - PROXY=1
+      - PARANOIA=5
+    ports:
+      - "443:443"
+      - "80:80"
+    tty: true
+    # volumes:
+    #   - ./nginx-modsecurity/modsecurity.d:/etc/modsecurity.d
+    #   - ./nginx-modsecurity/nginx:/etc/nginx
+    #   - ./nginx-modsecurity/:/var/log/nginx
+    #   - ./nginx-modsecurity/modlog/modsec_audit.log:/var/log/modsec_audit.log
+  redis:
+    container_name: redis
+    image: redis:6.0-rc1
+    restart: always
+    ports:
+      - "6379:6379"
+
+volumes:
+  mongo-data:

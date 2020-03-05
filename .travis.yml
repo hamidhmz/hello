@@ -5,11 +5,7 @@ services:
   - docker
 
 script:
-  - docker-compose up 
-  - sleep 3
-  - cd ./Hello/backend/
-  - npm run test 
-
+  - docker-compose up --file docker-compose.test.yml
 env:
   - NODE_ENV=test
 cache:
