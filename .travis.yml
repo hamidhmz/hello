@@ -2,7 +2,7 @@ sudo: required
 language: node_js
 node_js:
   - '10'
-
+dist: trusty
 services:
   - docker
 before_script:
@@ -11,6 +11,8 @@ before_script:
   - docker-compose --file docker-compose.test.yml up -d redis
   - docker-compose --file docker-compose.test.yml up -d app-rtc
   - docker-compose --file docker-compose.test.yml up -d app-cv
+install: 
+  - cd Hello/backend && npm install
 script:
   # - docker-compose --file docker-compose.test.yml up app
   - cd Hello/backend
