@@ -4,7 +4,8 @@ WORKDIR /app
 #VOLUME ./:/app
 #RUN npm install
 
-RUN ["sh","-c","ls && cd Hello/backend && npm install"]
+RUN cd Hello/backend 
+RUN npm install
 #VOLUME .:/app
 #CMD  ["sh","-c","cd backend && npm","start"]
 # test for github branches from local
