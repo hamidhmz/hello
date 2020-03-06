@@ -7,7 +7,9 @@ const { ContactUs } = require('../../../models/ContactUs');
 
 describe('/hello/api/users/test', () => {
     let server;
-
+    beforeAll((done) => {
+        done();
+    });
     beforeEach(async () => {
         server = require('../../../index');
         await User.remove({});
@@ -20,6 +22,9 @@ describe('/hello/api/users/test', () => {
         } catch (error) {
             console.log(error);
         }
+    });
+    afterAll((done) => {
+        done();
     });
     describe('GET /hello/api/users/list ', () => {
         /* ------------------------------- happy path ------------------------------- */

@@ -5,7 +5,9 @@ const { User } = require('../../../models/user');
 const bcrypt = require('bcryptjs');
 describe('/profile-image/', () => {
     let server;
-
+    beforeAll((done)=>{
+        done();
+    });
     beforeEach(async () => {
         server = require('../../../index');
         await User.remove({});
@@ -14,7 +16,9 @@ describe('/profile-image/', () => {
         await User.remove({});
         server.close();
     });
-    beforeAll(() => {});
+    afterAll((done) => {
+        done();
+    });
     describe('GET /', () => {
         it('should render main page (index)', async () => {
             const name = 'testtest';
@@ -115,7 +119,7 @@ describe('/profile-image/', () => {
                 .get('/hello/video-call')
                 .set('Cookie', ['token=' + token]);
 
-            expect(res.status).toBe(200);
+            expect(res.status).toBe(400);
         });
     });
     describe('GET /voip', () => {

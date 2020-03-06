@@ -10,7 +10,9 @@ const filePath_ = path.join(__dirname + '/test.jpg');
 let testFilePath = null;
 describe('/profile-image/', () => {
     let server;
-
+    beforeAll(done => {
+        done();
+    });
     beforeEach(async () => {
         server = require('../../../index');
     });
@@ -25,7 +27,9 @@ describe('/profile-image/', () => {
             console.log(error);
         }
     });
-    beforeAll(() => {});
+    afterAll(done => {
+        done();
+    });
     describe('GET /profile-image/', () => {
         it('should return image file for owner user ', async () => {
             const name = 'testtest';

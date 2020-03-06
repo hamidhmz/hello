@@ -51,7 +51,7 @@
     "scripts": {
         "start": "nodemon index.js",
         "test": "jest --watchAll --forceExit --detectOpenHandles --verbose --coverage --maxWorkers=1",
-        "test:ci": "jest  --ci ",
+        "test:ci": "jest  --ci",
         "test-jasmine": "jasmine",
         "test-mocha-chai": "mocha",
         "start_watch_inspect": "nodemon --delay 80ms --watch . index.js "
