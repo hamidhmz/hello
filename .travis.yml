@@ -3,9 +3,13 @@ language: node_js
 
 services:
   - docker
-
+before_script:
+  - docker-compose up -d mongo
+  - docker-compose up -d redis
+  - docker-compose up -d app-rtc
+  - docker-compose up -d app-cv
 script:
-  - docker-compose --file docker-compose.test.yml up
+  - docker-compose --file docker-compose.test.yml up -d app
 env:
   - NODE_ENV=test
 cache:

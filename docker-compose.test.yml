@@ -2,7 +2,6 @@ version: "3.5"
 services:
   app:
     container_name: hello
-    restart: always
     build:
       context: ./Hello/backend/
       dockerfile: test.Dockerfile
