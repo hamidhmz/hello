@@ -13,7 +13,7 @@ before_script:
   - docker-compose --file docker-compose.test.yml up -d app-cv
   - docker-compose --file docker-compose.test.yml up -d app 
 script:
-  - sleep 10
+  - sleep 20
   - docker-compose --file docker-compose.test.yml run app  sh -c ls && cd Hello/backend && npm run test:ci
   # - cd Hello/backend
   # - npm install 
