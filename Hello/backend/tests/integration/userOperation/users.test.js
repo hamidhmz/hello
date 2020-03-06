@@ -8,8 +8,9 @@ const { ContactUs } = require('../../../models/ContactUs');
 describe('/hello/api/users/test', () => {
     let server;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         server = require('../../../index');
+        await User.remove({});
     });
     afterEach(async () => {
         try {

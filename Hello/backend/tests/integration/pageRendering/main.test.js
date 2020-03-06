@@ -8,6 +8,7 @@ describe('/profile-image/', () => {
 
     beforeEach(async () => {
         server = require('../../../index');
+        await User.remove({});
     });
     afterEach(async () => {
         await User.remove({});
@@ -138,7 +139,7 @@ describe('/profile-image/', () => {
                 .get('/hello/settings')
                 .set('Cookie', ['token=' + token]);
 
-            expect(res.status).toBe(400);
+            expect(res.status).toBe(200);
         });
     });
 });
