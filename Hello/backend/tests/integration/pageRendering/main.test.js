@@ -138,7 +138,7 @@ describe('/profile-image/', () => {
                 .get('/hello/settings')
                 .set('Cookie', ['token=' + token]);
 
-            expect(res.status).toBe(200);
+            expect(res.status).toBe(400);
         });
     });
 });
