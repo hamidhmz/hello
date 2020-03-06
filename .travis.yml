@@ -6,7 +6,6 @@ services:
   - docker
 before_script:
   - npm install jest -g
-  - npm install 
   - docker-compose --file docker-compose.test.yml up -d mongo
   - docker-compose --file docker-compose.test.yml up -d redis
   - docker-compose --file docker-compose.test.yml up -d app-rtc
@@ -14,6 +13,7 @@ before_script:
 script:
   # - docker-compose --file docker-compose.test.yml up app
   - cd Hello/backend
+  - npm install 
   - sleep 3
   - npm run test:ci
 env:
