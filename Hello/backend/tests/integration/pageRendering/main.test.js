@@ -119,7 +119,7 @@ describe('/profile-image/', () => {
                 .get('/hello/video-call')
                 .set('Cookie', ['token=' + token]);
 
-            expect(res.status).toBe(400);
+            expect(res.status).toBe(200);
         });
     });
     describe('GET /voip', () => {
