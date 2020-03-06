@@ -14,11 +14,11 @@ before_install:
 install: 
   - cd Hello/backend && npm install
 script:
-  # - docker-compose --file docker-compose.test.yml up app
-  - cd Hello/backend
-  - npm install 
-  - sleep 3
-  - npm run test:ci
+  - docker-compose --file docker-compose.test.yml up app
+  # - cd Hello/backend
+  # - npm install 
+  # - sleep 3
+  # - npm run test:ci
 env:
   - NODE_ENV=test
   

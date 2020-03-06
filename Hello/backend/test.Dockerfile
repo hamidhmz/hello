@@ -4,10 +4,10 @@ WORKDIR /app
 #VOLUME ./:/app
 #RUN npm install
 
-#RUN cd backend
+RUN ["sh","-c","ls && cd Hello/backend && npm install"]
 #VOLUME .:/app
 #CMD  ["sh","-c","cd backend && npm","start"]
 # test for github branches from local
 # test for github branches from remote
-CMD ["sh","-c","ls && cd Hello/backend && npm install && npm run test:ci -- --coverage "]
+# CMD ["sh","-c","ls && cd Hello/backend && npm install"]
 #CMD "npm start"

@@ -19,6 +19,7 @@ services:
       - "adminPanel_jwt=123456"
       - "PORT=3000"
     depends_on: ["mongo"]
+    command: npm run dev
   app-cv:
     container_name: cv
     restart: always
