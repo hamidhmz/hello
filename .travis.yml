@@ -1,9 +1,11 @@
 language: node_js
-
+node_js:
+  - '10'
 
 services:
   - docker
 before_script:
+  - npm install jest -g
   - docker-compose --file docker-compose.test.yml up -d mongo
   - docker-compose --file docker-compose.test.yml up -d redis
   - docker-compose --file docker-compose.test.yml up -d app-rtc
