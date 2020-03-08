@@ -1,22 +1,23 @@
+sudo: required
 language: node_js
-
-
+node_js:
+  - '10'
+dist: trusty
 services:
   - docker
-
+before_script:
+  # - npm install jest -g
+  - npm install -g jest
+  - docker-compose --file docker-compose.test.yml up -d mongo
+  - docker-compose --file docker-compose.test.yml up -d redis
+  - docker-compose --file docker-compose.test.yml up -d app-rtc
+  - docker-compose --file docker-compose.test.yml up -d app-cv
+  - docker-compose --file docker-compose.test.yml up -d app 
 script:
-  - docker-compose up 
-  - sleep 3
-  - cd ./Hello/backend/
-  - npm run test 
-
+  - docker-compose --file docker-compose.test.yml run app  sh -c ls  && cd Hello/backend  && npm install && npm run test:ci
+  # - cd Hello/backend
+  # - npm install 
+  # - npm run test:ci
 env:
   - NODE_ENV=test
-cache:
-  directories:
-    - ./Hello/backend/node_modules
-    - ./RTCVideo/node_modules
-    - ./RTCVideo-previous/node_modules
-    - ./CV/node_modules
-
   

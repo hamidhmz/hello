@@ -2,10 +2,9 @@ version: "3.3"
 services:
   app:
     container_name: hello
-    restart: always
     build:
       context: ./Hello/backend/
-      dockerfile: Dockerfile
+      dockerfile: test.Dockerfile
     volumes:
       - ./:/app
     tty: true

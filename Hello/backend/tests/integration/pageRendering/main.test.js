@@ -5,15 +5,20 @@ const { User } = require('../../../models/user');
 const bcrypt = require('bcryptjs');
 describe('/profile-image/', () => {
     let server;
-
+    beforeAll((done)=>{
+        done();
+    });
     beforeEach(async () => {
         server = require('../../../index');
+        await User.remove({});
     });
     afterEach(async () => {
         await User.remove({});
         server.close();
     });
-    beforeAll(() => {});
+    afterAll((done) => {
+        done();
+    });
     describe('GET /', () => {
         it('should render main page (index)', async () => {
             const name = 'testtest';
