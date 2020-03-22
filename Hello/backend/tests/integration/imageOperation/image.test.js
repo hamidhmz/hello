@@ -7,6 +7,7 @@ const { User } = require('../../../models/user');
 const bcrypt = require('bcryptjs');
 const { base64EncodeFile } = require('../../../lib/files');
 const filePath_ = path.join(__dirname + '/test.jpg');
+const mongoose = require('mongoose');
 let testFilePath = null;
 describe('/profile-image/', () => {
     let server;
@@ -29,6 +30,7 @@ describe('/profile-image/', () => {
     });
     afterAll(done => {
         done();
+        mongoose.connection.close();
     });
     describe('GET /profile-image/', () => {
         it('should return image file for owner user ', async () => {
