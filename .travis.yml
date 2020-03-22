@@ -14,9 +14,9 @@ before_script:
   - docker-compose --file docker-compose.test.yml up -d app-cv
   - docker-compose --file docker-compose.test.yml up -d app 
 script:
-  - docker-compose --file docker-compose.test.yml run app  sh -c ls  && cd Hello/backend  && npm install && npm run test:ci
-  - ls
   - docker-compose --file docker-compose.test.yml run app-numerals  sh -c ls  && cd js-numerals  && npm install && npm run test:ci
+  - ls
+  - docker-compose --file docker-compose.test.yml run app  sh -c ls  && cd Hello/backend  && npm install && npm run test:ci
 env:
   - NODE_ENV=test
   
