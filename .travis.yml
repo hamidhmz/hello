@@ -6,18 +6,16 @@ dist: trusty
 services:
   - docker
 before_script:
-  # - npm install jest -g
   - npm install -g jest
   - docker-compose --file docker-compose.test.yml up -d mongo
   - docker-compose --file docker-compose.test.yml up -d redis
   - docker-compose --file docker-compose.test.yml up -d app-rtc
+  - docker-compose --file docker-compose.test.yml up -d app-numerals
   - docker-compose --file docker-compose.test.yml up -d app-cv
   - docker-compose --file docker-compose.test.yml up -d app 
 script:
   - docker-compose --file docker-compose.test.yml run app  sh -c ls  && cd Hello/backend  && npm install && npm run test:ci
-  # - cd Hello/backend
-  # - npm install 
-  # - npm run test:ci
+  - docker-compose --file docker-compose.test.yml run app-numerals  sh -c ls  && cd js-numerals  && npm install && npm run test:ci
 env:
   - NODE_ENV=test
   
