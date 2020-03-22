@@ -1,0 +1,50 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+.input-number {
+    width: auto;
+    padding: 8% 0 0;
+    z-index: 1;
+    margin: auto;
+    max-width: 360px;
+    padding: 45px;
+    background: #ffffff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+.input-number > span {
+    margin: 15px 0 0;
+    color: #b3b3b3;
+    font-size: 12px;
+}
+input[type='number'] {
+    font-family: 'Roboto', sans-serif;
+    outline: 0;
+    background: #f2f2f2;
+    width: 100%;
+    padding: 5px;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    display: block;
+    margin: 0 auto;
+    font-size: 14px;
+}
+
+input[type='number']:focus {
+    border-color: #333;
+}
+
+span {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+}
+body {
+    background: #76b852; /* fallback for old browsers */
+    background: -webkit-linear-gradient(right, #76b852, #8dc26f);
+    background: -moz-linear-gradient(right, #76b852, #8dc26f);
+    background: -o-linear-gradient(right, #76b852, #8dc26f);
+    background: linear-gradient(to left, #76b852, #8dc26f);
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
