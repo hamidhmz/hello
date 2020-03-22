@@ -24,7 +24,7 @@ services:
     restart: always
     build:
       context: ./js-numerals/
-      dockerfile: Dockerfile
+      dockerfile: test.Dockerfile
     volumes:
       - ./:/app
     tty: true

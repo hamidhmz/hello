@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "jest": "^25.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
