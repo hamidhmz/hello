@@ -3,9 +3,10 @@
 const request = require('supertest');
 const { User } = require('../../../models/user');
 const bcrypt = require('bcryptjs');
+const mongoose = require('mongoose');
 describe('/profile-image/', () => {
     let server;
-    beforeAll((done)=>{
+    beforeAll(done => {
         done();
     });
     beforeEach(async () => {
@@ -16,8 +17,9 @@ describe('/profile-image/', () => {
         await User.remove({});
         server.close();
     });
-    afterAll((done) => {
+    afterAll(done => {
         done();
+        mongoose.connection.close();
     });
     describe('GET /', () => {
         it('should render main page (index)', async () => {

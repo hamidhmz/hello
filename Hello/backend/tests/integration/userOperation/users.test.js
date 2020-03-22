@@ -3,6 +3,7 @@ const request = require('supertest');
 const bcrypt = require('bcryptjs');
 const { User } = require('../../../models/user');
 const { ContactUs } = require('../../../models/ContactUs');
+const mongoose = require('mongoose');
 // const expect = require("chai").expect;
 
 describe('/hello/api/users/test', () => {
@@ -25,6 +26,7 @@ describe('/hello/api/users/test', () => {
     });
     afterAll((done) => {
         done();
+        mongoose.connection.close()
     });
     describe('GET /hello/api/users/list ', () => {
         /* ------------------------------- happy path ------------------------------- */
