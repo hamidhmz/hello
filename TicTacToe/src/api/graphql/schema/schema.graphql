@@ -1,0 +1,76 @@
+type Query {
+  "show all games included played and playing"
+  showGames: [Game]!
+  "show all users"
+  showUsers: [User]!
+}
+
+type Mutation {
+  "make new move by one user"
+  move(gameId: ID!, userToken: String!, cellIndex: cellInput): Game!
+  "make new user"
+  newUser: User!
+}
+
+type Subscription {
+  "if there is no game wait for someone to join your game or join a game"
+  join(userId: ID!): Game!
+  "wait for new movement"
+  movement(gameId: ID!): GameSubscribePayload!
+}
+
+type Game {
+  id: ID!
+  firstPlayer: User
+  secondPlayer: User
+  firstPlayerSign: Sign!
+  secondPlayerSign: Sign!
+  turn: Sign!
+  winner: Winner
+  board: [[Cell!]!]!
+  status: GameStatus!
+}
+
+type User {
+  id: ID!
+  userToken: String!
+}
+
+type GameSubscribePayload {
+  mutation: MutationType!
+  data: Game!
+}
+
+input cellInput {
+  arrayNumber: Int!
+  cellNumber: Int!
+}
+
+enum MutationType {
+  START
+  JOINING
+  DONE
+}
+
+enum Cell {
+  EMPTY
+  X
+  O
+}
+
+enum Winner {
+  DRAW
+  X
+  O
+}
+
+enum Sign {
+  X
+  O
+}
+
+enum GameStatus {
+  OPEN
+  PLAYING
+  EXITED
+}

@@ -1,0 +1,12 @@
+version: '3.2'
+
+services:
+  app:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/node/Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 4000:4000

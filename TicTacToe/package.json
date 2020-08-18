@@ -1,0 +1,25 @@
+{
+  "name": "graphql-boilerplate",
+  "scripts": {
+    "start": "dotenv -- nodemon -e ts,graphql,json -x ts-node index.ts",
+    "debug": "dotenv -- nodemon -e ts,graphql,json -x ts-node --inspect index.ts"
+  },
+  "dependencies": {
+    "apollo-server": "^2.16.1",
+    "awilix": "^4.2.6",
+    "graphql-import": "^1.0.2",
+    "uuid": "^8.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "10.17.28",
+    "@types/uuid": "^8.3.0",
+    "@typescript-eslint/eslint-plugin": "^3.9.0",
+    "@typescript-eslint/parser": "^3.9.0",
+    "codelyzer": "^6.0.0",
+    "dotenv-cli": "1.4.0",
+    "nodemon": "1.19.4",
+    "ts-node": "7.0.1",
+    "tslint": "^6.1.3",
+    "typescript": "3.2.2"
+  }
+}

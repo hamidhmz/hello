@@ -96,5 +96,15 @@ services:
     ports:
       - "6379:6379"
 
+  tic-tac-toe:
+    restart: always
+    build:
+      context: ./TicTacToe/
+      dockerfile: docker/node/Dockerfile
+    volumes:
+      - ./:/app
+    ports:
+      - 4000:4000
+
 volumes:
   mongo-data:
