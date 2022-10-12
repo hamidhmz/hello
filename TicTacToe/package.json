@@ -5,7 +5,7 @@
     "debug": "dotenv -- nodemon -e ts,graphql,json -x ts-node --inspect index.ts"
   },
   "dependencies": {
-    "apollo-server": "^2.16.1",
+    "apollo-server": "^2.25.4",
     "awilix": "^4.2.6",
     "graphql-import": "^1.0.2",
     "uuid": "^8.3.0"
